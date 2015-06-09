@@ -2,7 +2,7 @@
 codepath project
 
 ## Wireframe
-![Wireframe](/wireframes/DreamCatcher Wireframe.png)
+![Wireframe](https://www.dropbox.com/s/c9ayherog2n2wh1/DreamCatcher%20Wireframe.png?dl=0)
 
 ## Functionalities
 Misc
