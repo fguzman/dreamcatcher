@@ -9,6 +9,8 @@ codepath project
 
 [Wireframe screenshot] (https://raw.githubusercontent.com/fguzman/dreamcatcher/master/dreamcatcher%20wireframes.png)
 
+![Alt text](http://full/path/to/dreamcatcher wireframe.png "Wireframe")
+
 ## Functionalities
 Misc
 * Home
