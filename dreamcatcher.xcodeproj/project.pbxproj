@@ -10,9 +10,14 @@
 		9455DD7D1B249E300080CE79 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9455DD7C1B249E300080CE79 /* AppDelegate.swift */; };
 		9455DD7F1B249E300080CE79 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9455DD7E1B249E300080CE79 /* ViewController.swift */; };
 		9455DD821B249E300080CE79 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9455DD801B249E300080CE79 /* Main.storyboard */; };
-		9455DD841B249E300080CE79 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9455DD831B249E300080CE79 /* Images.xcassets */; };
 		9455DD871B249E300080CE79 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9455DD851B249E300080CE79 /* LaunchScreen.xib */; };
 		9455DD931B249E300080CE79 /* dreamcatcherTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9455DD921B249E300080CE79 /* dreamcatcherTests.swift */; };
+		B569E07C1B2AA7C400A8D608 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B569E07B1B2AA7C400A8D608 /* Images.xcassets */; };
+		B569E07E1B2AB3CC00A8D608 /* StatsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B569E07D1B2AB3CC00A8D608 /* StatsViewController.swift */; };
+		B569E0801B2AB7F200A8D608 /* AlarmViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B569E07F1B2AB7F200A8D608 /* AlarmViewController.swift */; };
+		B569E0821B2AC2E000A8D608 /* JournalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B569E0811B2AC2E000A8D608 /* JournalViewController.swift */; };
+		B569E0841B2AC83B00A8D608 /* ComposeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B569E0831B2AC83B00A8D608 /* ComposeViewController.swift */; };
+		B569E0861B2ACB5500A8D608 /* ComposePreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B569E0851B2ACB5500A8D608 /* ComposePreviewViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -31,11 +36,16 @@
 		9455DD7C1B249E300080CE79 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9455DD7E1B249E300080CE79 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		9455DD811B249E300080CE79 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		9455DD831B249E300080CE79 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		9455DD861B249E300080CE79 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		9455DD8C1B249E300080CE79 /* dreamcatcherTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = dreamcatcherTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		9455DD911B249E300080CE79 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9455DD921B249E300080CE79 /* dreamcatcherTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = dreamcatcherTests.swift; sourceTree = "<group>"; };
+		B569E07B1B2AA7C400A8D608 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		B569E07D1B2AB3CC00A8D608 /* StatsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatsViewController.swift; sourceTree = "<group>"; };
+		B569E07F1B2AB7F200A8D608 /* AlarmViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlarmViewController.swift; sourceTree = "<group>"; };
+		B569E0811B2AC2E000A8D608 /* JournalViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JournalViewController.swift; sourceTree = "<group>"; };
+		B569E0831B2AC83B00A8D608 /* ComposeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComposeViewController.swift; sourceTree = "<group>"; };
+		B569E0851B2ACB5500A8D608 /* ComposePreviewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComposePreviewViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,7 +90,12 @@
 				9455DD7C1B249E300080CE79 /* AppDelegate.swift */,
 				9455DD7E1B249E300080CE79 /* ViewController.swift */,
 				9455DD801B249E300080CE79 /* Main.storyboard */,
-				9455DD831B249E300080CE79 /* Images.xcassets */,
+				B569E0851B2ACB5500A8D608 /* ComposePreviewViewController.swift */,
+				B569E0831B2AC83B00A8D608 /* ComposeViewController.swift */,
+				B569E0811B2AC2E000A8D608 /* JournalViewController.swift */,
+				B569E07F1B2AB7F200A8D608 /* AlarmViewController.swift */,
+				B569E07D1B2AB3CC00A8D608 /* StatsViewController.swift */,
+				B569E07B1B2AA7C400A8D608 /* Images.xcassets */,
 				9455DD851B249E300080CE79 /* LaunchScreen.xib */,
 				9455DD7A1B249E300080CE79 /* Supporting Files */,
 			);
@@ -192,9 +207,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B569E07C1B2AA7C400A8D608 /* Images.xcassets in Resources */,
 				9455DD821B249E300080CE79 /* Main.storyboard in Resources */,
 				9455DD871B249E300080CE79 /* LaunchScreen.xib in Resources */,
-				9455DD841B249E300080CE79 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -212,8 +227,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B569E0801B2AB7F200A8D608 /* AlarmViewController.swift in Sources */,
+				B569E0861B2ACB5500A8D608 /* ComposePreviewViewController.swift in Sources */,
 				9455DD7F1B249E300080CE79 /* ViewController.swift in Sources */,
+				B569E07E1B2AB3CC00A8D608 /* StatsViewController.swift in Sources */,
+				B569E0841B2AC83B00A8D608 /* ComposeViewController.swift in Sources */,
 				9455DD7D1B249E300080CE79 /* AppDelegate.swift in Sources */,
+				B569E0821B2AC2E000A8D608 /* JournalViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -340,6 +360,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				INFOPLIST_FILE = dreamcatcher/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -350,6 +371,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				INFOPLIST_FILE = dreamcatcher/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -409,6 +431,7 @@
 				9455DD981B249E300080CE79 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		9455DD991B249E300080CE79 /* Build configuration list for PBXNativeTarget "dreamcatcherTests" */ = {
 			isa = XCConfigurationList;
@@ -417,6 +440,7 @@
 				9455DD9B1B249E300080CE79 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
