@@ -12,22 +12,32 @@ import AVFoundation
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
+    var alarmViewController: AlarmViewController!
+    
     var window: UIWindow?
     var player: AVAudioPlayer! = AVAudioPlayer()
     var fader: iiFaderForAvAudioPlayer!
     var backgroundIdentifier: UIBackgroundTaskIdentifier!
+    
+    var isPlayerPrepared: Bool = false
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
         application.registerUserNotificationSettings(UIUserNotificationSettings(forTypes: .Alert | .Badge | .Sound, categories: nil))
         
-        prepareAudio()
+        if (alarmViewController != nil) {
+            alarmViewController.updateAlarmState(AlarmViewController.State.Triggered)
+        }
         return true
     }
     
     func application(application: UIApplication, didReceiveLocalNotification notification: UILocalNotification) {
         NSLog("Received local notification")
+        prepareAudio()
         fadeInAudio(player)
+        if (alarmViewController != nil) {
+            alarmViewController.updateAlarmState(AlarmViewController.State.Triggered)
+        }
     }
 
     // Prepare for audio session settings for background audio
@@ -39,6 +49,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UIApplication.sharedApplication().beginReceivingRemoteControlEvents()
         player.prepareToPlay()
         player.numberOfLoops = -1
+        
+        isPlayerPrepared = true
     }
     
     // Fade in music
@@ -49,17 +61,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         fader.fadeIn(duration: 22, velocity: 2, onFinished: nil)
     }
     
+    func stopPlayer() {
+        if (isPlayerPrepared) {
+            player.stop()
+            isPlayerPrepared = false
+        }
+    }
+    
     func playAlarm(timer: NSTimer) {
         println("here!")
-        fader = iiFaderForAvAudioPlayer(player: player)
-        fader.fadeIn(duration: 22, velocity: 2, onFinished: nil)
     }
     
     func applicationWillResignActive(application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
-        // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
-        UIApplication.sharedApplication().applicationIconBadgeNumber = 1
-        
+        // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.        
         backgroundIdentifier = UIApplication.sharedApplication().beginBackgroundTaskWithExpirationHandler { () -> Void in
             UIApplication.sharedApplication().endBackgroundTask(self.backgroundIdentifier)
         }
@@ -68,10 +83,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             var timer = NSTimer(fireDate: NSDate(timeIntervalSinceNow: 10), interval: 60.0, target: self, selector: Selector("playAlarm:"), userInfo: nil, repeats: false)
             NSRunLoop.currentRunLoop().addTimer(timer, forMode: NSDefaultRunLoopMode)
             println("scheduled timer")
-            
-            
-            self.player.play()
-            self.player.volume = 0
         })
     }
 

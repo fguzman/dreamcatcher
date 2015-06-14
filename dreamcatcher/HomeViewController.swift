@@ -14,18 +14,9 @@ class HomeViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        var date = NSDate()
-        date = date.dateByAddingTimeInterval(10)
-        setLocalNotification(date)
     }
     
-    func setLocalNotification (firedate: NSDate) {
-        var notification: UILocalNotification = UILocalNotification()
-        notification.fireDate = firedate
-        notification.alertBody = "It's a new day!"
-        notification.soundName = "alarm_sound_3.mp3"
-        UIApplication.sharedApplication().scheduleLocalNotification(notification)
-    }
+
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
