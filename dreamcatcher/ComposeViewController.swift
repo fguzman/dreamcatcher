@@ -10,14 +10,15 @@ import UIKit
 
 class ComposeViewController: UIViewController {
 
-    @IBOutlet weak var textField: UITextField!
+    
+    @IBOutlet weak var textView: UITextView!
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        textField.becomeFirstResponder()
+        textView.becomeFirstResponder()
     }
 
     override func didReceiveMemoryWarning() {
@@ -26,6 +27,7 @@ class ComposeViewController: UIViewController {
     }
     
     @IBAction func onPressCancelButton(sender: AnyObject) {
+        view.endEditing(true)
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     
