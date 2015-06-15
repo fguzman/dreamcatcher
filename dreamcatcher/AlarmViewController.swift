@@ -45,8 +45,11 @@ class AlarmViewController: UIViewController {
         editAlarmButton.layer.cornerRadius = editAlarmButton.frame.width/2
         appDelegate.alarmViewController = self
 
-        var tempState = State(rawValue: userDefaults.objectForKey("alarm.state") as! String)
-        updateAlarmState(tempState!)
+        var tempState = State.Unset
+        if (userDefaults.objectForKey("alarm.state") != nil) {
+            tempState = State(rawValue: userDefaults.objectForKey("alarm.state") as! String)!
+        }
+        updateAlarmState(tempState)
     }
     
     func setLocalNotification (firedate: NSDate) {
