@@ -24,6 +24,9 @@ class JournalViewController: UIViewController{
     }
     
     
+    @IBAction func onPressBackButton(sender: AnyObject) {
+        self.dismissViewControllerAnimated(true, completion: nil)
+    }
 
     /*
     // MARK: - Navigation
