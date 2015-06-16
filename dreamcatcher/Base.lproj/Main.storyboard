@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7702" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="vXZ-lx-hvc">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7701"/>
     </dependencies>
     <scenes>
         <!--Home View Controller-->
@@ -716,7 +716,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="close_icon" width="20" height="20"/>
         <image name="add_black" width="22" height="21"/>
         <image name="add_white" width="22" height="21"/>
         <image name="alarm_black" width="23" height="23"/>
@@ -724,6 +723,7 @@
         <image name="back_white" width="21" height="18"/>
         <image name="bg1" width="321" height="317"/>
         <image name="bg2" width="321" height="317"/>
+        <image name="close_icon" width="20" height="20"/>
         <image name="delete_black" width="15" height="15"/>
         <image name="divider_black" width="268" height="2"/>
         <image name="divider_white" width="268" height="2"/>
