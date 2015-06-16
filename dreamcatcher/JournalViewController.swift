@@ -8,28 +8,22 @@
 
 import UIKit
 
-class JournalViewController: UIViewController, UIScrollViewDelegate {
+class JournalViewController: UIViewController{
     
-    @IBOutlet weak var scrollView: UIScrollView!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        scrollView.delegate = self
-        scrollView.directionalLockEnabled = true
-    }
+           }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
-    func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-        if (scrollView.contentOffset.y < -50) {
-            self.dismissViewControllerAnimated(false, completion: nil)
-        }
-    }
+    
 
     /*
     // MARK: - Navigation

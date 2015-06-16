@@ -10,9 +10,15 @@ import UIKit
 
 class StatsViewController: UIViewController {
 
+
+    
+    @IBOutlet weak var scrollView: UIScrollView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        
+        scrollView.contentSize = CGSize(width: scrollView.frame.size.width * CGFloat(3), height: scrollView.frame.size.height)
         // Do any additional setup after loading the view.
     }
 
