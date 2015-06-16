@@ -12,6 +12,8 @@
 		9455DD821B249E300080CE79 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9455DD801B249E300080CE79 /* Main.storyboard */; };
 		9455DD871B249E300080CE79 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9455DD851B249E300080CE79 /* LaunchScreen.xib */; };
 		9455DD931B249E300080CE79 /* dreamcatcherTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9455DD921B249E300080CE79 /* dreamcatcherTests.swift */; };
+		A40B26391B2FD21C00D21DE6 /* CardCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A40B26381B2FD21C00D21DE6 /* CardCollectionViewCell.swift */; };
+		A40B263D1B2FD2D500D21DE6 /* DreamCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A40B263C1B2FD2D500D21DE6 /* DreamCollectionViewController.swift */; };
 		B569E07C1B2AA7C400A8D608 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B569E07B1B2AA7C400A8D608 /* Images.xcassets */; };
 		B569E07E1B2AB3CC00A8D608 /* StatsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B569E07D1B2AB3CC00A8D608 /* StatsViewController.swift */; };
 		B569E0801B2AB7F200A8D608 /* AlarmViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B569E07F1B2AB7F200A8D608 /* AlarmViewController.swift */; };
@@ -43,6 +45,8 @@
 		9455DD8C1B249E300080CE79 /* dreamcatcherTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = dreamcatcherTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		9455DD911B249E300080CE79 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9455DD921B249E300080CE79 /* dreamcatcherTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = dreamcatcherTests.swift; sourceTree = "<group>"; };
+		A40B26381B2FD21C00D21DE6 /* CardCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardCollectionViewCell.swift; sourceTree = "<group>"; };
+		A40B263C1B2FD2D500D21DE6 /* DreamCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DreamCollectionViewController.swift; sourceTree = "<group>"; usesTabs = 0; };
 		B569E07B1B2AA7C400A8D608 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		B569E07D1B2AB3CC00A8D608 /* StatsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatsViewController.swift; sourceTree = "<group>"; };
 		B569E07F1B2AB7F200A8D608 /* AlarmViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlarmViewController.swift; sourceTree = "<group>"; };
@@ -107,6 +111,8 @@
 				B569E07B1B2AA7C400A8D608 /* Images.xcassets */,
 				9455DD851B249E300080CE79 /* LaunchScreen.xib */,
 				9455DD7A1B249E300080CE79 /* Supporting Files */,
+				A40B26381B2FD21C00D21DE6 /* CardCollectionViewCell.swift */,
+				A40B263C1B2FD2D500D21DE6 /* DreamCollectionViewController.swift */,
 			);
 			path = dreamcatcher;
 			sourceTree = "<group>";
@@ -242,6 +248,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A40B26391B2FD21C00D21DE6 /* CardCollectionViewCell.swift in Sources */,
 				B569E0801B2AB7F200A8D608 /* AlarmViewController.swift in Sources */,
 				B569E0861B2ACB5500A8D608 /* ComposePreviewViewController.swift in Sources */,
 				9455DD7F1B249E300080CE79 /* ViewController.swift in Sources */,
@@ -251,6 +258,7 @@
 				B569E0841B2AC83B00A8D608 /* ComposeViewController.swift in Sources */,
 				9455DD7D1B249E300080CE79 /* AppDelegate.swift in Sources */,
 				B569E0821B2AC2E000A8D608 /* JournalViewController.swift in Sources */,
+				A40B263D1B2FD2D500D21DE6 /* DreamCollectionViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
