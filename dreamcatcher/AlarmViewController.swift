@@ -10,10 +10,15 @@ import UIKit
 
 class AlarmViewController: UIViewController {
     
-    enum State {
-        case Unset
-        case Set
-        case Triggered
+    enum State: String {
+        case Unset      = "Unset"
+        case Set        = "Set"
+        case Triggered  = "Triggered"
+    }
+    
+    enum Repeat: String {
+        case Everyday   = "Everyday"
+        case Once       = "Once"
     }
     
     @IBOutlet weak var editAlarmButton: UIButton!
@@ -27,7 +32,7 @@ class AlarmViewController: UIViewController {
     @IBOutlet weak var datePickerContainer: UIView!
     @IBOutlet weak var repeatContainer: UIView!
     
-    var currentState: State!
+    var currentState: State! = State.Unset
     
     let orangeColor: UIColor = UIColor(red: 255/255, green: 108.0/255, blue: 0.0, alpha: 1)
     let blueColor: UIColor = UIColor(red: 0, green: 153/255, blue: 255/255, alpha: 1)
@@ -38,8 +43,10 @@ class AlarmViewController: UIViewController {
         super.viewDidLoad()
         
         editAlarmButton.layer.cornerRadius = editAlarmButton.frame.width/2
-        updateAlarmState(State.Unset)
         appDelegate.alarmViewController = self
+
+        var tempState = State(rawValue: userDefaults.objectForKey("alarm.state") as! String)
+        updateAlarmState(tempState!)
     }
     
     func setLocalNotification (firedate: NSDate) {
@@ -50,15 +57,15 @@ class AlarmViewController: UIViewController {
         notification.soundName = "alarm_sound_3.mp3"
         notification.applicationIconBadgeNumber = 1
         
+        userDefaults.setObject(firedate, forKey: "alarm")
+        userDefaults.setObject(Repeat.Once.rawValue, forKey: "alarm.repeat")
+        
         if (repeatSwitch.on) {
             notification.repeatInterval = NSCalendarUnit.CalendarUnitDay
+            userDefaults.setObject(Repeat.Everyday.rawValue, forKey: "alarm.repeat")
         }
         
         UIApplication.sharedApplication().scheduleLocalNotification(notification)
-        
-        // add date to user default
-        userDefaults.setObject(firedate, forKey: "alarm")
-        println(userDefaults.valueForKey("alarm"))
     }
 
     override func didReceiveMemoryWarning() {
@@ -67,10 +74,6 @@ class AlarmViewController: UIViewController {
     }
 
     @IBAction func onPressCloseButton(sender: AnyObject) {
-        self.dismissViewControllerAnimated(true, completion: nil)
-    }
-    
-    @IBAction func onPressSetButton(sender: AnyObject) {
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     
@@ -84,13 +87,14 @@ class AlarmViewController: UIViewController {
     @IBAction func onPressSetAlarm(sender: AnyObject) {
         setLocalNotification(datePicker.date)
         updateAlarmState(State.Set)
+        self.dismissViewControllerAnimated(true, completion: nil)
     }
     
     func updateAlarmState(state: State) {
-        if (state == State.Triggered && currentState != State.Set) {
-            println("Error: current state is \(currentState)")
-            return
+        if (userDefaults.objectForKey("alarm") == nil) {
+            currentState = State.Unset
         }
+        
         currentState = state
         
         if currentState == State.Unset {
@@ -108,14 +112,13 @@ class AlarmViewController: UIViewController {
         else if (currentState == State.Set || currentState == State.Triggered) {
             var dateFormatter = NSDateFormatter()
             dateFormatter.timeStyle = NSDateFormatterStyle.ShortStyle
-            var strDate = dateFormatter.stringFromDate(datePicker.date)
+            var date = userDefaults.objectForKey("alarm") as! NSDate
+            var strDate = dateFormatter.stringFromDate(date)
             timeLabel.text = strDate
             timeLabel.sizeToFit()
-            if (repeatSwitch.on) {
-                repeatLabel.text = "Everyday"
-            } else {
-                repeatLabel.text = "Once"
-            }
+            
+            var repeatStr = userDefaults.objectForKey("alarm.repeat") as! String
+            repeatLabel.text = repeatStr
             repeatLabel.sizeToFit()
             
             repeatLabel.center = CGPointMake(UIScreen.mainScreen().bounds.width/2, repeatLabel.center.y)
@@ -136,11 +139,17 @@ class AlarmViewController: UIViewController {
         if (currentState == State.Triggered) {
             editAlarmButton.layer.backgroundColor = blueColor.CGColor
         }
+        
+        userDefaults.setObject(currentState.rawValue, forKey: "alarm.state")
+        println("save alarm state: \(currentState.rawValue)")
+
     }
     
     @IBAction func onPressCancelAlarm(sender: AnyObject) {
         updateAlarmState(State.Unset)
     }
+    
+    
     
     
     /*
