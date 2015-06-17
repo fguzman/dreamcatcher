@@ -10,7 +10,8 @@ import UIKit
 
 class DreamCollectionViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
     
-    var journalTransition : JournalTransition!
+    var journalTransition: JournalTransition!
+    var fadeTransition: FadeTransition!
 
     @IBOutlet weak var collectionView: UICollectionView!
     
@@ -45,6 +46,7 @@ class DreamCollectionViewController: UIViewController, UICollectionViewDataSourc
     }
     
     override func viewDidAppear(animated: Bool) {
+        
         if (userDefaults.objectForKey(AlarmViewController.AlarmUserSettings.Date.rawValue) != nil) {
             var dateFormatter = NSDateFormatter()
             dateFormatter.timeStyle = NSDateFormatterStyle.ShortStyle
@@ -94,7 +96,6 @@ class DreamCollectionViewController: UIViewController, UICollectionViewDataSourc
     
     
     @IBAction func onPan(sender: UIPanGestureRecognizer) {
-        println("pan")
         
         if sender.state == UIGestureRecognizerState.Began{
             performSegueWithIdentifier("journalDetailSegue", sender: nil)
@@ -105,12 +106,12 @@ class DreamCollectionViewController: UIViewController, UICollectionViewDataSourc
         }
         
     }
-
     
+    @IBAction func onPressAlarm(sender: AnyObject) {
+        performSegueWithIdentifier("alarmSegue", sender: nil)
+    }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
-        
-        println(segue.identifier)
         
         if segue.identifier == "journalDetailSegue" {
             var destinationVC = segue.destinationViewController as! JournalViewController
@@ -119,7 +120,12 @@ class DreamCollectionViewController: UIViewController, UICollectionViewDataSourc
             destinationVC.transitioningDelegate = journalTransition
         }
         
-        
+        if segue.identifier == "alarmSegue" {
+            var alarmVC = segue.destinationViewController as! AlarmViewController
+            alarmVC.modalPresentationStyle = UIModalPresentationStyle.Custom
+            fadeTransition = FadeTransition()
+            alarmVC.transitioningDelegate = fadeTransition
+        }
     }
     
 

@@ -23,6 +23,7 @@ class FadeTransition: BaseTransition {
     override func dismissTransition(containerView: UIView, fromViewController: UIViewController, toViewController: UIViewController) {
         
         fromViewController.view.alpha = 1
+        toViewController.beginAppearanceTransition(true, animated: true)
         UIView.animateWithDuration(duration, animations: {
             fromViewController.view.alpha = 0
         }) { (finished: Bool) -> Void in

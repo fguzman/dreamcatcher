@@ -23,6 +23,7 @@
 		B569E0821B2AC2E000A8D608 /* JournalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B569E0811B2AC2E000A8D608 /* JournalViewController.swift */; };
 		B569E0841B2AC83B00A8D608 /* ComposeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B569E0831B2AC83B00A8D608 /* ComposeViewController.swift */; };
 		B569E0861B2ACB5500A8D608 /* ComposePreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B569E0851B2ACB5500A8D608 /* ComposePreviewViewController.swift */; };
+		B5DC5B8F1B3160C800DD8E6E /* Common.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5DC5B8E1B3160C800DD8E6E /* Common.swift */; };
 		B5F960D31B2CDC3C00E5AAB3 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F960D21B2CDC3C00E5AAB3 /* HomeViewController.swift */; };
 		B5F960D51B2CEA2600E5AAB3 /* alarm_sound_3.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B5F960D41B2CEA2600E5AAB3 /* alarm_sound_3.mp3 */; };
 		B5F960D71B2D12D000E5AAB3 /* iiFaderForAvAudioPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F960D61B2D12D000E5AAB3 /* iiFaderForAvAudioPlayer.swift */; };
@@ -59,6 +60,7 @@
 		B569E0811B2AC2E000A8D608 /* JournalViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JournalViewController.swift; sourceTree = "<group>"; };
 		B569E0831B2AC83B00A8D608 /* ComposeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComposeViewController.swift; sourceTree = "<group>"; };
 		B569E0851B2ACB5500A8D608 /* ComposePreviewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComposePreviewViewController.swift; sourceTree = "<group>"; };
+		B5DC5B8E1B3160C800DD8E6E /* Common.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Common.swift; sourceTree = "<group>"; };
 		B5F960D21B2CDC3C00E5AAB3 /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		B5F960D41B2CEA2600E5AAB3 /* alarm_sound_3.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = alarm_sound_3.mp3; sourceTree = "<group>"; };
 		B5F960D61B2D12D000E5AAB3 /* iiFaderForAvAudioPlayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = iiFaderForAvAudioPlayer.swift; sourceTree = "<group>"; };
@@ -108,6 +110,7 @@
 				A4E4E3DF1B31207000E4410B /* Transition */,
 				B5F960D61B2D12D000E5AAB3 /* iiFaderForAvAudioPlayer.swift */,
 				9455DD7E1B249E300080CE79 /* ViewController.swift */,
+				B5DC5B8E1B3160C800DD8E6E /* Common.swift */,
 				9455DD801B249E300080CE79 /* Main.storyboard */,
 				B5F960D21B2CDC3C00E5AAB3 /* HomeViewController.swift */,
 				B569E0851B2ACB5500A8D608 /* ComposePreviewViewController.swift */,
@@ -278,6 +281,7 @@
 				B569E0821B2AC2E000A8D608 /* JournalViewController.swift in Sources */,
 				A4E4E3DE1B31206600E4410B /* BaseTransition.swift in Sources */,
 				A4E4E3DC1B31200B00E4410B /* FadeTransition.swift in Sources */,
+				B5DC5B8F1B3160C800DD8E6E /* Common.swift in Sources */,
 				A40B263D1B2FD2D500D21DE6 /* DreamCollectionViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

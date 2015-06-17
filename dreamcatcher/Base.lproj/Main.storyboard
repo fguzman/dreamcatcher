@@ -44,7 +44,7 @@
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
-                                            <segue destination="Luf-Go-OjK" kind="modal" id="l99-dY-BMy"/>
+                                            <action selector="onPressAlarm:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="kUP-g2-ORf"/>
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="7:30 AM" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="2dq-iY-EIe" userLabel="alarmTimeLabel">
@@ -152,7 +152,7 @@
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="JUNE 17" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="1tO-Dq-tcV">
                                                             <rect key="frame" x="15" y="76" width="70" height="21"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                            <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="11"/>
+                                                            <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="11"/>
                                                             <color key="textColor" red="1" green="0.99997437000274658" blue="0.99999129772186279" alpha="1" colorSpace="calibratedRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
@@ -200,6 +200,7 @@
                         <outlet property="collectionView" destination="uz8-Zy-5Yk" id="GSv-Th-yzP"/>
                         <outlet property="composeButton" destination="sOO-Sa-PFI" id="RRg-bg-C0q"/>
                         <outlet property="settingButton" destination="a3Y-aE-sXs" id="Z5U-Co-aPR"/>
+                        <segue destination="Luf-Go-OjK" kind="modal" identifier="alarmSegue" id="LB4-xo-G3d"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
@@ -533,6 +534,11 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <view contentMode="scaleToFill" id="eHB-sS-ADm" userLabel="backgroundView">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.95686274510000002" green="0.95686274510000002" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
+                            </view>
                             <view contentMode="scaleToFill" id="kbW-xn-FHa" userLabel="Date Picker Container">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -623,6 +629,13 @@
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     </view>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="DRAG TO DISMISS" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="941-Cn-j5d" userLabel="dismissLabel">
+                                        <rect key="frame" x="97" y="482" width="127" height="25"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="11"/>
+                                        <color key="textColor" red="0.0" green="0.058823529409999999" blue="0.16862745100000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
@@ -638,12 +651,37 @@
                                     <action selector="onPressCancelAlarm:" destination="Luf-Go-OjK" eventType="touchUpInside" id="dfM-Iw-Nsf"/>
                                 </connections>
                             </button>
+                            <view contentMode="scaleToFill" id="uE4-zf-xEB" userLabel="dismissButtonContainer">
+                                <rect key="frame" x="115" y="380" width="90" height="90"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" image="dismiss_alarm" id="lhb-u0-TjT">
+                                        <rect key="frame" x="28" y="35" width="35" height="19"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                    </imageView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="aHL-db-5EX" userLabel="dismissButton">
+                                        <rect key="frame" x="0.0" y="0.0" width="90" height="90"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <gestureRecognizers/>
+                                        <state key="normal">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <outletCollection property="gestureRecognizers" destination="Tx3-kW-Qdc" appends="YES" id="pJe-Oh-3Jw"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
                         </subviews>
-                        <color key="backgroundColor" red="0.95686274509803915" green="0.95686274509803915" blue="0.96078431372549022" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     </view>
                     <connections>
+                        <outlet property="backgroundView" destination="eHB-sS-ADm" id="ZpJ-oI-1Nh"/>
                         <outlet property="datePicker" destination="deJ-QS-rfP" id="Cay-bJ-pnf"/>
                         <outlet property="datePickerContainer" destination="kbW-xn-FHa" id="NeX-rN-lAe"/>
+                        <outlet property="dismissAlarmContainer" destination="uE4-zf-xEB" id="C7T-Hs-21I"/>
+                        <outlet property="dismissLabel" destination="941-Cn-j5d" id="u1L-p2-QML"/>
                         <outlet property="editAlarmButton" destination="r0W-y8-C8Q" id="jnd-Ue-IuY"/>
                         <outlet property="repeatContainer" destination="JgP-Ta-AWP" id="chS-Oy-WL2"/>
                         <outlet property="repeatFieldLabel" destination="iVu-xE-706" id="0tN-kD-GFB"/>
@@ -654,6 +692,11 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SH7-EC-kw5" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <panGestureRecognizer minimumNumberOfTouches="1" id="Tx3-kW-Qdc">
+                    <connections>
+                        <action selector="onPanningDismissButton:" destination="Luf-Go-OjK" id="r6s-Sy-VsZ"/>
+                    </connections>
+                </panGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="88" y="-424"/>
         </scene>
@@ -666,6 +709,7 @@
         <image name="bg2" width="321" height="317"/>
         <image name="close_icon" width="20" height="20"/>
         <image name="delete_black" width="15" height="15"/>
+        <image name="dismiss_alarm" width="35" height="19"/>
         <image name="divider_black" width="268" height="2"/>
         <image name="divider_white" width="268" height="2"/>
         <image name="graph1" width="637" height="627"/>
