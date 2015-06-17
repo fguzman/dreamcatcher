@@ -21,6 +21,13 @@ class AlarmViewController: UIViewController {
         case Once       = "Once"
     }
     
+    enum AlarmUserSettings: String {
+        case Date           = "alarm.date"
+        case Repeat         = "alarm.repeat"
+        case State          = "alarm.state"
+        case LastSelected   = "alarm.lastSelected"
+    }
+    
     @IBOutlet weak var editAlarmButton: UIButton!
     @IBOutlet weak var setAlarmButton: UIButton!
     
@@ -46,30 +53,17 @@ class AlarmViewController: UIViewController {
         editAlarmButton.layer.cornerRadius = editAlarmButton.frame.width/2
         appDelegate.alarmViewController = self
 
+        // Set alarm state
         var tempState = State.Unset
-        if (userDefaults.objectForKey("alarm.state") != nil) {
-            tempState = State(rawValue: userDefaults.objectForKey("alarm.state") as! String)!
+        if (userDefaults.objectForKey(AlarmUserSettings.State.rawValue) != nil) {
+            tempState = State(rawValue: userDefaults.objectForKey(AlarmUserSettings.State.rawValue) as! String)!
         }
         updateAlarmState(tempState)
-    }
-    
-    func setLocalNotification (firedate: NSDate) {
-        // set notification
-        var notification: UILocalNotification = UILocalNotification()
-        notification.fireDate = firedate
-        notification.alertBody = "It's a new day!"
-        notification.soundName = "alarm_sound_3.mp3"
-        notification.applicationIconBadgeNumber = 1
         
-        userDefaults.setObject(firedate, forKey: "alarm")
-        userDefaults.setObject(Repeat.Once.rawValue, forKey: "alarm.repeat")
-        
-        if (repeatSwitch.on) {
-            notification.repeatInterval = NSCalendarUnit.CalendarUnitDay
-            userDefaults.setObject(Repeat.Everyday.rawValue, forKey: "alarm.repeat")
+        if (userDefaults.objectForKey(AlarmUserSettings.LastSelected.rawValue) != nil) {
+            var lastSelectedDate: NSDate! = userDefaults.objectForKey(AlarmUserSettings.LastSelected.rawValue) as! NSDate
+            datePicker.date = lastSelectedDate
         }
-        
-        UIApplication.sharedApplication().scheduleLocalNotification(notification)
     }
 
     override func didReceiveMemoryWarning() {
@@ -82,15 +76,45 @@ class AlarmViewController: UIViewController {
     }
     
     @IBAction func onChangeDatePicker(sender: AnyObject) {
-        var dateFormatter = NSDateFormatter()
-        dateFormatter.timeStyle = NSDateFormatterStyle.ShortStyle
-        var strDate = dateFormatter.stringFromDate(datePicker.date)
+        userDefaults.setObject(datePicker.date, forKey: AlarmUserSettings.LastSelected.rawValue)
     }
     
     @IBAction func onPressSetAlarm(sender: AnyObject) {
         setLocalNotification(datePicker.date)
         updateAlarmState(State.Set)
         self.dismissViewControllerAnimated(true, completion: nil)
+    }
+
+    @IBAction func onPressCancelAlarm(sender: AnyObject) {
+        unsetLocalNotification()
+        updateAlarmState(State.Unset)
+    }
+    
+    
+    func unsetLocalNotification() {
+        //cancel notification or stop player
+        UIApplication.sharedApplication().cancelAllLocalNotifications()
+        appDelegate.stopPlayer()
+        userDefaults.removeObjectForKey(AlarmUserSettings.Date.rawValue)
+    }
+    
+    func setLocalNotification(firedate: NSDate) {
+        // set notification
+        var notification: UILocalNotification = UILocalNotification()
+        notification.fireDate = firedate
+        notification.alertBody = "It's a new day!"
+        notification.soundName = "alarm_sound_3.mp3"
+        notification.applicationIconBadgeNumber = 1
+        
+        userDefaults.setObject(firedate, forKey: AlarmUserSettings.Date.rawValue)
+        userDefaults.setObject(Repeat.Once.rawValue, forKey: AlarmUserSettings.Repeat.rawValue)
+        
+        if (repeatSwitch.on) {
+            notification.repeatInterval = NSCalendarUnit.CalendarUnitDay
+            userDefaults.setObject(Repeat.Everyday.rawValue, forKey: AlarmUserSettings.Repeat.rawValue)
+        }
+        
+        UIApplication.sharedApplication().scheduleLocalNotification(notification)
     }
     
     // Show or hide alarm date picker and repeat switch
@@ -144,12 +168,12 @@ class AlarmViewController: UIViewController {
     func displayAlarmInfo() {
         var dateFormatter = NSDateFormatter()
         dateFormatter.timeStyle = NSDateFormatterStyle.ShortStyle
-        var date = userDefaults.objectForKey("alarm") as! NSDate
+        var date = userDefaults.objectForKey(AlarmUserSettings.Date.rawValue) as! NSDate
         var strDate = dateFormatter.stringFromDate(date)
         timeLabel.text = strDate
         timeLabel.sizeToFit()
         
-        var repeatStr = userDefaults.objectForKey("alarm.repeat") as! String
+        var repeatStr = userDefaults.objectForKey(AlarmUserSettings.Repeat.rawValue) as! String
         repeatLabel.text = repeatStr
         repeatLabel.sizeToFit()
         
@@ -162,7 +186,7 @@ class AlarmViewController: UIViewController {
     // Alarm state controller
     func updateAlarmState(state: State) {
         // If user default doesn't have alarm setting yet, default to Unset
-        if (userDefaults.objectForKey("alarm") == nil) {
+        if (userDefaults.objectForKey(AlarmUserSettings.Date.rawValue) == nil) {
             currentState = State.Unset
         }
         
@@ -170,11 +194,6 @@ class AlarmViewController: UIViewController {
         
         if currentState == State.Unset {
             showHideEditUI(true)
-            
-            //cancel notification or stop player
-            UIApplication.sharedApplication().cancelAllLocalNotifications()
-            appDelegate.stopPlayer()
-            userDefaults.removeObjectForKey("alarm")
         }
         else if (currentState == State.Set || currentState == State.Triggered) {
             editAlarmButton.layer.backgroundColor = orangeColor.CGColor
@@ -188,12 +207,8 @@ class AlarmViewController: UIViewController {
             editAlarmButton.layer.backgroundColor = blueColor.CGColor
         }
         
-        userDefaults.setObject(currentState.rawValue, forKey: "alarm.state")
+        userDefaults.setObject(currentState.rawValue, forKey: AlarmUserSettings.State.rawValue)
 
-    }
-    
-    @IBAction func onPressCancelAlarm(sender: AnyObject) {
-        updateAlarmState(State.Unset)
     }
     
     /*

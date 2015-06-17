@@ -635,7 +635,7 @@
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="onPressCancelAlarm:" destination="Luf-Go-OjK" eventType="touchUpInside" id="G3b-oM-DAx"/>
+                                    <action selector="onPressCancelAlarm:" destination="Luf-Go-OjK" eventType="touchUpInside" id="dfM-Iw-Nsf"/>
                                 </connections>
                             </button>
                         </subviews>
