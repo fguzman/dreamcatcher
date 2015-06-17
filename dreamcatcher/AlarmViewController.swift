@@ -17,7 +17,7 @@ class AlarmViewController: UIViewController {
     }
     
     enum Repeat: String {
-        case Everyday   = "Everyday"
+        case Everyday   = "Repeat Everyday"
         case Once       = "Once"
     }
     
@@ -27,10 +27,11 @@ class AlarmViewController: UIViewController {
     @IBOutlet weak var timeLabel: UILabel!
     @IBOutlet weak var repeatLabel: UILabel!
     
+    @IBOutlet weak var repeatContainer: UIView!
+    @IBOutlet weak var repeatFieldLabel: UILabel!
     @IBOutlet weak var repeatSwitch: UISwitch!
     @IBOutlet weak var datePicker: UIDatePicker!
     @IBOutlet weak var datePickerContainer: UIView!
-    @IBOutlet weak var repeatContainer: UIView!
     
     var currentState: State! = State.Unset
     
@@ -84,7 +85,6 @@ class AlarmViewController: UIViewController {
         var dateFormatter = NSDateFormatter()
         dateFormatter.timeStyle = NSDateFormatterStyle.ShortStyle
         var strDate = dateFormatter.stringFromDate(datePicker.date)
-        println("user selected date: \(strDate)")
     }
     
     @IBAction func onPressSetAlarm(sender: AnyObject) {
@@ -93,7 +93,75 @@ class AlarmViewController: UIViewController {
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     
+    // Show or hide alarm date picker and repeat switch
+    func showHideEditUI(isShow: Bool) {
+        var editAlpha: CGFloat = isShow ? 1.0 : 0.0
+        var displayAlpha: CGFloat = isShow ? 0.0 : 1.0
+        
+        let screenSize: CGRect = UIScreen.mainScreen().bounds
+        let displayContainerHeight: CGFloat = 300.0
+        
+        if !isShow {
+            UIView.animateKeyframesWithDuration(1, delay: 0, options: nil, animations: {
+                UIView.addKeyframeWithRelativeStartTime(0, relativeDuration: 0.5, animations: {
+                    self.datePicker.alpha = editAlpha
+                    self.repeatContainer.alpha = editAlpha
+                    self.setAlarmButton.alpha = editAlpha
+                })
+                
+                UIView.addKeyframeWithRelativeStartTime(0.2, relativeDuration: 0.7, animations: {
+                    self.datePickerContainer.frame = CGRectMake(0, 0, screenSize.width, displayContainerHeight)
+                })
+                
+                UIView.addKeyframeWithRelativeStartTime(0.7, relativeDuration: 0.3, animations: {
+                    self.editAlarmButton.alpha = displayAlpha
+                    self.timeLabel.alpha = displayAlpha
+                    self.repeatLabel.alpha = displayAlpha
+                })
+            }, completion: nil)
+        } else {
+            UIView.animateKeyframesWithDuration(1, delay: 0, options: nil, animations: {
+                UIView.addKeyframeWithRelativeStartTime(0, relativeDuration: 0.5, animations: {
+                    self.editAlarmButton.alpha = displayAlpha
+                    self.timeLabel.alpha = displayAlpha
+                    self.repeatLabel.alpha = displayAlpha
+                })
+                
+                UIView.addKeyframeWithRelativeStartTime(0.2, relativeDuration: 0.7, animations: {
+                    self.datePickerContainer.frame = CGRectMake(0, 0, screenSize.width, screenSize.height)
+                })
+                
+                UIView.addKeyframeWithRelativeStartTime(0.7, relativeDuration: 0.3, animations: {
+                    self.datePicker.alpha = editAlpha
+                    self.repeatContainer.alpha = editAlpha
+                    self.setAlarmButton.alpha = editAlpha
+                })
+            }, completion: nil)
+        }
+    }
+    
+    // Display current alarm time and repeat setting
+    func displayAlarmInfo() {
+        var dateFormatter = NSDateFormatter()
+        dateFormatter.timeStyle = NSDateFormatterStyle.ShortStyle
+        var date = userDefaults.objectForKey("alarm") as! NSDate
+        var strDate = dateFormatter.stringFromDate(date)
+        timeLabel.text = strDate
+        timeLabel.sizeToFit()
+        
+        var repeatStr = userDefaults.objectForKey("alarm.repeat") as! String
+        repeatLabel.text = repeatStr
+        repeatLabel.sizeToFit()
+        
+        repeatLabel.center = CGPointMake(UIScreen.mainScreen().bounds.width/2, repeatLabel.center.y)
+        repeatLabel.textAlignment = NSTextAlignment.Center
+        timeLabel.center = CGPointMake(UIScreen.mainScreen().bounds.width/2, timeLabel.center.y)
+        timeLabel.textAlignment = NSTextAlignment.Center
+    }
+    
+    // Alarm state controller
     func updateAlarmState(state: State) {
+        // If user default doesn't have alarm setting yet, default to Unset
         if (userDefaults.objectForKey("alarm") == nil) {
             currentState = State.Unset
         }
@@ -101,11 +169,7 @@ class AlarmViewController: UIViewController {
         currentState = state
         
         if currentState == State.Unset {
-            editAlarmButton.hidden = true
-            repeatContainer.hidden = false
-            datePicker.hidden = false
-            timeLabel.hidden = true
-            repeatLabel.hidden = true
+            showHideEditUI(true)
             
             //cancel notification or stop player
             UIApplication.sharedApplication().cancelAllLocalNotifications()
@@ -113,30 +177,11 @@ class AlarmViewController: UIViewController {
             userDefaults.removeObjectForKey("alarm")
         }
         else if (currentState == State.Set || currentState == State.Triggered) {
-            var dateFormatter = NSDateFormatter()
-            dateFormatter.timeStyle = NSDateFormatterStyle.ShortStyle
-            var date = userDefaults.objectForKey("alarm") as! NSDate
-            var strDate = dateFormatter.stringFromDate(date)
-            timeLabel.text = strDate
-            timeLabel.sizeToFit()
-            
-            var repeatStr = userDefaults.objectForKey("alarm.repeat") as! String
-            repeatLabel.text = repeatStr
-            repeatLabel.sizeToFit()
-            
-            repeatLabel.center = CGPointMake(UIScreen.mainScreen().bounds.width/2, repeatLabel.center.y)
-            repeatLabel.textAlignment = NSTextAlignment.Center
-            timeLabel.center = CGPointMake(UIScreen.mainScreen().bounds.width/2, timeLabel.center.y)
-            timeLabel.textAlignment = NSTextAlignment.Center
-            
             editAlarmButton.layer.backgroundColor = orangeColor.CGColor
             editAlarmButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
             
-            editAlarmButton.hidden = false
-            repeatContainer.hidden = true
-            datePicker.hidden = true
-            timeLabel.hidden = false
-            repeatLabel.hidden = false
+            displayAlarmInfo()
+            showHideEditUI(false)
         }
         
         if (currentState == State.Triggered) {
@@ -144,16 +189,12 @@ class AlarmViewController: UIViewController {
         }
         
         userDefaults.setObject(currentState.rawValue, forKey: "alarm.state")
-        println("save alarm state: \(currentState.rawValue)")
 
     }
     
     @IBAction func onPressCancelAlarm(sender: AnyObject) {
         updateAlarmState(State.Unset)
     }
-    
-    
-    
     
     /*
     // MARK: - Navigation
