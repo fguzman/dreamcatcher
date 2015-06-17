@@ -14,6 +14,12 @@ class DreamCollectionViewController: UIViewController, UICollectionViewDataSourc
 
     @IBOutlet weak var collectionView: UICollectionView!
     
+    // Nav buttons
+    @IBOutlet weak var settingButton: UIButton!
+    @IBOutlet weak var alarmButton: UIButton!
+    @IBOutlet weak var composeButton: UIButton!
+    @IBOutlet weak var alarmTimeLabel: UILabel!
+    
     var numOfCell = 2
     var dateArray = ["JUNE 17", "JUNE 14"]
     var titleArray = ["Underwater World With Corals", "Fat Cat Getting Stuck in the Wall"]
@@ -22,8 +28,8 @@ class DreamCollectionViewController: UIViewController, UICollectionViewDataSourc
         "My fat cat is so obese that it resembles an overstuff sausage. There were a few times..."
     ]
     
-    
-    
+    let defaultNavAlpha: CGFloat = 0.3
+    let userDefaults: NSUserDefaults = NSUserDefaults.standardUserDefaults()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,7 +37,36 @@ class DreamCollectionViewController: UIViewController, UICollectionViewDataSourc
         collectionView.delegate = self
         collectionView.dataSource = self
        
-        // Do any additional setup after loading the view.
+        // Set all nav buttons to 30% alpha by default
+        settingButton.alpha = defaultNavAlpha
+        alarmButton.alpha = defaultNavAlpha
+        composeButton.alpha = defaultNavAlpha
+        alarmTimeLabel.alpha = 0
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        if (userDefaults.objectForKey("alarm") != nil) {
+            var dateFormatter = NSDateFormatter()
+            dateFormatter.timeStyle = NSDateFormatterStyle.ShortStyle
+            var date = userDefaults.objectForKey("alarm") as! NSDate
+            var strDate = dateFormatter.stringFromDate(date)
+            alarmTimeLabel.text = strDate
+            alarmTimeLabel.sizeToFit()
+            alarmTimeLabel.textAlignment = NSTextAlignment.Center
+            alarmTimeLabel.center = CGPointMake(UIScreen.mainScreen().bounds.width/2, alarmTimeLabel.center.y)
+            
+            // Fade in the alarm time label
+            UIView.animateWithDuration(0.5, delay: 0.1, options: .CurveEaseInOut, animations: {
+                self.alarmButton.alpha = 1
+                self.alarmTimeLabel.alpha = 1
+            }, completion: nil)
+        } else {
+            // Fade out the alarm time label
+            UIView.animateWithDuration(0.5, delay: 0.1, options: .CurveEaseInOut, animations: {
+                self.alarmButton.alpha = self.defaultNavAlpha
+                self.alarmTimeLabel.alpha = 0
+                }, completion: nil)
+        }
     }
 
     override func didReceiveMemoryWarning() {
