@@ -9,6 +9,8 @@
 import UIKit
 
 class DreamCollectionViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
+    
+    var journalTransition : JournalTransition!
 
     @IBOutlet weak var collectionView: UICollectionView!
     
@@ -55,15 +57,37 @@ class DreamCollectionViewController: UIViewController, UICollectionViewDataSourc
         return cell
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    
+    @IBAction func onPan(sender: UIPanGestureRecognizer) {
+        println("pan")
+        
+        if sender.state == UIGestureRecognizerState.Began{
+            performSegueWithIdentifier("journalDetailSegue", sender: nil)
+        }
+        else if sender.state == UIGestureRecognizerState.Changed{
+        }
+        else if sender.state == UIGestureRecognizerState.Ended{
+        }
+        
     }
-    */
+
+    
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
+        
+        println(segue.identifier)
+        
+        if segue.identifier == "journalDetailSegue" {
+            var destinationVC = segue.destinationViewController as! JournalViewController
+            destinationVC.modalPresentationStyle = UIModalPresentationStyle.Custom
+            journalTransition = JournalTransition()
+            destinationVC.transitioningDelegate = journalTransition
+        }
+        
+        
+    }
+    
+
+    
 
 }
