@@ -114,69 +114,59 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.96078431372549022" green="0.96078431372549022" blue="0.96078431372549022" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="0o9-Bv-eBF">
-                                    <size key="itemSize" width="220" height="308"/>
+                                    <size key="itemSize" width="257.5" height="349"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="cardCollectionViewCell" id="2Gv-xp-Ukn" customClass="CardCollectionViewCell" customModule="dreamcatcher" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="44" width="220" height="308"/>
+                                        <rect key="frame" x="0.0" y="24" width="257.5" height="349"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="220" height="308"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="257.5" height="349"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" id="Pom-wr-7tg">
-                                                    <rect key="frame" x="-0.5" y="0.0" width="220" height="308"/>
+                                                    <rect key="frame" x="-0.5" y="0.0" width="258" height="349"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <subviews>
                                                         <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" image="bg1" id="E4Q-IP-dfc">
-                                                            <rect key="frame" x="0.0" y="0.0" width="220" height="225"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="258" height="225"/>
                                                             <autoresizingMask key="autoresizingMask"/>
                                                         </imageView>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Underwater world with corals" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="EcI-U5-pSE">
-                                                            <rect key="frame" x="16.5" y="100" width="198" height="115"/>
+                                                            <rect key="frame" x="16" y="118" width="253" height="101"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                             <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="28"/>
                                                             <color key="textColor" red="1" green="0.99997437000274658" blue="0.99999129772186279" alpha="1" colorSpace="calibratedRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
+                                                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" userInteractionEnabled="NO" contentMode="scaleToFill" editable="NO" id="DgK-Je-fMs">
+                                                            <rect key="frame" x="16" y="233" width="232" height="116"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                            <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda. Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                                                            <fontDescription key="fontDescription" name="TimesNewRomanPSMT" family="Times New Roman" pointSize="18"/>
+                                                            <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                                        </textView>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="JUNE 17" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="1tO-Dq-tcV">
-                                                            <rect key="frame" x="15" y="76" width="70" height="21"/>
+                                                            <rect key="frame" x="16" y="97" width="70" height="21"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                             <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="11"/>
                                                             <color key="textColor" red="1" green="0.99997437000274658" blue="0.99999129772186279" alpha="1" colorSpace="calibratedRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="My friends and I (probably the same old girls gang, Emily, Jenny, Vivian, also Emily’s bf " id="DgK-Je-fMs">
-                                                            <rect key="frame" x="16" y="233" width="189" height="75"/>
-                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                            <fontDescription key="fontDescription" name="TimesNewRomanPSMT" family="Times New Roman" pointSize="18"/>
-                                                            <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                                                        </textView>
-                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Lc5-6u-n36">
-                                                            <rect key="frame" x="0.0" y="0.0" width="220" height="308"/>
-                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                            <state key="normal">
-                                                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                                            </state>
-                                                            <connections>
-                                                                <segue destination="MhU-ff-7iy" kind="modal" identifier="journalDetailSegue" id="aaD-6p-aaB"/>
-                                                            </connections>
-                                                        </button>
                                                     </subviews>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <gestureRecognizers/>
-                                                    <connections>
-                                                        <outletCollection property="gestureRecognizers" destination="Ybt-es-iqX" appends="YES" id="g3y-jU-DQK"/>
-                                                    </connections>
                                                 </view>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
+                                        <gestureRecognizers/>
                                         <connections>
+                                            <outlet property="backgroundImageView" destination="E4Q-IP-dfc" id="OVy-vt-Pla"/>
                                             <outlet property="dateLabel" destination="1tO-Dq-tcV" id="QN8-0G-svV"/>
                                             <outlet property="textView" destination="DgK-Je-fMs" id="8cf-ew-P0a"/>
                                             <outlet property="titleLabel" destination="EcI-U5-pSE" id="iUN-0G-7ia"/>
@@ -189,14 +179,10 @@
                     </view>
                     <connections>
                         <outlet property="collectionView" destination="uz8-Zy-5Yk" id="GSv-Th-yzP"/>
+                        <segue destination="MhU-ff-7iy" kind="modal" identifier="journalDetailSegue" id="bVz-Il-50Z"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
-                <panGestureRecognizer minimumNumberOfTouches="1" id="Ybt-es-iqX">
-                    <connections>
-                        <action selector="onPan:" destination="vXZ-lx-hvc" id="PGY-7e-Qpp"/>
-                    </connections>
-                </panGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="-363" y="327"/>
         </scene>
@@ -247,6 +233,12 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
+                    <connections>
+                        <outlet property="backgroundImageView" destination="oBH-vL-imF" id="M8J-8Z-CUa"/>
+                        <outlet property="dateLabel" destination="MUf-lA-SGT" id="TgU-em-i4w"/>
+                        <outlet property="textView" destination="HUa-6R-pIA" id="hMy-hQ-pPw"/>
+                        <outlet property="titleLabel" destination="IEu-aQ-0X1" id="AQa-fP-5vJ"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ubx-M8-4lG" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

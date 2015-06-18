@@ -11,6 +11,15 @@ import UIKit
 class JournalViewController: UIViewController{
     
     
+    @IBOutlet weak var backgroundImageView: UIImageView!
+    
+    
+    @IBOutlet weak var dateLabel: UILabel!
+    
+    @IBOutlet weak var titleLabel: UILabel!
+    
+    @IBOutlet weak var textView: UITextView!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()

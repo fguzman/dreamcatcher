@@ -16,5 +16,6 @@ class CardCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var textView: UITextView!
     
+    @IBOutlet weak var backgroundImageView: UIImageView!
     
 }
