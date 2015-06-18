@@ -18,7 +18,7 @@ class ComposeViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        textView.becomeFirstResponder()
+//        textView.becomeFirstResponder()
     }
 
     override func didReceiveMemoryWarning() {

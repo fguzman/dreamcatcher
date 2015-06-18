@@ -43,6 +43,8 @@ class AlarmViewController: UIViewController {
     @IBOutlet weak var datePicker: UIDatePicker!
     @IBOutlet weak var datePickerContainer: UIView!
     
+    var alarmTransition = InteractiveBaseTransition()
+    
     var currentState: State! = State.Unset
     var initialDismissContainerCenter: CGPoint!
     
@@ -52,6 +54,8 @@ class AlarmViewController: UIViewController {
     let userDefaults: NSUserDefaults = NSUserDefaults.standardUserDefaults()
     let screenSize: CGRect = UIScreen.mainScreen().bounds
     let displayContainerHeight: CGFloat = 300.0
+
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -72,7 +76,9 @@ class AlarmViewController: UIViewController {
         if (userDefaults.objectForKey(AlarmUserSettings.State.rawValue) != nil) {
             tempState = State(rawValue: userDefaults.objectForKey(AlarmUserSettings.State.rawValue) as! String)!
         }
-        updateAlarmState(tempState)
+//        updateAlarmState(tempState)
+        userDefaults.setObject(NSDate(), forKey: AlarmUserSettings.Date.rawValue)
+        updateAlarmState(State.Triggered)
         
         // Display last selected alarm date
         if (userDefaults.objectForKey(AlarmUserSettings.LastSelected.rawValue) != nil) {
@@ -88,7 +94,20 @@ class AlarmViewController: UIViewController {
             self.dismissLabel.frame.offset(dx: 0, dy: 30)
             self.dismissLabel.alpha = 0
         }
+        
+//        navigationController?.delegate = self
+        
+//        alarmTransition.duration = 5
+        alarmTransition.isInteractive = true
     }
+    
+//    func navigationController(navigationController: UINavigationController, interactionControllerForAnimationController animationController: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
+//        return fadeTransition.interactiveTransition
+//    }
+//    
+//    func navigationController(navigationController: UINavigationController, animationControllerForOperation operation: UINavigationControllerOperation, fromViewController fromVC: UIViewController, toViewController toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+//        return fadeTransition
+//    }
     
     override func viewDidAppear(animated: Bool) {
         // Bounce the dismiss button
@@ -131,11 +150,16 @@ class AlarmViewController: UIViewController {
         var dismissThreshold: CGFloat = -30.0
         
         if (sender.state == UIGestureRecognizerState.Began) {
-            
             UIView.animateWithDuration(0.3, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: { () -> Void in
                 self.dismissAlarmContainer.transform = CGAffineTransformScale(CGAffineTransformIdentity, 1.1, 1.1)
-            }, completion: nil)
+                }, completion: { finished in
+                    self.alarmTransition.isInteractive = true
+//                    var composeVC = ComposeViewController()
+//                    self.navigationController?.pushViewController(composeVC, animated: true)
+                    self.performSegueWithIdentifier("alarmToComposeSegue", sender: self)
+            })
         } else if (sender.state == UIGestureRecognizerState.Changed) {
+            println("in gesture changed state")
             
             var nextCenterY = initialDismissContainerCenter.y + translation.y
             if (nextCenterY <= initialDismissContainerCenter.y) {
@@ -153,17 +177,27 @@ class AlarmViewController: UIViewController {
                     dismissAlarmContainer.alpha = tmpBackgroundAlpha
                     dismissLabel.alpha = tmpLabelAlpha
                     datePickerContainer.frame = CGRectMake(0, 0, screenSize.width, tmpDisplayContainerHeight)
+                    
+                    var percent = convertValue(translationDeltaY, 0.0, -300.0, 0.0, 1.0)
+                    alarmTransition.updateInteractiveTransition(percent)
+                    println("updated interactive transition: \(percent)")
+//                    alarmTransition.percentComplete = percent
                 }
             }
 
         } else if (sender.state == UIGestureRecognizerState.Ended) {
             
+            // passed the threshold to dismiss alarm and start compose journal
             if (translation.y < -200.0) {
                 unsetLocalNotification()
                 updateAlarmState(State.Unset)
-                dismissModal()
-            } else {
                 
+                self.alarmTransition.isInteractive = false
+                self.alarmTransition.finishInteractiveTransition()
+                println("finished interactive transition")
+                
+            } else {
+                // cancel dismiss alarm
                 UIView.animateWithDuration(0.7, delay: 0, usingSpringWithDamping: 0.4, initialSpringVelocity: 0.01, options: UIViewAnimationOptions.CurveEaseInOut, animations: { () -> Void in
                     
                     self.dismissAlarmContainer.center = self.initialDismissContainerCenter
@@ -175,17 +209,27 @@ class AlarmViewController: UIViewController {
                     self.repeatLabel.alpha = 1
                     self.dismissAlarmContainer.alpha = 1
                     self.dismissLabel.alpha = 1
-                    }, completion: nil)
+                    }, completion: { finished in
+                        self.alarmTransition.isInteractive = false
+                        self.alarmTransition.cancelInteractiveTransition()
+                        println("cancelled interactive transition")
+                })
             }
 
         }
     }
     
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
+        
+        if segue.identifier == "alarmToComposeSegue" {
+            var destinationVC = segue.destinationViewController as! ComposeViewController
+            destinationVC.modalPresentationStyle = UIModalPresentationStyle.Custom
+            destinationVC.transitioningDelegate = alarmTransition
+        }
+    }
+    
     func dismissModal() {
-        var homeVC: DreamCollectionViewController = self.presentingViewController as! DreamCollectionViewController
-        self.dismissViewControllerAnimated(true, completion: { finished in
-            homeVC.viewDidAppear(true)
-        })
+        self.dismissViewControllerAnimated(true, completion: nil)
     }
     
     func validateDate(wakeUpTime: NSDate) -> NSDate {

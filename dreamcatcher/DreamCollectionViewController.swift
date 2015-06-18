@@ -12,7 +12,6 @@ class DreamCollectionViewController: UIViewController, UICollectionViewDataSourc
     
     var journalTransition : JournalTransition!
     var currentRowIndex: NSIndexPath!
-    var fadeTransition: FadeTransition!
 
     @IBOutlet weak var collectionView: UICollectionView!
     
@@ -128,10 +127,6 @@ class DreamCollectionViewController: UIViewController, UICollectionViewDataSourc
         
     }
     
-    @IBAction func onPressAlarm(sender: AnyObject) {
-        performSegueWithIdentifier("alarmSegue", sender: nil)
-    }
-    
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
         
         if segue.identifier == "journalDetailSegue" {
@@ -139,13 +134,6 @@ class DreamCollectionViewController: UIViewController, UICollectionViewDataSourc
             destinationVC.modalPresentationStyle = UIModalPresentationStyle.Custom
             journalTransition = JournalTransition()
             destinationVC.transitioningDelegate = journalTransition
-        }
-        
-        if segue.identifier == "alarmSegue" {
-            var alarmVC = segue.destinationViewController as! AlarmViewController
-            alarmVC.modalPresentationStyle = UIModalPresentationStyle.Custom
-            fadeTransition = FadeTransition()
-            alarmVC.transitioningDelegate = fadeTransition
         }
     }
     

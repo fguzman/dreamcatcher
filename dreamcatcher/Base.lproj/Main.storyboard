@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="vXZ-lx-hvc">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7702" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="vXZ-lx-hvc">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7701"/>
     </dependencies>
     <scenes>
         <!--Dream Collection View Controller-->
@@ -27,7 +27,7 @@
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
-                                            <segue destination="5NG-Ep-KH3" kind="custom" id="p4H-hC-eL1"/>
+                                            <segue destination="tXq-Sb-N5b" kind="custom" id="p4H-hC-eL1"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="a3Y-aE-sXs">
@@ -44,7 +44,7 @@
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
-                                            <action selector="onPressAlarm:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="kUP-g2-ORf"/>
+                                            <segue destination="kin-5p-vdj" kind="modal" id="aKH-Qp-Jb4"/>
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="7:30 AM" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="2dq-iY-EIe" userLabel="alarmTimeLabel">
@@ -128,7 +128,7 @@
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="cardCollectionViewCell" id="2Gv-xp-Ukn" customClass="CardCollectionViewCell" customModule="dreamcatcher" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="23.5" width="257.5" height="349"/>
+                                        <rect key="frame" x="0.0" y="24" width="257.5" height="349"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="0.0" y="0.0" width="257.5" height="349"/>
@@ -191,7 +191,6 @@
                         <outlet property="composeButton" destination="sOO-Sa-PFI" id="DO4-bV-WjH"/>
                         <outlet property="settingButton" destination="a3Y-aE-sXs" id="Z4Q-yf-Zv4"/>
                         <segue destination="MhU-ff-7iy" kind="modal" identifier="journalDetailSegue" id="bVz-Il-50Z"/>
-                        <segue destination="Luf-Go-OjK" kind="modal" identifier="alarmSegue" id="LB4-xo-G3d"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
@@ -254,7 +253,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ubx-M8-4lG" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="130" y="1020"/>
+            <point key="canvasLocation" x="-363" y="1096"/>
         </scene>
         <!--Compose View Controller-->
         <scene sceneID="Y68-EU-3LG">
@@ -305,13 +304,14 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
+                    <navigationItem key="navigationItem" id="gDi-I9-Fga"/>
                     <connections>
                         <outlet property="textView" destination="Be5-vd-vcW" id="dTr-Ng-BWc"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HRn-Tq-RQP" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="538" y="1020"/>
+            <point key="canvasLocation" x="1152" y="1112"/>
         </scene>
         <!--Compose Preview View Controller-->
         <scene sceneID="e7d-Wc-Rdw">
@@ -388,7 +388,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="K3r-cz-lgj" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="947" y="1020"/>
+            <point key="canvasLocation" x="1716" y="1112"/>
         </scene>
         <!--Stats View Controller-->
         <scene sceneID="1Ln-hT-a0e">
@@ -516,7 +516,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="M2r-CT-qWQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="636" y="319"/>
+            <point key="canvasLocation" x="-888" y="1096"/>
         </scene>
         <!--Alarm View Controller-->
         <scene sceneID="HZK-4F-Sm0">
@@ -668,6 +668,7 @@
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     </view>
+                    <navigationItem key="navigationItem" id="piK-Yw-mjl"/>
                     <connections>
                         <outlet property="backgroundView" destination="eHB-sS-ADm" id="ZpJ-oI-1Nh"/>
                         <outlet property="datePicker" destination="deJ-QS-rfP" id="Cay-bJ-pnf"/>
@@ -681,6 +682,7 @@
                         <outlet property="repeatSwitch" destination="8Lu-pH-3jc" id="7Wo-1C-xK2"/>
                         <outlet property="setAlarmButton" destination="a8K-DH-FEs" id="r3T-DO-xdd"/>
                         <outlet property="timeLabel" destination="Qhp-g7-0Gm" id="hfY-Nu-Qab"/>
+                        <segue destination="5NG-Ep-KH3" kind="modal" identifier="alarmToComposeSegue" id="Ycs-ya-d26"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SH7-EC-kw5" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -690,7 +692,45 @@
                     </connections>
                 </panGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="88" y="-424"/>
+            <point key="canvasLocation" x="1152" y="327"/>
+        </scene>
+        <!--AlarmNavController-->
+        <scene sceneID="fML-c9-icB">
+            <objects>
+                <navigationController title="AlarmNavController" automaticallyAdjustsScrollViewInsets="NO" navigationBarHidden="YES" id="kin-5p-vdj" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="l2T-Ok-vH0">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="Luf-Go-OjK" kind="relationship" relationship="rootViewController" id="Pzt-78-0iU"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="QMP-M4-InD" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="620" y="327"/>
+        </scene>
+        <!--ComposeNavController-->
+        <scene sceneID="GjN-LP-dJS">
+            <objects>
+                <navigationController title="ComposeNavController" automaticallyAdjustsScrollViewInsets="NO" id="tXq-Sb-N5b" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationItem key="navigationItem" id="zIX-lO-Djp"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="ZE1-js-dw6">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="5NG-Ep-KH3" kind="relationship" relationship="rootViewController" id="M1N-Ob-dyF"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="GvW-21-mAU" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="646" y="1112"/>
         </scene>
     </scenes>
     <resources>
@@ -716,4 +756,7 @@
         <simulatedOrientationMetrics key="orientation"/>
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
+    <inferredMetricsTieBreakers>
+        <segue reference="Ycs-ya-d26"/>
+    </inferredMetricsTieBreakers>
 </document>
