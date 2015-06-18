@@ -12,12 +12,11 @@
 		9455DD821B249E300080CE79 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9455DD801B249E300080CE79 /* Main.storyboard */; };
 		9455DD871B249E300080CE79 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9455DD851B249E300080CE79 /* LaunchScreen.xib */; };
 		9455DD931B249E300080CE79 /* dreamcatcherTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9455DD921B249E300080CE79 /* dreamcatcherTests.swift */; };
+		94A48D781B2E5BA400978643 /* DreamComposeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A48D771B2E5BA400978643 /* DreamComposeViewController.swift */; };
 		B569E07C1B2AA7C400A8D608 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B569E07B1B2AA7C400A8D608 /* Images.xcassets */; };
 		B569E07E1B2AB3CC00A8D608 /* StatsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B569E07D1B2AB3CC00A8D608 /* StatsViewController.swift */; };
 		B569E0801B2AB7F200A8D608 /* AlarmViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B569E07F1B2AB7F200A8D608 /* AlarmViewController.swift */; };
 		B569E0821B2AC2E000A8D608 /* JournalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B569E0811B2AC2E000A8D608 /* JournalViewController.swift */; };
-		B569E0841B2AC83B00A8D608 /* ComposeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B569E0831B2AC83B00A8D608 /* ComposeViewController.swift */; };
-		B569E0861B2ACB5500A8D608 /* ComposePreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B569E0851B2ACB5500A8D608 /* ComposePreviewViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,12 +39,11 @@
 		9455DD8C1B249E300080CE79 /* dreamcatcherTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = dreamcatcherTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		9455DD911B249E300080CE79 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9455DD921B249E300080CE79 /* dreamcatcherTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = dreamcatcherTests.swift; sourceTree = "<group>"; };
+		94A48D771B2E5BA400978643 /* DreamComposeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DreamComposeViewController.swift; sourceTree = "<group>"; };
 		B569E07B1B2AA7C400A8D608 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		B569E07D1B2AB3CC00A8D608 /* StatsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatsViewController.swift; sourceTree = "<group>"; };
 		B569E07F1B2AB7F200A8D608 /* AlarmViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlarmViewController.swift; sourceTree = "<group>"; };
 		B569E0811B2AC2E000A8D608 /* JournalViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JournalViewController.swift; sourceTree = "<group>"; };
-		B569E0831B2AC83B00A8D608 /* ComposeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComposeViewController.swift; sourceTree = "<group>"; };
-		B569E0851B2ACB5500A8D608 /* ComposePreviewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComposePreviewViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -90,8 +88,7 @@
 				9455DD7C1B249E300080CE79 /* AppDelegate.swift */,
 				9455DD7E1B249E300080CE79 /* ViewController.swift */,
 				9455DD801B249E300080CE79 /* Main.storyboard */,
-				B569E0851B2ACB5500A8D608 /* ComposePreviewViewController.swift */,
-				B569E0831B2AC83B00A8D608 /* ComposeViewController.swift */,
+				94A48D771B2E5BA400978643 /* DreamComposeViewController.swift */,
 				B569E0811B2AC2E000A8D608 /* JournalViewController.swift */,
 				B569E07F1B2AB7F200A8D608 /* AlarmViewController.swift */,
 				B569E07D1B2AB3CC00A8D608 /* StatsViewController.swift */,
@@ -228,10 +225,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				B569E0801B2AB7F200A8D608 /* AlarmViewController.swift in Sources */,
-				B569E0861B2ACB5500A8D608 /* ComposePreviewViewController.swift in Sources */,
 				9455DD7F1B249E300080CE79 /* ViewController.swift in Sources */,
 				B569E07E1B2AB3CC00A8D608 /* StatsViewController.swift in Sources */,
-				B569E0841B2AC83B00A8D608 /* ComposeViewController.swift in Sources */,
+				94A48D781B2E5BA400978643 /* DreamComposeViewController.swift in Sources */,
 				9455DD7D1B249E300080CE79 /* AppDelegate.swift in Sources */,
 				B569E0821B2AC2E000A8D608 /* JournalViewController.swift in Sources */,
 			);
