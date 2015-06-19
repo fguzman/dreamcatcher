@@ -27,7 +27,7 @@
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
-                                            <segue destination="tXq-Sb-N5b" kind="custom" id="p4H-hC-eL1"/>
+                                            <segue destination="5NG-Ep-KH3" kind="custom" id="e8C-El-w45"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="a3Y-aE-sXs">
@@ -263,16 +263,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="83H-zx-a6o" userLabel="nextButton">
-                                <rect key="frame" x="258" y="26" width="35" height="37"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" image="next_black">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <segue destination="Kwz-bM-uKs" kind="modal" modalTransitionStyle="crossDissolve" id="bZz-yO-tYQ"/>
-                                </connections>
-                            </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="eTg-Vf-a3O" userLabel="cancelButton">
                                 <rect key="frame" x="29" y="26" width="36" height="37"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -301,6 +291,16 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="83H-zx-a6o" userLabel="nextButton">
+                                <rect key="frame" x="258" y="26" width="35" height="37"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" image="next_black">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <segue destination="Kwz-bM-uKs" kind="modal" modalTransitionStyle="crossDissolve" id="bZz-yO-tYQ"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
@@ -682,7 +682,7 @@
                         <outlet property="repeatSwitch" destination="8Lu-pH-3jc" id="7Wo-1C-xK2"/>
                         <outlet property="setAlarmButton" destination="a8K-DH-FEs" id="r3T-DO-xdd"/>
                         <outlet property="timeLabel" destination="Qhp-g7-0Gm" id="hfY-Nu-Qab"/>
-                        <segue destination="5NG-Ep-KH3" kind="modal" identifier="alarmToComposeSegue" id="Ycs-ya-d26"/>
+                        <segue destination="5NG-Ep-KH3" kind="push" identifier="alarmToComposeSegue" id="Ycs-ya-d26"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SH7-EC-kw5" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -713,25 +713,6 @@
             </objects>
             <point key="canvasLocation" x="620" y="327"/>
         </scene>
-        <!--ComposeNavController-->
-        <scene sceneID="GjN-LP-dJS">
-            <objects>
-                <navigationController title="ComposeNavController" automaticallyAdjustsScrollViewInsets="NO" id="tXq-Sb-N5b" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <navigationItem key="navigationItem" id="zIX-lO-Djp"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="ZE1-js-dw6">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="5NG-Ep-KH3" kind="relationship" relationship="rootViewController" id="M1N-Ob-dyF"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="GvW-21-mAU" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="646" y="1112"/>
-        </scene>
     </scenes>
     <resources>
         <image name="add_black" width="22" height="22"/>
@@ -757,6 +738,6 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="Ycs-ya-d26"/>
+        <segue reference="e8C-El-w45"/>
     </inferredMetricsTieBreakers>
 </document>

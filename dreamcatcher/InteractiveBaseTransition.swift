@@ -52,19 +52,20 @@ class InteractiveBaseTransition: UIPercentDrivenInteractiveTransition, UIViewCon
         
         if (isPresenting) {
             containerView.addSubview(toViewController.view)
+            
+            println("container view's subview: '\(containerView.subviews)")
+
             presentTransition(containerView, fromViewController: fromViewController, toViewController: toViewController, completionCallback: {
                 if (transitionContext.transitionWasCancelled()) {
                     transitionContext.completeTransition(false)
-                    UIApplication.sharedApplication().keyWindow?.addSubview(fromViewController.view)
                 } else {
+                    println("-- TRANSITION COMPLETED --")
                     transitionContext.completeTransition(true)
-                    UIApplication.sharedApplication().keyWindow?.addSubview(toViewController.view)
                 }
             })
         } else {
             dismissTransition(containerView, fromViewController: fromViewController, toViewController: toViewController, completionCallback: {
                 transitionContext.completeTransition(true)
-                UIApplication.sharedApplication().keyWindow?.addSubview(toViewController.view)
             })
         }
     }
@@ -72,7 +73,6 @@ class InteractiveBaseTransition: UIPercentDrivenInteractiveTransition, UIViewCon
     func presentTransition(containerView: UIView, fromViewController: UIViewController, toViewController: UIViewController, completionCallback: () -> Void) {
 
         containerView.backgroundColor = UIColor.whiteColor()
-        containerView.addSubview(fromViewController.view)
         
         toViewController.view.alpha = 0
         fromViewController.view.alpha = 1
@@ -86,7 +86,7 @@ class InteractiveBaseTransition: UIPercentDrivenInteractiveTransition, UIViewCon
     
     func dismissTransition(containerView: UIView, fromViewController: UIViewController, toViewController: UIViewController, completionCallback: () -> Void) {
         
-        println("dismiss transition")
+        println("-- DISMISS TRANSITION -- ")
         
         fromViewController.view.alpha = 1
         toViewController.beginAppearanceTransition(true, animated: true)
@@ -96,6 +96,7 @@ class InteractiveBaseTransition: UIPercentDrivenInteractiveTransition, UIViewCon
         UIView.animateWithDuration(animationDuration, animations: { () -> Void in
             fromViewController.view.alpha = 0
             }, completion: { finished in
+                
                 completionCallback()
         })
     }

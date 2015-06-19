@@ -8,7 +8,7 @@
 
 import UIKit
 
-class AlarmViewController: UIViewController {
+class AlarmViewController: UIViewController, UINavigationControllerDelegate {
     
     enum State: String {
         case Unset      = "Unset"
@@ -47,6 +47,7 @@ class AlarmViewController: UIViewController {
     
     var currentState: State! = State.Unset
     var initialDismissContainerCenter: CGPoint!
+    var initialDismissLabelCenter: CGPoint!
     
     let orangeColor: UIColor = UIColor(red: 255/255, green: 108.0/255, blue: 0.0, alpha: 1)
     let blueColor: UIColor = UIColor(red: 0, green: 153/255, blue: 255/255, alpha: 1)
@@ -59,6 +60,7 @@ class AlarmViewController: UIViewController {
         super.viewDidLoad()
         
         appDelegate.alarmViewController = self
+        self.navigationController?.delegate = self
 
         // Style edit alarm
         editAlarmButton.layer.cornerRadius = editAlarmButton.frame.width/2
@@ -85,6 +87,7 @@ class AlarmViewController: UIViewController {
         }
         
         initialDismissContainerCenter = dismissAlarmContainer.center
+        initialDismissLabelCenter = dismissLabel.center
         // Bounce the dismiss button
         if (currentState == State.Triggered) {
             self.dismissAlarmContainer.frame.offset(dx: 0, dy: 30)
@@ -97,15 +100,27 @@ class AlarmViewController: UIViewController {
     }
     
     override func viewDidAppear(animated: Bool) {
+        print("viewDidAppear")
+        
         // Bounce the dismiss button
         if (currentState == State.Triggered) {
             UIView.animateWithDuration(1, delay: 0, usingSpringWithDamping: 0.2, initialSpringVelocity: 0.02, options: UIViewAnimationOptions.CurveEaseInOut, animations: { () -> Void in
-                self.dismissAlarmContainer.frame.offset(dx: 0, dy: -30)
+                self.dismissAlarmContainer.center = self.initialDismissContainerCenter
                 self.dismissAlarmContainer.alpha = 1
-                self.dismissLabel.frame.offset(dx: 0, dy: -30)
+                self.dismissLabel.center = self.initialDismissLabelCenter
                 self.dismissLabel.alpha = 0.3
                 }, completion: nil)
         }
+    }
+    
+    func navigationController(navigationController: UINavigationController, animationControllerForOperation operation: UINavigationControllerOperation, fromViewController fromVC: UIViewController, toViewController toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        return alarmTransition
+    }
+    
+    func navigationController(navigationController: UINavigationController, interactionControllerForAnimationController animationController: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
+        
+        println("-- ASKED FOR NAVIGATION INTERACTIVE ANIAMTION CONTROLLER -- ")
+        return alarmTransition
     }
 
     override func didReceiveMemoryWarning() {
@@ -141,12 +156,9 @@ class AlarmViewController: UIViewController {
                 self.dismissAlarmContainer.transform = CGAffineTransformScale(CGAffineTransformIdentity, 1.1, 1.1)
                 }, completion: { finished in
                     self.alarmTransition.isInteractive = true
-//                    var composeVC = ComposeViewController()
-//                    self.navigationController?.pushViewController(composeVC, animated: true)
                     self.performSegueWithIdentifier("alarmToComposeSegue", sender: self)
             })
         } else if (sender.state == UIGestureRecognizerState.Changed) {
-            println("in gesture changed state")
             
             var nextCenterY = initialDismissContainerCenter.y + translation.y
             if (nextCenterY <= initialDismissContainerCenter.y) {
@@ -154,7 +166,6 @@ class AlarmViewController: UIViewController {
                 
                 if (translation.y < dismissThreshold) {
                     var translationDeltaY = translation.y - dismissThreshold
-                    var tmpBackgroundAlpha = convertValue(translationDeltaY, 0.0, -500.0, 1.0, 0)
                     var tmpLabelAlpha = convertValue(translationDeltaY, 0.0, -100.0, 1.0, 0)
                     var tmpDisplayContainerHeight = convertValue(translationDeltaY, 0.0, -300.0, displayContainerHeight, 60.0)
                     
@@ -164,32 +175,26 @@ class AlarmViewController: UIViewController {
                     
                     var percent = convertValue(translationDeltaY, 0.0, -300.0, 0.0, 1.0)
                     alarmTransition.updateInteractiveTransition(percent)
-                    println("updated interactive transition: \(percent)")
                 }
             }
 
         } else if (sender.state == UIGestureRecognizerState.Ended) {
-            println("in gesture ended state")
-
+            println("-- GESTURE ENDED -- ")
+            
             // passed the threshold to dismiss alarm and start compose journal
             if (translation.y < -200.0) {
                 unsetLocalNotification()
                 updateAlarmState(State.Unset)
                 
                 self.alarmTransition.isInteractive = false
-                self.alarmTransition.finishInteractiveTransition()
-                println("finished interactive transition")
-                
+                self.alarmTransition.finish()
+                println("-- FINISHED TRANSITION -- ")
             } else {
                 // cancel dismiss alarm
-                self.alarmTransition.isInteractive = false
-                self.alarmTransition.cancelInteractiveTransition()
-                println("cancelled interactive transition")
+                self.alarmTransition.cancel()
+                println("-- CANCELLED TRANSITION -- ")
                 
                 UIView.animateWithDuration(1, delay: 0, usingSpringWithDamping: 0.2, initialSpringVelocity: 0.01, options: UIViewAnimationOptions.CurveEaseInOut, animations: { () -> Void in
-                    
-                    println("cancelling interactive transition")
-                    
                     self.dismissAlarmContainer.center = self.initialDismissContainerCenter
                     self.dismissAlarmContainer.transform = CGAffineTransformIdentity
                     self.datePickerContainer.frame = CGRectMake(0, 0, self.screenSize.width, self.displayContainerHeight)
