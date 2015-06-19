@@ -54,8 +54,6 @@ class AlarmViewController: UIViewController {
     let userDefaults: NSUserDefaults = NSUserDefaults.standardUserDefaults()
     let screenSize: CGRect = UIScreen.mainScreen().bounds
     let displayContainerHeight: CGFloat = 300.0
-
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -95,19 +93,8 @@ class AlarmViewController: UIViewController {
             self.dismissLabel.alpha = 0
         }
         
-//        navigationController?.delegate = self
-        
-//        alarmTransition.duration = 5
         alarmTransition.isInteractive = true
     }
-    
-//    func navigationController(navigationController: UINavigationController, interactionControllerForAnimationController animationController: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
-//        return fadeTransition.interactiveTransition
-//    }
-//    
-//    func navigationController(navigationController: UINavigationController, animationControllerForOperation operation: UINavigationControllerOperation, fromViewController fromVC: UIViewController, toViewController toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-//        return fadeTransition
-//    }
     
     override func viewDidAppear(animated: Bool) {
         // Bounce the dismiss button
@@ -171,22 +158,19 @@ class AlarmViewController: UIViewController {
                     var tmpLabelAlpha = convertValue(translationDeltaY, 0.0, -100.0, 1.0, 0)
                     var tmpDisplayContainerHeight = convertValue(translationDeltaY, 0.0, -300.0, displayContainerHeight, 60.0)
                     
-                    backgroundView.alpha = tmpBackgroundAlpha
                     timeLabel.alpha = tmpLabelAlpha
                     repeatLabel.alpha = tmpLabelAlpha
-                    dismissAlarmContainer.alpha = tmpBackgroundAlpha
-                    dismissLabel.alpha = tmpLabelAlpha
                     datePickerContainer.frame = CGRectMake(0, 0, screenSize.width, tmpDisplayContainerHeight)
                     
                     var percent = convertValue(translationDeltaY, 0.0, -300.0, 0.0, 1.0)
                     alarmTransition.updateInteractiveTransition(percent)
                     println("updated interactive transition: \(percent)")
-//                    alarmTransition.percentComplete = percent
                 }
             }
 
         } else if (sender.state == UIGestureRecognizerState.Ended) {
-            
+            println("in gesture ended state")
+
             // passed the threshold to dismiss alarm and start compose journal
             if (translation.y < -200.0) {
                 unsetLocalNotification()
@@ -198,29 +182,26 @@ class AlarmViewController: UIViewController {
                 
             } else {
                 // cancel dismiss alarm
-                UIView.animateWithDuration(0.7, delay: 0, usingSpringWithDamping: 0.4, initialSpringVelocity: 0.01, options: UIViewAnimationOptions.CurveEaseInOut, animations: { () -> Void in
+                self.alarmTransition.isInteractive = false
+                self.alarmTransition.cancelInteractiveTransition()
+                println("cancelled interactive transition")
+                
+                UIView.animateWithDuration(1, delay: 0, usingSpringWithDamping: 0.2, initialSpringVelocity: 0.01, options: UIViewAnimationOptions.CurveEaseInOut, animations: { () -> Void in
+                    
+                    println("cancelling interactive transition")
                     
                     self.dismissAlarmContainer.center = self.initialDismissContainerCenter
                     self.dismissAlarmContainer.transform = CGAffineTransformIdentity
                     self.datePickerContainer.frame = CGRectMake(0, 0, self.screenSize.width, self.displayContainerHeight)
                     
-                    self.backgroundView.alpha = 1
                     self.timeLabel.alpha = 1
                     self.repeatLabel.alpha = 1
-                    self.dismissAlarmContainer.alpha = 1
-                    self.dismissLabel.alpha = 1
-                    }, completion: { finished in
-                        self.alarmTransition.isInteractive = false
-                        self.alarmTransition.cancelInteractiveTransition()
-                        println("cancelled interactive transition")
-                })
+                    }, completion: nil)
             }
-
         }
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
-        
         if segue.identifier == "alarmToComposeSegue" {
             var destinationVC = segue.destinationViewController as! ComposeViewController
             destinationVC.modalPresentationStyle = UIModalPresentationStyle.Custom

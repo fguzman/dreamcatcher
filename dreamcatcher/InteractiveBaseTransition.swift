@@ -15,6 +15,11 @@ class InteractiveBaseTransition: UIPercentDrivenInteractiveTransition, UIViewCon
     var isInteractive: Bool = false
     var transitionContext: UIViewControllerContextTransitioning!
     
+    override init() {
+        super.init()
+        self.completionSpeed = 0.999;
+    }
+    
     func animationControllerForPresentedController(presented: UIViewController, presentingController presenting: UIViewController, sourceController source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         isPresenting = true
         return self
@@ -66,10 +71,13 @@ class InteractiveBaseTransition: UIPercentDrivenInteractiveTransition, UIViewCon
     
     func presentTransition(containerView: UIView, fromViewController: UIViewController, toViewController: UIViewController, completionCallback: () -> Void) {
 
+        containerView.backgroundColor = UIColor.whiteColor()
         containerView.addSubview(fromViewController.view)
         
+        toViewController.view.alpha = 0
         fromViewController.view.alpha = 1
         UIView.animateWithDuration(self.animationDuration, animations: {
+            toViewController.view.alpha = 1
             fromViewController.view.alpha = 0
             }) { (finished: Bool) -> Void in
                 completionCallback()
@@ -77,11 +85,13 @@ class InteractiveBaseTransition: UIPercentDrivenInteractiveTransition, UIViewCon
     }
     
     func dismissTransition(containerView: UIView, fromViewController: UIViewController, toViewController: UIViewController, completionCallback: () -> Void) {
+        
+        println("dismiss transition")
+        
         fromViewController.view.alpha = 1
         toViewController.beginAppearanceTransition(true, animated: true)
         
         fromViewController.view.alpha = 1
-        toViewController.beginAppearanceTransition(true, animated: true)
         
         UIView.animateWithDuration(animationDuration, animations: { () -> Void in
             fromViewController.view.alpha = 0
