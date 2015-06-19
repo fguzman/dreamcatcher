@@ -89,7 +89,7 @@ class InteractiveBaseTransition: UIPercentDrivenInteractiveTransition, UIViewCon
         println("-- DISMISS TRANSITION -- ")
         
         fromViewController.view.alpha = 1
-        toViewController.beginAppearanceTransition(true, animated: true)
+//        toViewController.beginAppearanceTransition(true, animated: true)
         
         fromViewController.view.alpha = 1
         
