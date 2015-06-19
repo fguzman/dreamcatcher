@@ -307,14 +307,19 @@ class AlarmViewController: UIViewController, UINavigationControllerDelegate {
     func displayAlarmInfo() {
         var dateFormatter = NSDateFormatter()
         dateFormatter.timeStyle = NSDateFormatterStyle.ShortStyle
-        var date = userDefaults.objectForKey(AlarmUserSettings.Date.rawValue) as! NSDate
-        var strDate = dateFormatter.stringFromDate(date)
-        timeLabel.text = strDate
-        timeLabel.sizeToFit()
         
-        var repeatStr = userDefaults.objectForKey(AlarmUserSettings.Repeat.rawValue) as! String
-        repeatLabel.text = repeatStr
-        repeatLabel.sizeToFit()
+        if (userDefaults.objectForKey(AlarmUserSettings.Date.rawValue) != nil) {
+            var date = userDefaults.objectForKey(AlarmUserSettings.Date.rawValue) as! NSDate
+            var strDate = dateFormatter.stringFromDate(date)
+            timeLabel.text = strDate
+            timeLabel.sizeToFit()
+        }
+        
+        if (userDefaults.objectForKey(AlarmUserSettings.Repeat.rawValue) != nil) {
+            var repeatStr = userDefaults.objectForKey(AlarmUserSettings.Repeat.rawValue) as! String
+            repeatLabel.text = repeatStr
+            repeatLabel.sizeToFit()
+        }
         
         repeatLabel.center = CGPointMake(UIScreen.mainScreen().bounds.width/2, repeatLabel.center.y)
         repeatLabel.textAlignment = NSTextAlignment.Center

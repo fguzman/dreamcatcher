@@ -19,11 +19,18 @@ class JournalViewController: UIViewController{
     @IBOutlet weak var titleLabel: UILabel!
     
     @IBOutlet weak var textView: UITextView!
+    var paragraph: String!
+    var titleText: String!
+    var dateText: String!
     
+    var index: Int = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        println(textView.text)
+        textView.text = paragraph
+        titleLabel.text = titleText
+        dateLabel.text = dateText
         // Do any additional setup after loading the view.
            }
 
