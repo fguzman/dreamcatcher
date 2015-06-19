@@ -18,7 +18,8 @@ class ComposeViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        textView.becomeFirstResponder()
+//        textView.becomeFirstResponder()
+        println("got here!!! -- \(self.parentViewController)")
     }
 
     override func didReceiveMemoryWarning() {
@@ -27,6 +28,7 @@ class ComposeViewController: UIViewController {
     }
     
     @IBAction func onPressCancelButton(sender: AnyObject) {
+        println("in compose -- pressed cancel!")
         view.endEditing(true)
         self.dismissViewControllerAnimated(true, completion: nil)
     }

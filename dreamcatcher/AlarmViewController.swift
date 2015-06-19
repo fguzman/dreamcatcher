@@ -8,7 +8,7 @@
 
 import UIKit
 
-class AlarmViewController: UIViewController {
+class AlarmViewController: UIViewController, UINavigationControllerDelegate {
     
     enum State: String {
         case Unset      = "Unset"
@@ -43,8 +43,11 @@ class AlarmViewController: UIViewController {
     @IBOutlet weak var datePicker: UIDatePicker!
     @IBOutlet weak var datePickerContainer: UIView!
     
+    var alarmTransition = InteractiveBaseTransition()
+    
     var currentState: State! = State.Unset
     var initialDismissContainerCenter: CGPoint!
+    var initialDismissLabelCenter: CGPoint!
     
     let orangeColor: UIColor = UIColor(red: 255/255, green: 108.0/255, blue: 0.0, alpha: 1)
     let blueColor: UIColor = UIColor(red: 0, green: 153/255, blue: 255/255, alpha: 1)
@@ -57,6 +60,7 @@ class AlarmViewController: UIViewController {
         super.viewDidLoad()
         
         appDelegate.alarmViewController = self
+        self.navigationController?.delegate = self
 
         // Style edit alarm
         editAlarmButton.layer.cornerRadius = editAlarmButton.frame.width/2
@@ -72,7 +76,9 @@ class AlarmViewController: UIViewController {
         if (userDefaults.objectForKey(AlarmUserSettings.State.rawValue) != nil) {
             tempState = State(rawValue: userDefaults.objectForKey(AlarmUserSettings.State.rawValue) as! String)!
         }
-        updateAlarmState(tempState)
+//        updateAlarmState(tempState)
+        userDefaults.setObject(NSDate(), forKey: AlarmUserSettings.Date.rawValue)
+        updateAlarmState(State.Triggered)
         
         // Display last selected alarm date
         if (userDefaults.objectForKey(AlarmUserSettings.LastSelected.rawValue) != nil) {
@@ -81,6 +87,7 @@ class AlarmViewController: UIViewController {
         }
         
         initialDismissContainerCenter = dismissAlarmContainer.center
+        initialDismissLabelCenter = dismissLabel.center
         // Bounce the dismiss button
         if (currentState == State.Triggered) {
             self.dismissAlarmContainer.frame.offset(dx: 0, dy: 30)
@@ -88,18 +95,32 @@ class AlarmViewController: UIViewController {
             self.dismissLabel.frame.offset(dx: 0, dy: 30)
             self.dismissLabel.alpha = 0
         }
+        
+        alarmTransition.isInteractive = true
     }
     
     override func viewDidAppear(animated: Bool) {
+        print("viewDidAppear")
+        
         // Bounce the dismiss button
         if (currentState == State.Triggered) {
             UIView.animateWithDuration(1, delay: 0, usingSpringWithDamping: 0.2, initialSpringVelocity: 0.02, options: UIViewAnimationOptions.CurveEaseInOut, animations: { () -> Void in
-                self.dismissAlarmContainer.frame.offset(dx: 0, dy: -30)
+                self.dismissAlarmContainer.center = self.initialDismissContainerCenter
                 self.dismissAlarmContainer.alpha = 1
-                self.dismissLabel.frame.offset(dx: 0, dy: -30)
+                self.dismissLabel.center = self.initialDismissLabelCenter
                 self.dismissLabel.alpha = 0.3
                 }, completion: nil)
         }
+    }
+    
+    func navigationController(navigationController: UINavigationController, animationControllerForOperation operation: UINavigationControllerOperation, fromViewController fromVC: UIViewController, toViewController toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        return alarmTransition
+    }
+    
+    func navigationController(navigationController: UINavigationController, interactionControllerForAnimationController animationController: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
+        
+        println("-- ASKED FOR NAVIGATION INTERACTIVE ANIAMTION CONTROLLER -- ")
+        return alarmTransition
     }
 
     override func didReceiveMemoryWarning() {
@@ -131,10 +152,12 @@ class AlarmViewController: UIViewController {
         var dismissThreshold: CGFloat = -30.0
         
         if (sender.state == UIGestureRecognizerState.Began) {
-            
             UIView.animateWithDuration(0.3, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: { () -> Void in
                 self.dismissAlarmContainer.transform = CGAffineTransformScale(CGAffineTransformIdentity, 1.1, 1.1)
-            }, completion: nil)
+                }, completion: { finished in
+                    self.alarmTransition.isInteractive = true
+                    self.performSegueWithIdentifier("alarmToComposeSegue", sender: self)
+            })
         } else if (sender.state == UIGestureRecognizerState.Changed) {
             
             var nextCenterY = initialDismissContainerCenter.y + translation.y
@@ -143,49 +166,56 @@ class AlarmViewController: UIViewController {
                 
                 if (translation.y < dismissThreshold) {
                     var translationDeltaY = translation.y - dismissThreshold
-                    var tmpBackgroundAlpha = convertValue(translationDeltaY, 0.0, -500.0, 1.0, 0)
                     var tmpLabelAlpha = convertValue(translationDeltaY, 0.0, -100.0, 1.0, 0)
                     var tmpDisplayContainerHeight = convertValue(translationDeltaY, 0.0, -300.0, displayContainerHeight, 60.0)
                     
-                    backgroundView.alpha = tmpBackgroundAlpha
                     timeLabel.alpha = tmpLabelAlpha
                     repeatLabel.alpha = tmpLabelAlpha
-                    dismissAlarmContainer.alpha = tmpBackgroundAlpha
-                    dismissLabel.alpha = tmpLabelAlpha
                     datePickerContainer.frame = CGRectMake(0, 0, screenSize.width, tmpDisplayContainerHeight)
+                    
+                    var percent = convertValue(translationDeltaY, 0.0, -300.0, 0.0, 1.0)
+                    alarmTransition.updateInteractiveTransition(percent)
                 }
             }
 
         } else if (sender.state == UIGestureRecognizerState.Ended) {
+            println("-- GESTURE ENDED -- ")
             
+            // passed the threshold to dismiss alarm and start compose journal
             if (translation.y < -200.0) {
                 unsetLocalNotification()
                 updateAlarmState(State.Unset)
-                dismissModal()
-            } else {
                 
-                UIView.animateWithDuration(0.7, delay: 0, usingSpringWithDamping: 0.4, initialSpringVelocity: 0.01, options: UIViewAnimationOptions.CurveEaseInOut, animations: { () -> Void in
-                    
+                self.alarmTransition.isInteractive = false
+                self.alarmTransition.finish()
+                println("-- FINISHED TRANSITION -- ")
+            } else {
+                // cancel dismiss alarm
+                self.alarmTransition.cancel()
+                println("-- CANCELLED TRANSITION -- ")
+                
+                UIView.animateWithDuration(1, delay: 0, usingSpringWithDamping: 0.2, initialSpringVelocity: 0.01, options: UIViewAnimationOptions.CurveEaseInOut, animations: { () -> Void in
                     self.dismissAlarmContainer.center = self.initialDismissContainerCenter
                     self.dismissAlarmContainer.transform = CGAffineTransformIdentity
                     self.datePickerContainer.frame = CGRectMake(0, 0, self.screenSize.width, self.displayContainerHeight)
                     
-                    self.backgroundView.alpha = 1
                     self.timeLabel.alpha = 1
                     self.repeatLabel.alpha = 1
-                    self.dismissAlarmContainer.alpha = 1
-                    self.dismissLabel.alpha = 1
                     }, completion: nil)
             }
-
+        }
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
+        if segue.identifier == "alarmToComposeSegue" {
+            var destinationVC = segue.destinationViewController as! DreamComposeViewController
+            destinationVC.modalPresentationStyle = UIModalPresentationStyle.Custom
+            destinationVC.transitioningDelegate = alarmTransition
         }
     }
     
     func dismissModal() {
-        var homeVC: DreamCollectionViewController = self.presentingViewController as! DreamCollectionViewController
-        self.dismissViewControllerAnimated(true, completion: { finished in
-            homeVC.viewDidAppear(true)
-        })
+        self.dismissViewControllerAnimated(true, completion: nil)
     }
     
     func validateDate(wakeUpTime: NSDate) -> NSDate {
@@ -279,14 +309,19 @@ class AlarmViewController: UIViewController {
     func displayAlarmInfo() {
         var dateFormatter = NSDateFormatter()
         dateFormatter.timeStyle = NSDateFormatterStyle.ShortStyle
-        var date = userDefaults.objectForKey(AlarmUserSettings.Date.rawValue) as! NSDate
-        var strDate = dateFormatter.stringFromDate(date)
-        timeLabel.text = strDate
-        timeLabel.sizeToFit()
         
-        var repeatStr = userDefaults.objectForKey(AlarmUserSettings.Repeat.rawValue) as! String
-        repeatLabel.text = repeatStr
-        repeatLabel.sizeToFit()
+        if (userDefaults.objectForKey(AlarmUserSettings.Date.rawValue) != nil) {
+            var date = userDefaults.objectForKey(AlarmUserSettings.Date.rawValue) as! NSDate
+            var strDate = dateFormatter.stringFromDate(date)
+            timeLabel.text = strDate
+            timeLabel.sizeToFit()
+        }
+        
+        if (userDefaults.objectForKey(AlarmUserSettings.Repeat.rawValue) != nil) {
+            var repeatStr = userDefaults.objectForKey(AlarmUserSettings.Repeat.rawValue) as! String
+            repeatLabel.text = repeatStr
+            repeatLabel.sizeToFit()
+        }
         
         repeatLabel.center = CGPointMake(UIScreen.mainScreen().bounds.width/2, repeatLabel.center.y)
         repeatLabel.textAlignment = NSTextAlignment.Center
