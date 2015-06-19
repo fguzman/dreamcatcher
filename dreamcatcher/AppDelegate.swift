@@ -68,9 +68,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
     
-    func playAlarm(timer: NSTimer) {
-        println("here!")
-    }
+//    func playAlarm(timer: NSTimer) {
+//        println("here!")
+//    }
     
     func applicationWillResignActive(application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
@@ -79,11 +79,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             UIApplication.sharedApplication().endBackgroundTask(self.backgroundIdentifier)
         }
         
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), { () -> Void in
-            var timer = NSTimer(fireDate: NSDate(timeIntervalSinceNow: 10), interval: 60.0, target: self, selector: Selector("playAlarm:"), userInfo: nil, repeats: false)
-            NSRunLoop.currentRunLoop().addTimer(timer, forMode: NSDefaultRunLoopMode)
-            println("scheduled timer")
-        })
+//        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), { () -> Void in
+//            var timer = NSTimer(fireDate: NSDate(timeIntervalSinceNow: 10), interval: 60.0, target: self, selector: Selector("playAlarm:"), userInfo: nil, repeats: false)
+//            NSRunLoop.currentRunLoop().addTimer(timer, forMode: NSDefaultRunLoopMode)
+//            println("scheduled timer")
+//        })
     }
 
     func applicationDidEnterBackground(application: UIApplication) {

@@ -22,6 +22,11 @@ class BaseTransition: NSObject, UIViewControllerTransitioningDelegate, UIViewCon
         }
     }
     
+    override init() {
+        interactiveTransition = UIPercentDrivenInteractiveTransition()
+        interactiveTransition.completionSpeed = 0.99
+    }
+    
     func animationControllerForPresentedController(presented: UIViewController, presentingController presenting: UIViewController, sourceController source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         isPresenting = true
         return self
@@ -38,8 +43,6 @@ class BaseTransition: NSObject, UIViewControllerTransitioningDelegate, UIViewCon
     
     func interactionControllerForPresentation(animator: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
         if isInteractive {
-            interactiveTransition = UIPercentDrivenInteractiveTransition()
-            interactiveTransition.completionSpeed = 0.99
         } else {
             interactiveTransition = nil
         }

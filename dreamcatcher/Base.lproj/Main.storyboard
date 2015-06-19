@@ -37,16 +37,6 @@
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="SgA-fj-0o3" userLabel="alarmButton">
-                                        <rect key="frame" x="141" y="23" width="36" height="37"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <state key="normal" image="alarm_black">
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="onPressAlarm:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="kUP-g2-ORf"/>
-                                        </connections>
-                                    </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="7:30 AM" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="2dq-iY-EIe" userLabel="alarmTimeLabel">
                                         <rect key="frame" x="138" y="54" width="43" height="16"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -54,6 +44,16 @@
                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="SgA-fj-0o3" userLabel="alarmButton">
+                                        <rect key="frame" x="141" y="21" width="36" height="37"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <state key="normal" image="alarm_black">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <segue destination="kin-5p-vdj" kind="modal" id="vrh-u5-qOU"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
@@ -191,7 +191,6 @@
                         <outlet property="composeButton" destination="sOO-Sa-PFI" id="DO4-bV-WjH"/>
                         <outlet property="settingButton" destination="a3Y-aE-sXs" id="Z4Q-yf-Zv4"/>
                         <segue destination="MhU-ff-7iy" kind="modal" identifier="journalDetailSegue" id="bVz-Il-50Z"/>
-                        <segue destination="Luf-Go-OjK" kind="modal" identifier="alarmSegue" id="LB4-xo-G3d"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
@@ -361,6 +360,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
+                    <navigationItem key="navigationItem" id="IQA-7K-WKQ"/>
                     <connections>
                         <outlet property="backButton" destination="NJs-kM-yaU" id="RuJ-AW-H1a"/>
                         <outlet property="closeButton" destination="dCT-uj-VKF" id="kAJ-le-Wqd"/>
@@ -503,7 +503,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="M2r-CT-qWQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="636" y="319"/>
+            <point key="canvasLocation" x="-630" y="1077"/>
         </scene>
         <!--Alarm View Controller-->
         <scene sceneID="HZK-4F-Sm0">
@@ -653,8 +653,9 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
                         </subviews>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
+                    <navigationItem key="navigationItem" id="piK-Yw-mjl"/>
                     <connections>
                         <outlet property="backgroundView" destination="eHB-sS-ADm" id="ZpJ-oI-1Nh"/>
                         <outlet property="datePicker" destination="deJ-QS-rfP" id="Cay-bJ-pnf"/>
@@ -668,6 +669,7 @@
                         <outlet property="repeatSwitch" destination="8Lu-pH-3jc" id="7Wo-1C-xK2"/>
                         <outlet property="setAlarmButton" destination="a8K-DH-FEs" id="r3T-DO-xdd"/>
                         <outlet property="timeLabel" destination="Qhp-g7-0Gm" id="hfY-Nu-Qab"/>
+                        <segue destination="t7P-0f-ZQo" kind="push" identifier="alarmToComposeSegue" id="6NF-Um-wBc"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SH7-EC-kw5" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -677,7 +679,26 @@
                     </connections>
                 </panGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="88" y="-424"/>
+            <point key="canvasLocation" x="738" y="277"/>
+        </scene>
+        <!--AlarmNavController-->
+        <scene sceneID="fML-c9-icB">
+            <objects>
+                <navigationController title="AlarmNavController" automaticallyAdjustsScrollViewInsets="NO" navigationBarHidden="YES" id="kin-5p-vdj" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="l2T-Ok-vH0">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="Luf-Go-OjK" kind="relationship" relationship="rootViewController" id="Pzt-78-0iU"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="QMP-M4-InD" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="108" y="277"/>
         </scene>
     </scenes>
     <resources>
@@ -705,4 +726,7 @@
         <simulatedOrientationMetrics key="orientation"/>
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
+    <inferredMetricsTieBreakers>
+        <segue reference="6NF-Um-wBc"/>
+    </inferredMetricsTieBreakers>
 </document>
