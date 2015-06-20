@@ -33,7 +33,7 @@ class JournalTransition: BaseTransition {
         fullTextView.text = journalViewController.textView.text
         fullTextView.frame.size = journalViewController.textView.frame.size
         fullTextView.frame.origin = selectedCell.textView.frame.origin
-        println("journal text view frame origin \(fullTextView.frame.origin)")
+        
         fullTextView.font = UIFont(name: selectedCell.textView.font.fontName, size: 18)
         fullTextView.alpha = 0
     
@@ -45,7 +45,7 @@ class JournalTransition: BaseTransition {
         
         backgroundImageView.image = selectedCell.backgroundImageView.image
         backgroundImageView.frame = selectedCell.backgroundImageView.frame
-        backgroundImageView.contentMode = UIViewContentMode.Center
+        backgroundImageView.contentMode = UIViewContentMode.ScaleAspectFill
         backgroundImageView.clipsToBounds = true
         titleLabel.text = selectedCell.titleLabel.text
         titleLabel.frame = selectedCell.titleLabel.frame
