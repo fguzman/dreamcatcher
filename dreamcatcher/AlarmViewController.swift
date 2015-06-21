@@ -28,10 +28,10 @@ class AlarmViewController: UIViewController, UINavigationControllerDelegate {
         case LastSelected   = "alarm.lastSelected"
     }
     
-    @IBOutlet weak var editAlarmButton: UIButton!
+    @IBOutlet weak var cancelAlarmContainer: UIView!
     @IBOutlet weak var setAlarmButton: UIButton!
     @IBOutlet weak var dismissAlarmContainer: UIView!
-    @IBOutlet weak var dismissLabel: UILabel!
+    @IBOutlet weak var buttonLabel: UILabel!
     
     @IBOutlet weak var timeLabel: UILabel!
     @IBOutlet weak var repeatLabel: UILabel!
@@ -47,38 +47,61 @@ class AlarmViewController: UIViewController, UINavigationControllerDelegate {
     
     var currentState: State! = State.Unset
     var initialDismissContainerCenter: CGPoint!
-    var initialDismissLabelCenter: CGPoint!
+    var initialButtonLabelCenter: CGPoint!
+    var initialCancelButtonCenter: CGPoint!
+    
+    let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+    let userDefaults: NSUserDefaults = NSUserDefaults.standardUserDefaults()
     
     let orangeColor: UIColor = UIColor(red: 255/255, green: 108.0/255, blue: 0.0, alpha: 1)
     let blueColor: UIColor = UIColor(red: 0, green: 153/255, blue: 255/255, alpha: 1)
-    let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-    let userDefaults: NSUserDefaults = NSUserDefaults.standardUserDefaults()
+
     let screenSize: CGRect = UIScreen.mainScreen().bounds
     let displayContainerHeight: CGFloat = 300.0
+    
+    // initial cancel and dismiss button, label styles
+    let buttonLabelAlpha: CGFloat = 0.3
+    let buttonInitOffset: CGFloat = 30.0
+    
+    // alarm state 
+    let alarmSoundDuration: Int = 23
+    let alarmNotificationCount: Int = 13
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         appDelegate.alarmViewController = self
         self.navigationController?.delegate = self
+        alarmTransition.isInteractive = true
 
+        initialDismissContainerCenter = dismissAlarmContainer.center
+        initialButtonLabelCenter = buttonLabel.center
+        initialCancelButtonCenter = cancelAlarmContainer.center
+        
+        initButtonStyle()
+        initAlarmState()
+    }
+    
+    func initButtonStyle() {
         // Style edit alarm
-        editAlarmButton.layer.cornerRadius = editAlarmButton.frame.width/2
-        editAlarmButton.layer.backgroundColor = orangeColor.CGColor
-        editAlarmButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+        cancelAlarmContainer.layer.cornerRadius = cancelAlarmContainer.frame.width/2
+        cancelAlarmContainer.layer.backgroundColor = orangeColor.CGColor
         
         // Style dismiss alarm
         dismissAlarmContainer.layer.cornerRadius = dismissAlarmContainer.frame.width/2
         dismissAlarmContainer.layer.backgroundColor = blueColor.CGColor
         
+    }
+    
+    func initAlarmState() {
         // Set alarm state
         var tempState = State.Unset
         if (userDefaults.objectForKey(AlarmUserSettings.State.rawValue) != nil) {
             tempState = State(rawValue: userDefaults.objectForKey(AlarmUserSettings.State.rawValue) as! String)!
         }
-//        updateAlarmState(tempState)
-        userDefaults.setObject(NSDate(), forKey: AlarmUserSettings.Date.rawValue)
-        updateAlarmState(State.Triggered)
+        updateAlarmState(tempState, isAnimate: false, complete: nil)
+//        userDefaults.setObject(NSDate(), forKey: AlarmUserSettings.Date.rawValue)
+//        updateAlarmState(State.Triggered, isAnimate: false)
         
         // Display last selected alarm date
         if (userDefaults.objectForKey(AlarmUserSettings.LastSelected.rawValue) != nil) {
@@ -86,29 +109,37 @@ class AlarmViewController: UIViewController, UINavigationControllerDelegate {
             datePicker.date = lastSelectedDate
         }
         
-        initialDismissContainerCenter = dismissAlarmContainer.center
-        initialDismissLabelCenter = dismissLabel.center
         // Bounce the dismiss button
         if (currentState == State.Triggered) {
-            self.dismissAlarmContainer.frame.offset(dx: 0, dy: 30)
+            println("prepare for trigger animation")
+            self.dismissAlarmContainer.frame.offset(dx: 0, dy: buttonInitOffset)
             self.dismissAlarmContainer.alpha = 0
-            self.dismissLabel.frame.offset(dx: 0, dy: 30)
-            self.dismissLabel.alpha = 0
+            self.buttonLabel.frame.offset(dx: 0, dy: buttonInitOffset)
+            self.buttonLabel.alpha = 0
+        } else if (currentState == State.Set) {
+            self.cancelAlarmContainer.frame.offset(dx: 0, dy: -buttonInitOffset)
+            self.cancelAlarmContainer.alpha = 0
+            self.buttonLabel.frame.offset(dx: 0, dy: -buttonInitOffset)
+            self.buttonLabel.alpha = 0
         }
-        
-        alarmTransition.isInteractive = true
     }
     
+    
     override func viewDidAppear(animated: Bool) {
-        print("viewDidAppear")
-        
         // Bounce the dismiss button
         if (currentState == State.Triggered) {
-            UIView.animateWithDuration(1, delay: 0, usingSpringWithDamping: 0.2, initialSpringVelocity: 0.02, options: UIViewAnimationOptions.CurveEaseInOut, animations: { () -> Void in
+            UIView.animateWithDuration(1, delay: 0, usingSpringWithDamping: 0.2, initialSpringVelocity: 0.02, options: UIViewAnimationOptions.CurveEaseInOut | UIViewAnimationOptions.AllowUserInteraction, animations: { () -> Void in
                 self.dismissAlarmContainer.center = self.initialDismissContainerCenter
                 self.dismissAlarmContainer.alpha = 1
-                self.dismissLabel.center = self.initialDismissLabelCenter
-                self.dismissLabel.alpha = 0.3
+                self.buttonLabel.center = self.initialButtonLabelCenter
+                self.buttonLabel.alpha = self.buttonLabelAlpha
+                }, completion: nil)
+        } else if (currentState == State.Set) {
+            UIView.animateWithDuration(1, delay: 0, usingSpringWithDamping: 0.2, initialSpringVelocity: 0.02, options: UIViewAnimationOptions.CurveEaseInOut | UIViewAnimationOptions.AllowUserInteraction, animations: { () -> Void in
+                self.cancelAlarmContainer.center = self.initialDismissContainerCenter
+                self.cancelAlarmContainer.alpha = 1
+                self.buttonLabel.center = self.initialButtonLabelCenter
+                self.buttonLabel.alpha = self.buttonLabelAlpha
                 }, completion: nil)
         }
     }
@@ -137,13 +168,83 @@ class AlarmViewController: UIViewController, UINavigationControllerDelegate {
     
     @IBAction func onPressSetAlarm(sender: AnyObject) {
         setLocalNotification(datePicker.date)
-        updateAlarmState(State.Set)
+        updateAlarmState(State.Set, isAnimate: true, complete: nil)
         dismissModal()
     }
 
     @IBAction func onPressCancelAlarm(sender: AnyObject) {
         unsetLocalNotification()
-        updateAlarmState(State.Unset)
+        updateAlarmState(State.Unset, isAnimate: true, complete: nil)
+    }
+    
+    @IBAction func onPanningCancelButton(sender: UIPanGestureRecognizer) {
+        var translation = sender.translationInView(view)
+        
+        if (sender.state == UIGestureRecognizerState.Began) {
+            UIView.animateWithDuration(0.3, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: { () -> Void in
+                self.cancelAlarmContainer.transform = CGAffineTransformScale(CGAffineTransformIdentity, 1.1, 1.1)
+                }, completion: nil)
+        } else if (sender.state == UIGestureRecognizerState.Changed) {
+            
+            var nextCenterY = initialCancelButtonCenter.y + translation.y
+            if (nextCenterY > initialCancelButtonCenter.y) {
+                println("translate y: \(translation.y)")
+                
+                // Hide display UI
+                if (translation.y > 0) {
+                    var tmpEditUIAlpha = convertValue(translation.y, 0.0, 180.0, 1.0, 0)
+                    var tmpButtonLabelAlpha = convertValue(translation.y, 0.0, 180.0, buttonLabelAlpha, 0)
+                    
+                    self.cancelAlarmContainer.alpha = tmpEditUIAlpha
+                    self.timeLabel.alpha = tmpEditUIAlpha
+                    self.repeatLabel.alpha = tmpEditUIAlpha
+                    self.buttonLabel.alpha = tmpButtonLabelAlpha
+                    
+                    // Extend date picker container
+                    self.datePickerContainer.frame = CGRectMake(0, 0, self.screenSize.width, displayContainerHeight + translation.y)
+                    self.cancelAlarmContainer.center = CGPointMake(initialCancelButtonCenter.x, initialCancelButtonCenter.y + translation.y)
+                    self.buttonLabel.center = CGPointMake(self.buttonLabel.center.x, initialButtonLabelCenter.y + translation.y)
+                }
+                
+                // Show edit UI
+                if (translation.y > 60.0) {
+                    var tmpEditUIAlpha = convertValue(translation.y, 0.0, 360.0, 0.0, 1.0)
+
+                    self.datePicker.alpha = tmpEditUIAlpha
+                    self.repeatContainer.alpha = tmpEditUIAlpha
+                    self.setAlarmButton.alpha = tmpEditUIAlpha
+                }
+            }
+            
+        } else if (sender.state == UIGestureRecognizerState.Ended) {
+            println("-- GESTURE ENDED -- ")
+            
+            // passed the threshold to dismiss alarm and start compose journal
+            if (translation.y < 60.0) {
+                UIView.animateWithDuration(0.3, delay: 0, usingSpringWithDamping: 0.3, initialSpringVelocity: 0.005, options: UIViewAnimationOptions.CurveEaseOut, animations: { () -> Void in
+                    self.cancelAlarmContainer.transform = CGAffineTransformIdentity
+                    self.cancelAlarmContainer.center = self.initialCancelButtonCenter
+                    
+                    //reset everything
+                    self.cancelAlarmContainer.alpha = 1
+                    self.timeLabel.alpha = 1
+                    self.repeatLabel.alpha = 1
+                    self.buttonLabel.alpha = self.buttonLabelAlpha
+                    
+                    // Extend date picker container
+                    self.datePickerContainer.frame = CGRectMake(0, 0, self.screenSize.width, self.displayContainerHeight)
+                    self.cancelAlarmContainer.center = CGPointMake(self.initialCancelButtonCenter.x, self.initialCancelButtonCenter.y)
+                    self.buttonLabel.center = CGPointMake(self.buttonLabel.center.x, self.initialButtonLabelCenter.y)
+                    
+                    self.datePicker.alpha = 0
+                    self.repeatContainer.alpha = 0
+                    self.setAlarmButton.alpha = 0
+                    }, completion: nil)
+            } else {
+                unsetLocalNotification()
+                updateAlarmState(State.Unset, isAnimate: true, complete: nil)
+            }
+        }
     }
     
     @IBAction func onPanningDismissButton(sender: UIPanGestureRecognizer) {
@@ -154,7 +255,6 @@ class AlarmViewController: UIViewController, UINavigationControllerDelegate {
             UIView.animateWithDuration(0.3, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: { () -> Void in
                 self.dismissAlarmContainer.transform = CGAffineTransformScale(CGAffineTransformIdentity, 1.1, 1.1)
                 }, completion: { finished in
-                    self.alarmTransition.isInteractive = true
                     self.performSegueWithIdentifier("alarmToComposeSegue", sender: self)
             })
         } else if (sender.state == UIGestureRecognizerState.Changed) {
@@ -163,7 +263,7 @@ class AlarmViewController: UIViewController, UINavigationControllerDelegate {
             if (nextCenterY <= initialDismissContainerCenter.y) {
                 self.dismissAlarmContainer.center = CGPointMake(initialDismissContainerCenter.x, initialDismissContainerCenter.y + translation.y)
                 
-                if (translation.y < dismissThreshold) {
+                if (translation.y <= dismissThreshold) {
                     var translationDeltaY = translation.y - dismissThreshold
                     var tmpLabelAlpha = convertValue(translationDeltaY, 0.0, -100.0, 1.0, 0)
                     var tmpDisplayContainerHeight = convertValue(translationDeltaY, 0.0, -300.0, displayContainerHeight, 60.0)
@@ -178,21 +278,18 @@ class AlarmViewController: UIViewController, UINavigationControllerDelegate {
             }
 
         } else if (sender.state == UIGestureRecognizerState.Ended) {
-            println("-- GESTURE ENDED -- ")
             
             // passed the threshold to dismiss alarm and start compose journal
             if (translation.y < -200.0) {
                 unsetLocalNotification()
-                updateAlarmState(State.Unset)
+                updateAlarmState(State.Unset, isAnimate: false, complete: nil)
                 
                 self.alarmTransition.finish()
-                println("-- FINISHED TRANSITION -- ")
             } else {
                 // cancel dismiss alarm
                 self.alarmTransition.cancel()
-                println("-- CANCELLED TRANSITION -- ")
                 
-                UIView.animateWithDuration(1, delay: 0, usingSpringWithDamping: 0.2, initialSpringVelocity: 0.01, options: UIViewAnimationOptions.CurveEaseInOut, animations: { () -> Void in
+                UIView.animateWithDuration(1, delay: 0, usingSpringWithDamping: 0.2, initialSpringVelocity: 0.005, options: UIViewAnimationOptions.CurveEaseInOut, animations: { () -> Void in
                     self.dismissAlarmContainer.center = self.initialDismissContainerCenter
                     self.dismissAlarmContainer.transform = CGAffineTransformIdentity
                     self.datePickerContainer.frame = CGRectMake(0, 0, self.screenSize.width, self.displayContainerHeight)
@@ -238,69 +335,117 @@ class AlarmViewController: UIViewController, UINavigationControllerDelegate {
     
     func setLocalNotification(firedate: NSDate) {
         var date = validateDate(firedate)
+        var originalDate = date
         
         // set notification
-        var notification: UILocalNotification = UILocalNotification()
-        notification.fireDate = date
-        notification.alertBody = "It's a new day!"
-        notification.soundName = "alarm_sound_3.mp3"
-        notification.applicationIconBadgeNumber = 1
+        var notification: UILocalNotification!
+        let calendar = NSCalendar.currentCalendar()
+        for index in 1...alarmNotificationCount {
+            notification = UILocalNotification()
+            
+            if index > 1 {
+                date = calendar.dateByAddingUnit(.CalendarUnitSecond, value: alarmSoundDuration, toDate: date, options: nil)!
+                notification.soundName = "alarm_sound_normal.mp3"
+            }
+            
+            if index == 1 {
+                notification.alertBody = "It's a new day!"
+                notification.soundName = "alarm_sound_fadedIn.mp3"
+                notification.applicationIconBadgeNumber = 1
+            }
+            
+            notification.fireDate = date
+            UIApplication.sharedApplication().scheduleLocalNotification(notification)
+        }
         
-        userDefaults.setObject(date, forKey: AlarmUserSettings.Date.rawValue)
+        userDefaults.setObject(originalDate, forKey: AlarmUserSettings.Date.rawValue)
         userDefaults.setObject(Repeat.Once.rawValue, forKey: AlarmUserSettings.Repeat.rawValue)
         
         if (repeatSwitch.on) {
             notification.repeatInterval = NSCalendarUnit.CalendarUnitDay
             userDefaults.setObject(Repeat.Everyday.rawValue, forKey: AlarmUserSettings.Repeat.rawValue)
         }
-        
-        UIApplication.sharedApplication().scheduleLocalNotification(notification)
     }
     
     // Show or hide alarm date picker and repeat switch
-    func showHideEditUI(isShow: Bool) {
+    func showHideEditUI(isShow: Bool, isAnimate: Bool, complete: (() -> Void)?) {
         var editAlpha: CGFloat = isShow ? 1.0 : 0.0
         var displayAlpha: CGFloat = isShow ? 0.0 : 1.0
         
         if !isShow {
-            UIView.animateKeyframesWithDuration(1, delay: 0, options: nil, animations: {
-                UIView.addKeyframeWithRelativeStartTime(0, relativeDuration: 0.5, animations: {
-                    self.datePicker.alpha = editAlpha
-                    self.repeatContainer.alpha = editAlpha
-                    self.setAlarmButton.alpha = editAlpha
+            if isAnimate {
+                UIView.animateKeyframesWithDuration(1, delay: 0, options: nil, animations: {
+                    UIView.addKeyframeWithRelativeStartTime(0, relativeDuration: 0.5, animations: {
+                        self.datePicker.alpha = editAlpha
+                        self.repeatContainer.alpha = editAlpha
+                        self.setAlarmButton.alpha = editAlpha
+                    })
+                    
+                    UIView.addKeyframeWithRelativeStartTime(0.2, relativeDuration: 0.7, animations: {
+                        self.datePickerContainer.frame = CGRectMake(0, 0, self.screenSize.width, self.displayContainerHeight)
+                    })
+                    
+                    UIView.addKeyframeWithRelativeStartTime(0.7, relativeDuration: 0.3, animations: {
+                        self.cancelAlarmContainer.alpha = displayAlpha
+                        self.timeLabel.alpha = displayAlpha
+                        self.repeatLabel.alpha = displayAlpha
+                        self.buttonLabel.alpha = self.buttonLabelAlpha
+                    })
+                    }, completion: { finished in
+                        complete?()
                 })
-                
-                UIView.addKeyframeWithRelativeStartTime(0.2, relativeDuration: 0.7, animations: {
-                    self.datePickerContainer.frame = CGRectMake(0, 0, self.screenSize.width, self.displayContainerHeight)
-                })
-                
-                UIView.addKeyframeWithRelativeStartTime(0.7, relativeDuration: 0.3, animations: {
-                    self.editAlarmButton.alpha = displayAlpha
-                    self.timeLabel.alpha = displayAlpha
-                    self.repeatLabel.alpha = displayAlpha
-                })
-            }, completion: nil)
+
+            } else {
+                self.datePicker.alpha = editAlpha
+                self.repeatContainer.alpha = editAlpha
+                self.setAlarmButton.alpha = editAlpha
+                self.datePickerContainer.frame = CGRectMake(0, 0, self.screenSize.width, self.displayContainerHeight)
+                self.cancelAlarmContainer.alpha = displayAlpha
+                self.timeLabel.alpha = displayAlpha
+                self.repeatLabel.alpha = displayAlpha
+                self.buttonLabel.alpha = self.buttonLabelAlpha
+            }
         } else {
-            UIView.animateKeyframesWithDuration(1, delay: 0, options: nil, animations: {
-                UIView.addKeyframeWithRelativeStartTime(0, relativeDuration: 0.5, animations: {
-                    self.editAlarmButton.alpha = displayAlpha
-                    self.dismissAlarmContainer.alpha = displayAlpha
-                    self.timeLabel.alpha = displayAlpha
-                    self.repeatLabel.alpha = displayAlpha
-                    self.dismissLabel.alpha = displayAlpha
+            if isAnimate {
+                UIView.animateKeyframesWithDuration(1, delay: 0, options: nil, animations: {
+                    UIView.addKeyframeWithRelativeStartTime(0, relativeDuration: 0.5, animations: {
+                        self.cancelAlarmContainer.alpha = displayAlpha
+                        self.dismissAlarmContainer.alpha = displayAlpha
+                        self.timeLabel.alpha = displayAlpha
+                        self.repeatLabel.alpha = displayAlpha
+                        self.buttonLabel.alpha = displayAlpha
+                    })
+                    
+                    UIView.addKeyframeWithRelativeStartTime(0.2, relativeDuration: 0.7, animations: {
+                        self.datePickerContainer.frame = CGRectMake(0, 0, self.screenSize.width, self.screenSize.height)
+                    })
+                    
+                    UIView.addKeyframeWithRelativeStartTime(0.7, relativeDuration: 0.3, animations: {
+                        self.datePicker.alpha = editAlpha
+                        self.repeatContainer.alpha = editAlpha
+                        self.setAlarmButton.alpha = editAlpha
+                    })
+                    }, completion: { finished in
+                        complete?()
                 })
-                
-                UIView.addKeyframeWithRelativeStartTime(0.2, relativeDuration: 0.7, animations: {
-                    self.datePickerContainer.frame = CGRectMake(0, 0, self.screenSize.width, self.screenSize.height)
-                })
-                
-                UIView.addKeyframeWithRelativeStartTime(0.7, relativeDuration: 0.3, animations: {
-                    self.datePicker.alpha = editAlpha
-                    self.repeatContainer.alpha = editAlpha
-                    self.setAlarmButton.alpha = editAlpha
-                })
-            }, completion: nil)
+            } else {
+                self.cancelAlarmContainer.alpha = displayAlpha
+                self.dismissAlarmContainer.alpha = displayAlpha
+                self.timeLabel.alpha = displayAlpha
+                self.repeatLabel.alpha = displayAlpha
+                self.buttonLabel.alpha = displayAlpha
+                self.datePickerContainer.frame = CGRectMake(0, 0, self.screenSize.width, self.screenSize.height)
+                self.datePicker.alpha = editAlpha
+                self.repeatContainer.alpha = editAlpha
+                self.setAlarmButton.alpha = editAlpha
+            }
         }
+    }
+    
+    func centerTextLabel(textLabel: UILabel) {
+        textLabel.sizeToFit()
+        textLabel.center = CGPointMake(UIScreen.mainScreen().bounds.width/2, textLabel.center.y)
+        textLabel.textAlignment = NSTextAlignment.Center
     }
     
     // Display current alarm time and repeat setting
@@ -312,23 +457,19 @@ class AlarmViewController: UIViewController, UINavigationControllerDelegate {
             var date = userDefaults.objectForKey(AlarmUserSettings.Date.rawValue) as! NSDate
             var strDate = dateFormatter.stringFromDate(date)
             timeLabel.text = strDate
-            timeLabel.sizeToFit()
         }
         
         if (userDefaults.objectForKey(AlarmUserSettings.Repeat.rawValue) != nil) {
             var repeatStr = userDefaults.objectForKey(AlarmUserSettings.Repeat.rawValue) as! String
             repeatLabel.text = repeatStr
-            repeatLabel.sizeToFit()
         }
         
-        repeatLabel.center = CGPointMake(UIScreen.mainScreen().bounds.width/2, repeatLabel.center.y)
-        repeatLabel.textAlignment = NSTextAlignment.Center
-        timeLabel.center = CGPointMake(UIScreen.mainScreen().bounds.width/2, timeLabel.center.y)
-        timeLabel.textAlignment = NSTextAlignment.Center
+        centerTextLabel(repeatLabel)
+        centerTextLabel(timeLabel)
     }
     
     // Alarm state controller
-    func updateAlarmState(state: State) {
+    func updateAlarmState(state: State, isAnimate: Bool, complete: (() -> Void)?) {
         // If user default doesn't have alarm setting yet, default to Unset
         if (userDefaults.objectForKey(AlarmUserSettings.Date.rawValue) == nil) {
             currentState = State.Unset
@@ -337,25 +478,27 @@ class AlarmViewController: UIViewController, UINavigationControllerDelegate {
         currentState = state
         
         if currentState == State.Unset {
-            showHideEditUI(true)
+            showHideEditUI(true, isAnimate: isAnimate, complete: complete)
         }
         else {
             displayAlarmInfo()
-            showHideEditUI(false)
+            showHideEditUI(false, isAnimate: isAnimate, complete: complete)
         }
         
         if (currentState == State.Set) {
             dismissAlarmContainer.alpha = 0
-            dismissLabel.alpha = 0
+            buttonLabel.text = "DRAG TO CANCEL"
+            centerTextLabel(buttonLabel)
         }
         
         if (currentState == State.Triggered) {
             dismissAlarmContainer.alpha = 1
-            editAlarmButton.alpha = 0
+            cancelAlarmContainer.alpha = 0
+            buttonLabel.text = "DRAG TO DISMISS"
+            centerTextLabel(buttonLabel)
         }
         
         userDefaults.setObject(currentState.rawValue, forKey: AlarmUserSettings.State.rawValue)
-
     }
     
     /*

@@ -35,12 +35,12 @@ class InteractiveBaseTransition: UIPercentDrivenInteractiveTransition, UIViewCon
     }
     
     func interactionControllerForPresentation(animator: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
-        println("interactionControllerForPresentation: \(self.isInteractive)")
+//        println("interactionControllerForPresentation: \(self.isInteractive)")
         return self.isInteractive ? self : nil
     }
     
     func interactionControllerForDismissal(animator: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
-        println("interactionControllerForDismissal: \(self.isInteractive)")
+//        println("interactionControllerForDismissal: \(self.isInteractive)")
         return self.isInteractive ? self : nil
     }
     
@@ -53,13 +53,11 @@ class InteractiveBaseTransition: UIPercentDrivenInteractiveTransition, UIViewCon
         if (isPresenting) {
             containerView.addSubview(toViewController.view)
             
-            println("container view's subview: '\(containerView.subviews)")
-
             presentTransition(containerView, fromViewController: fromViewController, toViewController: toViewController, completionCallback: {
                 if (transitionContext.transitionWasCancelled()) {
                     transitionContext.completeTransition(false)
                 } else {
-                    println("-- TRANSITION COMPLETED --")
+//                    println("-- TRANSITION COMPLETED --")
                     transitionContext.completeTransition(true)
                 }
             })
@@ -86,10 +84,7 @@ class InteractiveBaseTransition: UIPercentDrivenInteractiveTransition, UIViewCon
     
     func dismissTransition(containerView: UIView, fromViewController: UIViewController, toViewController: UIViewController, completionCallback: () -> Void) {
         
-        println("-- DISMISS TRANSITION -- ")
-        
-        fromViewController.view.alpha = 1
-//        toViewController.beginAppearanceTransition(true, animated: true)
+//        println("-- DISMISS TRANSITION -- ")
         
         fromViewController.view.alpha = 1
         

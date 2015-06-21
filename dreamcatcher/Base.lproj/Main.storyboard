@@ -608,7 +608,7 @@
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     </view>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="DRAG TO DISMISS" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="941-Cn-j5d" userLabel="dismissLabel">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="DRAG TO DISMISS" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="941-Cn-j5d" userLabel="buttonLabel">
                                         <rect key="frame" x="97" y="482" width="127" height="25"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="11"/>
@@ -618,18 +618,6 @@
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="r0W-y8-C8Q">
-                                <rect key="frame" x="115" y="380" width="90" height="90"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="20"/>
-                                <state key="normal" title="Cancel">
-                                    <color key="titleColor" red="0.0" green="0.69019607839999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="onPressCancelAlarm:" destination="Luf-Go-OjK" eventType="touchUpInside" id="dfM-Iw-Nsf"/>
-                                </connections>
-                            </button>
                             <view contentMode="scaleToFill" id="uE4-zf-xEB" userLabel="dismissButtonContainer">
                                 <rect key="frame" x="115" y="380" width="90" height="90"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -652,17 +640,42 @@
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
+                            <view contentMode="scaleToFill" id="1bI-ps-36Y" userLabel="cancelButtonContainer">
+                                <rect key="frame" x="115" y="380" width="90" height="90"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" image="cancel_alarm" id="xkR-ZP-qcH">
+                                        <rect key="frame" x="27" y="36" width="35" height="19"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                    </imageView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="r0W-y8-C8Q" userLabel="cancelButton">
+                                        <rect key="frame" x="0.0" y="0.0" width="90" height="90"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <gestureRecognizers/>
+                                        <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="20"/>
+                                        <state key="normal">
+                                            <color key="titleColor" red="0.0" green="0.69019607839999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="onPressCancelAlarm:" destination="Luf-Go-OjK" eventType="touchUpInside" id="dfM-Iw-Nsf"/>
+                                            <outletCollection property="gestureRecognizers" destination="6ig-Y5-qVI" appends="YES" id="aYD-Hd-nO7"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" id="piK-Yw-mjl"/>
                     <connections>
                         <outlet property="backgroundView" destination="eHB-sS-ADm" id="ZpJ-oI-1Nh"/>
+                        <outlet property="buttonLabel" destination="941-Cn-j5d" id="BDD-Jx-N7U"/>
+                        <outlet property="cancelAlarmContainer" destination="1bI-ps-36Y" id="zcf-hr-eOf"/>
                         <outlet property="datePicker" destination="deJ-QS-rfP" id="Cay-bJ-pnf"/>
                         <outlet property="datePickerContainer" destination="kbW-xn-FHa" id="NeX-rN-lAe"/>
                         <outlet property="dismissAlarmContainer" destination="uE4-zf-xEB" id="C7T-Hs-21I"/>
-                        <outlet property="dismissLabel" destination="941-Cn-j5d" id="u1L-p2-QML"/>
-                        <outlet property="editAlarmButton" destination="r0W-y8-C8Q" id="jnd-Ue-IuY"/>
                         <outlet property="repeatContainer" destination="JgP-Ta-AWP" id="chS-Oy-WL2"/>
                         <outlet property="repeatFieldLabel" destination="iVu-xE-706" id="0tN-kD-GFB"/>
                         <outlet property="repeatLabel" destination="jH2-mO-H2b" id="kNo-dw-cLn"/>
@@ -673,9 +686,14 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SH7-EC-kw5" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <panGestureRecognizer minimumNumberOfTouches="1" id="Tx3-kW-Qdc">
+                <panGestureRecognizer minimumNumberOfTouches="1" id="Tx3-kW-Qdc" userLabel="dismissAlarmPanGesture">
                     <connections>
                         <action selector="onPanningDismissButton:" destination="Luf-Go-OjK" id="r6s-Sy-VsZ"/>
+                    </connections>
+                </panGestureRecognizer>
+                <panGestureRecognizer minimumNumberOfTouches="1" id="6ig-Y5-qVI" userLabel="cancelAlarmPanGesture">
+                    <connections>
+                        <action selector="onPanningCancelButton:" destination="Luf-Go-OjK" id="dKH-W6-1k6"/>
                     </connections>
                 </panGestureRecognizer>
             </objects>
@@ -710,6 +728,7 @@
         <image name="back" width="25" height="25"/>
         <image name="back_white" width="21" height="18"/>
         <image name="bg1" width="321" height="317"/>
+        <image name="cancel_alarm" width="35" height="19"/>
         <image name="close" width="25" height="25"/>
         <image name="close_icon" width="20" height="20"/>
         <image name="dismiss_alarm" width="35" height="19"/>
