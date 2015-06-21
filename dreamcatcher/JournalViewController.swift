@@ -8,16 +8,16 @@
 
 import UIKit
 
-class JournalViewController: UIViewController{
+class JournalViewController: UIViewController, UIScrollViewDelegate{
     
     
     @IBOutlet weak var backgroundImageView: UIImageView!
     
+    @IBOutlet weak var backgroundView: UIView!
     
+    @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var dateLabel: UILabel!
-    
     @IBOutlet weak var titleLabel: UILabel!
-    
     @IBOutlet weak var textView: UITextView!
     var paragraph: String!
     var titleText: String!
@@ -28,12 +28,39 @@ class JournalViewController: UIViewController{
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         textView.text = paragraph
         titleLabel.text = titleText
         dateLabel.text = dateText
         backgroundImageView.image = image
-        // Do any additional setup after loading the view.
-           }
+        let size: CGSize = textView.sizeThatFits(CGSizeMake(textView.frame.size.width, CGFloat.max))
+        textView.frame.size.height = size.height
+        textView.scrollEnabled = false
+        let inset: CGFloat = 20
+        
+        scrollView.contentSize.height = textView.frame.origin.y + textView.frame.size.height + inset
+        backgroundView.frame.size.height = scrollView.contentSize.height
+        
+        scrollView.delegate = self
+        
+        
+    }
+    
+    func scrollViewDidScroll(scrollView: UIScrollView){
+        var backgroundAlpha = progressValue(scrollView.contentOffset.y, refValueMin: 0, refValueMax: -300, convertValueMin: 1, convertValueMax: 0)
+
+
+        scrollView.backgroundColor = UIColor(white:0, alpha: backgroundAlpha)
+        
+        
+    }
+    
+    func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool){
+        println("end")
+        
+        self.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -45,14 +72,17 @@ class JournalViewController: UIViewController{
         self.dismissViewControllerAnimated(true, completion: nil)
     }
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    
+    func progressValue(value: CGFloat, refValueMin: CGFloat, refValueMax: CGFloat, convertValueMin: CGFloat, convertValueMax: CGFloat) -> CGFloat {
+        
+        
+        
+        var ratio = (value - refValueMin)/(refValueMax - refValueMin)
+        
+        var currentValue = (convertValueMax - convertValueMin)*ratio + convertValueMin
+        
+        return currentValue
+        
     }
-    */
 
 }
