@@ -23,26 +23,37 @@ class DreamCollectionViewController: UIViewController, UICollectionViewDataSourc
     @IBOutlet weak var composeButton: UIButton!
     @IBOutlet weak var alarmTimeLabel: UILabel!
     
+    
     var numOfCell = 2
-    var dateArray = ["JUNE 17", "JUNE 14"]
-    var titleArray = ["Underwater world with corals", "Diamond Man"]
+    var dateArray = ["JUNE 17", "JUNE 14", "MAY 7", "APRIL 20", "APRIL 15", "MARCH 28"]
+    var titleArray = ["Underwater world with corals", "Diamond Man in the cellar", "I know or don't know you", "Do you want to inspect your piano", "The invisible murder witness", "Undercover investigator"]
     var paragraphArray = [
         "Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, ",
-        "We were lined up at the gate. The guards took everything from us, and checked us before pushing us into the celler. When it was my turn, they checked all my pockets, making sure I had no valuables on me. Then they pasted a piece of tiny diamond on my thumb. \"If you ever find the Diamond Man. Bring him to us. Your freedom will be granted.\" "
+        "We were lined up at the gate. The guards took everything from us, and checked us before pushing us into the cellar. When it was my turn, they checked all my pockets, making sure I had no valuables on me. Then they pasted a piece of tiny diamond on my thumb. \"If you ever find the Diamond Man. Bring him to us. Your freedom will be granted.\" The underground cellar was like an underground community. There were markets ran by fellow prisoners who allow other people barter for goods. There were merchants, fortune tellers, children, and elders. ",
+        "It was at a hike to Alps when I saw this shop at the side of the street of this tiny French village. I walked into the shop, but there was no one there. The entire shop smells of dust and woods, like it has not been visited for a long time. I opened the door again to go back to the street, only to find myself standing at the doorway of a tower at the edge of a cliff. I looked back again, realizing that the shop was no longer there. Instead I saw a spiral stoned staircase. At the bottom of the stairs, I found yet another door. I opened the door an empty theater with rows and rows of wooden seats facing a circular stage. ",
+        "Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, ",
+        "Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, ",
+        "Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, "
     ]
+    var imageArray = [UIImage]()
     
-    let defaultNavAlpha: CGFloat = 0.3
+    let defaultNavAlpha: CGFloat = 0.7
     let userDefaults: NSUserDefaults = NSUserDefaults.standardUserDefaults()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        //setting background images
+        for var i = 0; i < dateArray.count; ++i {
+            var image = UIImage(named: "bg\(i+1)")
+            imageArray.append(image!)
+        }
         
         collectionView.delegate = self
         collectionView.dataSource = self
         currentRowIndex = NSIndexPath(forRow: 0, inSection: 0)
         // Do any additional setup after loading the view.
        
-        // Set all nav buttons to 30% alpha by default
+        // Set all nav buttons to 70% alpha by default
         settingButton.alpha = defaultNavAlpha
         alarmButton.alpha = defaultNavAlpha
         composeButton.alpha = defaultNavAlpha
@@ -53,6 +64,7 @@ class DreamCollectionViewController: UIViewController, UICollectionViewDataSourc
     }
     
     override func viewDidAppear(animated: Bool) {
+        
         
         if (userDefaults.objectForKey(AlarmViewController.AlarmUserSettings.Date.rawValue) != nil) {
             var dateFormatter = NSDateFormatter()
@@ -114,6 +126,7 @@ class DreamCollectionViewController: UIViewController, UICollectionViewDataSourc
         cell.titleLabel.text = titleArray[indexPath.row]
         cell.dateLabel.text = dateArray[indexPath.row]
         cell.textView.text = paragraphArray[indexPath.row]
+        cell.backgroundImageView.image = imageArray[indexPath.row]
         
         return cell
     }
@@ -143,7 +156,9 @@ class DreamCollectionViewController: UIViewController, UICollectionViewDataSourc
         journalViewController.paragraph = paragraphArray[index]
         journalViewController.titleText = titleArray[index]
         journalViewController.dateText = dateArray[index]
+        journalViewController.image = imageArray[index]
         journalViewController.index = index
+        
         
         return journalViewController
     }

@@ -22,15 +22,16 @@ class JournalViewController: UIViewController{
     var paragraph: String!
     var titleText: String!
     var dateText: String!
+    var image: UIImage!
     
     var index: Int = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        println(textView.text)
         textView.text = paragraph
         titleLabel.text = titleText
         dateLabel.text = dateText
+        backgroundImageView.image = image
         // Do any additional setup after loading the view.
            }
 

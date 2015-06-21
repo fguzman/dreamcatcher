@@ -76,20 +76,19 @@ class DreamComposeViewController: UIViewController {
     @IBAction func onDone(sender: AnyObject) {
         view.endEditing(true)
         styleScrollView.hidden = true
-        dismissViewControllerAnimated(true, completion: nil)
+        //dismissViewControllerAnimated(true, completion: nil)
+        
+        performSegueWithIdentifier("addSegue", sender: nil)
     }
     
 
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+        
+        var dreamCollectionViewController = segue.destinationViewController as! DreamCollectionViewController
+        dreamCollectionViewController.numOfCell++
+        dreamCollectionViewController.dateArray.append(dateLabel.text!)
+        dreamCollectionViewController.titleArray.append(titleTextView.text)
+        dreamCollectionViewController.paragraphArray.append(composeTextView.text)
     }
-    */
 
 }
