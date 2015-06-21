@@ -744,7 +744,6 @@
         <image name="back_white" width="25" height="25"/>
         <image name="bg1" width="321" height="317"/>
         <image name="cancel_alarm" width="35" height="19"/>
-        <image name="close" width="25" height="25"/>
         <image name="close_icon" width="20" height="20"/>
         <image name="delete_black" width="25" height="25"/>
         <image name="dismiss_alarm" width="35" height="19"/>
