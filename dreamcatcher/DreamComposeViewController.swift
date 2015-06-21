@@ -83,9 +83,7 @@ class DreamComposeViewController: UIViewController {
     @IBAction func onDone(sender: AnyObject) {
         view.endEditing(true)
         styleScrollView.hidden = true
-        dismissViewControllerAnimated(true, completion: nil)        
     }
-    
 
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         println()
