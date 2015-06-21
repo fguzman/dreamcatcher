@@ -8,13 +8,7 @@
 
 import UIKit
 
-protocol communicationControllerJournal {
-    func backFromCompose()
-}
-
-class DreamComposeViewController: UIViewController {
-    
-    var composeDelegate: communicationControllerJournal!
+class DreamComposeViewController: UIViewController, UITextViewDelegate {
     
     @IBOutlet weak var styleScrollView: UIScrollView!
     @IBOutlet weak var composeTextView: UITextView!
@@ -26,18 +20,68 @@ class DreamComposeViewController: UIViewController {
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var titleTextView: UITextView!
     
+    let placeholderText: String = "What did you dream?"
+    let textColor: UIColor = UIColor(red: 45/255, green: 45/255, blue: 64/255, alpha: 1)
+    let lightTextColor: UIColor = UIColor(red: 45/255, green: 45/255, blue: 64/255, alpha: 0.3)
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        composeTextView.becomeFirstResponder()
-                styleScrollView.contentSize = CGSize(width: 960, height: 568)
+
         dateLabel.text = "June 17"
         titleTextView.backgroundColor = UIColor.clearColor()
         styleScrollView.hidden=true
+        
+        // Set up text view
+        composeTextView.becomeFirstResponder()
+        styleScrollView.contentSize = CGSize(width: 960, height: 568)
+        composeTextView.delegate = self
+        composeTextView.selectedTextRange = composeTextView.textRangeFromPosition(composeTextView.beginningOfDocument, toPosition: composeTextView.beginningOfDocument)
+        composeTextView.textColor = lightTextColor
+
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
+        
+        // Combine the textView text and the replacement text to
+        // create the updated text string
+        let currentText:NSString = textView.text
+        let updatedText = currentText.stringByReplacingCharactersInRange(range, withString:text)
+        
+        // If updated text view will be empty, add the placeholder
+        // and set the cursor to the beginning of the text view
+        if count(updatedText) == 0 {
+            
+            textView.text = placeholderText
+            textView.textColor = lightTextColor
+            
+            textView.selectedTextRange = textView.textRangeFromPosition(textView.beginningOfDocument, toPosition: textView.beginningOfDocument)
+            
+            return false
+        }
+            
+            // Else if the text view's placeholder is showing and the
+            // length of the replacement string is greater than 0, clear
+            // the text view and set its color to black to prepare for
+            // the user's entry
+        else if textView.textColor == lightTextColor && count(text) > 0 {
+            textView.text = nil
+            textView.textColor = textColor
+        }
+        
+        return true
+    }
+    
+    func textViewDidChangeSelection(textView: UITextView) {
+        if self.view.window != nil {
+            if textView.textColor == UIColor.lightGrayColor() {
+                textView.selectedTextRange = textView.textRangeFromPosition(textView.beginningOfDocument, toPosition: textView.beginningOfDocument)
+            }
+        }
     }
     
     @IBAction func onNext(sender: AnyObject) {
@@ -86,19 +130,18 @@ class DreamComposeViewController: UIViewController {
     }
 
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        println()
-        
         println("====== PREPARE FOR SEGUE ======!")
         
-        var dreamCollectionViewController = segue.destinationViewController as! DreamCollectionViewController
-        
-        dreamCollectionViewController.hasNewJournal = true
-        dreamCollectionViewController.dateArray.append(dateLabel.text!)
-        dreamCollectionViewController.titleArray.append(titleTextView.text)
-        dreamCollectionViewController.paragraphArray.append(composeTextView.text)
-        dreamCollectionViewController.imageArray.append(UIImage(named: "bg6")!)
-        
-        println("Number of journals: \(dreamCollectionViewController.dateArray.count)")
+        // Only add new journal if content is not empty
+        if composeTextView.textColor == textColor {
+            var dreamCollectionViewController = segue.destinationViewController as! DreamCollectionViewController
+            
+            dreamCollectionViewController.hasNewJournal = true
+            dreamCollectionViewController.dateArray.append(dateLabel.text!)
+            dreamCollectionViewController.titleArray.append(titleTextView.text)
+            dreamCollectionViewController.paragraphArray.append(composeTextView.text)
+            dreamCollectionViewController.imageArray.append(UIImage(named: "bg6")!)
+            println("Number of journals: \(dreamCollectionViewController.dateArray.count)")
+        }
     }
-
 }
