@@ -8,7 +8,13 @@
 
 import UIKit
 
+protocol communicationControllerJournal {
+    func backFromCompose()
+}
+
 class DreamComposeViewController: UIViewController {
+    
+    var composeDelegate: communicationControllerJournal!
     
     @IBOutlet weak var styleScrollView: UIScrollView!
     @IBOutlet weak var composeTextView: UITextView!
@@ -73,22 +79,26 @@ class DreamComposeViewController: UIViewController {
         dismissViewControllerAnimated(true, completion: nil)
     }
     
+    
     @IBAction func onDone(sender: AnyObject) {
         view.endEditing(true)
         styleScrollView.hidden = true
-        //dismissViewControllerAnimated(true, completion: nil)
-        
-        performSegueWithIdentifier("addSegue", sender: nil)
     }
-    
 
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        println()
+        
+        println("====== PREPARE FOR SEGUE ======!")
         
         var dreamCollectionViewController = segue.destinationViewController as! DreamCollectionViewController
-        dreamCollectionViewController.numOfCell++
+        
+        dreamCollectionViewController.hasNewJournal = true
         dreamCollectionViewController.dateArray.append(dateLabel.text!)
         dreamCollectionViewController.titleArray.append(titleTextView.text)
         dreamCollectionViewController.paragraphArray.append(composeTextView.text)
+        dreamCollectionViewController.imageArray.append(UIImage(named: "bg6")!)
+        
+        println("Number of journals: \(dreamCollectionViewController.dateArray.count)")
     }
 
 }

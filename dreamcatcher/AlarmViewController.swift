@@ -45,6 +45,7 @@ class AlarmViewController: UIViewController, UINavigationControllerDelegate {
     
     var alarmTransition = InteractiveBaseTransition()
     
+    var hasStartedTransition: Bool = false
     var currentState: State! = State.Unset
     var initialDismissContainerCenter: CGPoint!
     var initialButtonLabelCenter: CGPoint!
@@ -101,7 +102,7 @@ class AlarmViewController: UIViewController, UINavigationControllerDelegate {
         }
         updateAlarmState(tempState, isAnimate: false, complete: nil)
 //        userDefaults.setObject(NSDate(), forKey: AlarmUserSettings.Date.rawValue)
-//        updateAlarmState(State.Triggered, isAnimate: false)
+//        updateAlarmState(State.Triggered, isAnimate: false, complete: nil)
         
         // Display last selected alarm date
         if (userDefaults.objectForKey(AlarmUserSettings.LastSelected.rawValue) != nil) {
@@ -111,7 +112,6 @@ class AlarmViewController: UIViewController, UINavigationControllerDelegate {
         
         // Bounce the dismiss button
         if (currentState == State.Triggered) {
-            println("prepare for trigger animation")
             self.dismissAlarmContainer.frame.offset(dx: 0, dy: buttonInitOffset)
             self.dismissAlarmContainer.alpha = 0
             self.buttonLabel.frame.offset(dx: 0, dy: buttonInitOffset)
@@ -149,7 +149,6 @@ class AlarmViewController: UIViewController, UINavigationControllerDelegate {
     }
     
     func navigationController(navigationController: UINavigationController, interactionControllerForAnimationController animationController: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
-        println("-- ASKED FOR NAVIGATION INTERACTIVE ANIAMTION CONTROLLER -- ")
         return alarmTransition
     }
 
@@ -188,7 +187,6 @@ class AlarmViewController: UIViewController, UINavigationControllerDelegate {
             
             var nextCenterY = initialCancelButtonCenter.y + translation.y
             if (nextCenterY > initialCancelButtonCenter.y) {
-                println("translate y: \(translation.y)")
                 
                 // Hide display UI
                 if (translation.y > 0) {
@@ -217,7 +215,6 @@ class AlarmViewController: UIViewController, UINavigationControllerDelegate {
             }
             
         } else if (sender.state == UIGestureRecognizerState.Ended) {
-            println("-- GESTURE ENDED -- ")
             
             // passed the threshold to dismiss alarm and start compose journal
             if (translation.y < 60.0) {
@@ -255,7 +252,10 @@ class AlarmViewController: UIViewController, UINavigationControllerDelegate {
             UIView.animateWithDuration(0.3, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: { () -> Void in
                 self.dismissAlarmContainer.transform = CGAffineTransformScale(CGAffineTransformIdentity, 1.1, 1.1)
                 }, completion: { finished in
-                    self.performSegueWithIdentifier("alarmToComposeSegue", sender: self)
+                    if (!self.hasStartedTransition) {
+                        self.performSegueWithIdentifier("alarmToComposeSegue", sender: self)
+                        self.hasStartedTransition = true
+                    }
             })
         } else if (sender.state == UIGestureRecognizerState.Changed) {
             
@@ -285,9 +285,11 @@ class AlarmViewController: UIViewController, UINavigationControllerDelegate {
                 updateAlarmState(State.Unset, isAnimate: false, complete: nil)
                 
                 self.alarmTransition.finish()
+                self.hasStartedTransition = false
             } else {
                 // cancel dismiss alarm
                 self.alarmTransition.cancel()
+                self.hasStartedTransition = false
                 
                 UIView.animateWithDuration(1, delay: 0, usingSpringWithDamping: 0.2, initialSpringVelocity: 0.005, options: UIViewAnimationOptions.CurveEaseInOut, animations: { () -> Void in
                     self.dismissAlarmContainer.center = self.initialDismissContainerCenter

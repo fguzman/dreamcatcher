@@ -8,21 +8,30 @@
 
 import UIKit
 
-class AlarmTransition: BaseTransition {
+class AlarmTransition: InteractiveBaseTransition {
     
-    override func presentTransition(containerView: UIView, fromViewController: UIViewController, toViewController: UIViewController) {
+    override func presentTransition(containerView: UIView, fromViewController: UIViewController, toViewController: UIViewController, completionCallback: () -> Void) {
         
-        containerView.sendSubviewToBack(toViewController.view)
-        toViewController.view.alpha = 1
-    }
-    
-    override func dismissTransition(containerView: UIView, fromViewController: UIViewController, toViewController: UIViewController) {
+        containerView.backgroundColor = UIColor.whiteColor()
         
+        toViewController.view.alpha = 0
         fromViewController.view.alpha = 1
-        UIView.animateWithDuration(duration, animations: {
+        UIView.animateWithDuration(self.animationDuration, animations: {
+            toViewController.view.alpha = 1
             fromViewController.view.alpha = 0
             }) { (finished: Bool) -> Void in
-                self.finish()
+                completionCallback()
         }
+    }
+    
+    override func dismissTransition(containerView: UIView, fromViewController: UIViewController, toViewController: UIViewController, completionCallback: () -> Void) {
+        fromViewController.view.alpha = 1
+        
+        UIView.animateWithDuration(animationDuration, animations: { () -> Void in
+            fromViewController.view.alpha = 0
+            }, completion: { finished in
+                
+                completionCallback()
+        })
     }
 }

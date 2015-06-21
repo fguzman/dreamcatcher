@@ -10,7 +10,8 @@ import UIKit
 
 class DreamCollectionViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UIPageViewControllerDataSource {
     
-    var journalTransition : JournalTransition!
+    var hasNewJournal: Bool = false
+    var journalTransition: JournalTransition!
     var currentRowIndex: NSIndexPath!
 
     @IBOutlet weak var collectionView: UICollectionView!
@@ -23,8 +24,6 @@ class DreamCollectionViewController: UIViewController, UICollectionViewDataSourc
     @IBOutlet weak var composeButton: UIButton!
     @IBOutlet weak var alarmTimeLabel: UILabel!
     
-    
-    var numOfCell = 2
     var dateArray = ["JUNE 17", "JUNE 14", "MAY 7", "APRIL 20", "APRIL 15", "MARCH 28"]
     var titleArray = ["Underwater world with corals", "Diamond Man in the cellar", "The familiar yet unfamiliar stranger", "Do you want to inspect your piano", "The invisible murder witness", "The wonderful fluidity of gravity"]
     var paragraphArray = [
@@ -39,12 +38,20 @@ class DreamCollectionViewController: UIViewController, UICollectionViewDataSourc
     
     let defaultNavAlpha: CGFloat = 0.7
     let userDefaults: NSUserDefaults = NSUserDefaults.standardUserDefaults()
+    let hardcodedJournals: Int = 6
     
     override func viewDidLoad() {
         super.viewDidLoad()
         //setting background images
-        for var i = 0; i < dateArray.count; ++i {
-            var image = UIImage(named: "bg\(i+1)")
+        for i in 1...dateArray.count {
+            var image: UIImage!
+            if i <= hardcodedJournals {
+                image = UIImage(named: "bg\(i)")
+            } else {
+                // hardcoding image for now, to be changed later
+                image = UIImage(named: "bg6")
+            }
+            
             imageArray.append(image!)
         }
         
@@ -88,6 +95,11 @@ class DreamCollectionViewController: UIViewController, UICollectionViewDataSourc
                 self.alarmTimeLabel.alpha = 0
                 }, completion: nil)
         }
+        
+        if hasNewJournal {
+            collectionView.reloadData()
+            hasNewJournal = false
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -95,10 +107,12 @@ class DreamCollectionViewController: UIViewController, UICollectionViewDataSourc
         // Dispose of any resources that can be recreated.
     }
     
+    @IBAction func unwindToSegue (segue : UIStoryboardSegue) {
+//        println("UNWIND TO SEGUE")
+    }
     
-    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int{
+    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int{        
         return titleArray.count
-        
     }
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath){
@@ -162,8 +176,6 @@ class DreamCollectionViewController: UIViewController, UICollectionViewDataSourc
         
         return journalViewController
     }
-   
-    
     
     @IBAction func onPan(sender: UIPanGestureRecognizer) {
         //var cell = sender.view as! CardCollectionViewCell
@@ -182,30 +194,4 @@ class DreamCollectionViewController: UIViewController, UICollectionViewDataSourc
         }
         
     }
-    
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
-        
-
-//        if segue.identifier == "journalDetailSegue" {
-//            var destinationVC = segue.destinationViewController as! JournalViewController
-//            destinationVC.modalPresentationStyle = UIModalPresentationStyle.Custom
-//            journalTransition = JournalTransition()
-//            destinationVC.transitioningDelegate = journalTransition
-//            var currentCell = collectionView.cellForItemAtIndexPath(currentRowIndex) as! CardCollectionViewCell
-//            
-//            println(destinationVC.textView)
-//            
-//            destinationVC.paragraph = currentCell.textView.text
-//            destinationVC.titleText = currentCell.titleLabel.text
-//            destinationVC.dateText = currentCell.dateLabel.text
-//            
-//        }
-        
-
-        
-    }
-    
-
-    
-
 }

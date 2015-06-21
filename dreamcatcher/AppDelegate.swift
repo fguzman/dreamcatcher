@@ -63,7 +63,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func stopPlayer() {
         if (isPlayerPrepared) {
-            fader.fadeOut(duration: 5, velocity: 2, onFinished: { finished in
+            fader.fadeOut(duration: 2, velocity: 2, onFinished: { finished in
                 self.player.stop()
                 self.isPlayerPrepared = false
             })
