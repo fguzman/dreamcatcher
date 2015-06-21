@@ -13,6 +13,8 @@ class DreamCollectionViewController: UIViewController, UICollectionViewDataSourc
     var hasNewJournal: Bool = false
     var journalTransition: JournalTransition!
     var currentRowIndex: NSIndexPath!
+    
+    @IBOutlet weak var statsView: UIView!
 
     @IBOutlet weak var collectionView: UICollectionView!
     
@@ -23,6 +25,8 @@ class DreamCollectionViewController: UIViewController, UICollectionViewDataSourc
     @IBOutlet weak var alarmButton: UIButton!
     @IBOutlet weak var composeButton: UIButton!
     @IBOutlet weak var alarmTimeLabel: UILabel!
+    
+    @IBOutlet weak var statsBackButton: UIButton!
     
     var dateArray = ["JUNE 17", "JUNE 14", "MAY 7", "APRIL 20", "APRIL 15", "MARCH 28"]
     var titleArray = ["Underwater world with corals", "Diamond Man in the cellar", "The familiar yet unfamiliar stranger", "Do you want to inspect your piano", "The invisible murder witness", "The wonderful fluidity of gravity"]
@@ -68,6 +72,14 @@ class DreamCollectionViewController: UIViewController, UICollectionViewDataSourc
         
         pageViewController = UIPageViewController(transitionStyle: UIPageViewControllerTransitionStyle.Scroll, navigationOrientation: UIPageViewControllerNavigationOrientation.Horizontal, options: nil)
         pageViewController.dataSource = self
+        
+        
+        var storyboard = UIStoryboard(name: "Main", bundle:nil)
+        var statsViewController = storyboard.instantiateViewControllerWithIdentifier("StatsViewController") as! StatsViewController
+        statsViewController.view.frame = statsView.bounds
+        addChildViewController(statsViewController)
+        statsView.addSubview(statsViewController.view)
+        statsView.addSubview(statsBackButton)
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -194,4 +206,21 @@ class DreamCollectionViewController: UIViewController, UICollectionViewDataSourc
         }
         
     }
+    
+    
+    @IBAction func onStatsButtonPressed(sender: AnyObject) {
+        UIView.animateWithDuration(0.5, animations: { () -> Void in
+            self.statsView.frame.origin.y = 172
+        })
+        
+    }
+    
+    
+    @IBAction func onStatsBackButtonPressed(sender: AnyObject) {
+        UIView.animateWithDuration(0.5, animations: { () -> Void in
+            self.statsView.frame.origin.y = -250
+        })
+    }
+    
+    
 }
