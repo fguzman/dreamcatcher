@@ -20,15 +20,16 @@ class DreamComposeViewController: UIViewController, UITextViewDelegate {
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var titleTextView: UITextView!
     
-    let placeholderText: String = "What did you dream?"
+    let placeholderText: String = "Quickly jot down what you remember from your dream"
     let textColor: UIColor = UIColor(red: 45/255, green: 45/255, blue: 64/255, alpha: 1)
     let lightTextColor: UIColor = UIColor(red: 45/255, green: 45/255, blue: 64/255, alpha: 0.3)
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        dateLabel.text = "June 17"
+        dateLabel.text = "JUNE 17"
         titleTextView.backgroundColor = UIColor.clearColor()
+        titleTextView.textColor = UIColor.whiteColor()
         styleScrollView.hidden=true
         
         // Set up text view
@@ -137,9 +138,9 @@ class DreamComposeViewController: UIViewController, UITextViewDelegate {
             var dreamCollectionViewController = segue.destinationViewController as! DreamCollectionViewController
             
             dreamCollectionViewController.hasNewJournal = true
-            dreamCollectionViewController.dateArray.append(dateLabel.text!)
-            dreamCollectionViewController.titleArray.append(titleTextView.text)
-            dreamCollectionViewController.paragraphArray.append(composeTextView.text)
+            dreamCollectionViewController.dateArray.insert(dateLabel.text!, atIndex: 0)
+            dreamCollectionViewController.titleArray.insert(titleTextView.text, atIndex: 0)
+            dreamCollectionViewController.paragraphArray.insert(composeTextView.text, atIndex: 0)
             dreamCollectionViewController.imageArray.append(UIImage(named: "bg6")!)
             println("Number of journals: \(dreamCollectionViewController.dateArray.count)")
         }
