@@ -87,6 +87,7 @@ class JournalTransition: BaseTransition {
             
             }) { (finished: Bool) -> Void in
                 toViewController.view.alpha = 1
+                containerView.backgroundColor = UIColor(white:0, alpha:0)
                 self.transitionView.removeFromSuperview()
                 self.finish()
         }
@@ -95,12 +96,18 @@ class JournalTransition: BaseTransition {
     override func dismissTransition(containerView: UIView, fromViewController: UIViewController, toViewController: UIViewController) {
         fromViewController.view.alpha = 0
         
+        
+        
         var pageViewController = fromViewController as! UIPageViewController
         var journalViewController = pageViewController.viewControllers[0] as! JournalViewController
         var dreamCollectionViewController = toViewController as! DreamCollectionViewController
         var selectedCell = dreamCollectionViewController.collectionView.cellForItemAtIndexPath(dreamCollectionViewController.currentRowIndex) as! CardCollectionViewCell
         
         var cellFrame = containerView.convertRect(selectedCell.frame, fromView: selectedCell.superview)
+
+        containerView.backgroundColor = journalViewController.scrollView.backgroundColor
+        transitionView.frame.origin.y = journalViewController.scrollView.contentOffset.y * CGFloat(-1)
+        println("transition \(transitionView.frame.origin.y)")
         
         backgroundImageView.image = journalViewController.backgroundImageView.image
         backgroundImageView.frame = journalViewController.backgroundImageView.frame
@@ -113,13 +120,11 @@ class JournalTransition: BaseTransition {
         dateLabel.text = journalViewController.dateLabel.text
         dateLabel.frame = journalViewController.dateLabel.frame
         textView.text = selectedCell.textView.text
-        transitionView.frame = journalViewController.view.frame
-        
-        
         
         
         var window = UIApplication.sharedApplication().keyWindow
         window?.addSubview(transitionView)
+        
     
         
         UIView.animateWithDuration(duration, animations: {
@@ -134,6 +139,7 @@ class JournalTransition: BaseTransition {
             self.fullTextView.frame.origin = selectedCell.textView.frame.origin
             containerView.backgroundColor = UIColor(white:0, alpha:0)
             }) { (finished: Bool) -> Void in
+                containerView.backgroundColor = UIColor(white:0, alpha:1)
                 self.transitionView.removeFromSuperview()
                 self.finish()
         }

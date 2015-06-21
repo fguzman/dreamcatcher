@@ -68,6 +68,7 @@ class DreamCollectionViewController: UIViewController, UICollectionViewDataSourc
         
         pageViewController = UIPageViewController(transitionStyle: UIPageViewControllerTransitionStyle.Scroll, navigationOrientation: UIPageViewControllerNavigationOrientation.Horizontal, options: nil)
         pageViewController.dataSource = self
+        pageViewController.view.backgroundColor = UIColor(white: 1, alpha: 0)
     }
     
     override func viewDidAppear(animated: Bool) {
