@@ -111,7 +111,6 @@ class AlarmViewController: UIViewController, UINavigationControllerDelegate {
         
         // Bounce the dismiss button
         if (currentState == State.Triggered) {
-            println("prepare for trigger animation")
             self.dismissAlarmContainer.frame.offset(dx: 0, dy: buttonInitOffset)
             self.dismissAlarmContainer.alpha = 0
             self.buttonLabel.frame.offset(dx: 0, dy: buttonInitOffset)
@@ -149,7 +148,6 @@ class AlarmViewController: UIViewController, UINavigationControllerDelegate {
     }
     
     func navigationController(navigationController: UINavigationController, interactionControllerForAnimationController animationController: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
-        println("-- ASKED FOR NAVIGATION INTERACTIVE ANIAMTION CONTROLLER -- ")
         return alarmTransition
     }
 
@@ -188,7 +186,6 @@ class AlarmViewController: UIViewController, UINavigationControllerDelegate {
             
             var nextCenterY = initialCancelButtonCenter.y + translation.y
             if (nextCenterY > initialCancelButtonCenter.y) {
-                println("translate y: \(translation.y)")
                 
                 // Hide display UI
                 if (translation.y > 0) {
@@ -217,7 +214,6 @@ class AlarmViewController: UIViewController, UINavigationControllerDelegate {
             }
             
         } else if (sender.state == UIGestureRecognizerState.Ended) {
-            println("-- GESTURE ENDED -- ")
             
             // passed the threshold to dismiss alarm and start compose journal
             if (translation.y < 60.0) {
