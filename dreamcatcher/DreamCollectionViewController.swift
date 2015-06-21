@@ -101,8 +101,6 @@ class DreamCollectionViewController: UIViewController, UICollectionViewDataSourc
         return titleArray.count
         
     }
- 
-    
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath){
         currentRowIndex = indexPath

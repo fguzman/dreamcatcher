@@ -26,7 +26,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         application.registerUserNotificationSettings(UIUserNotificationSettings(forTypes: .Alert | .Badge | .Sound, categories: nil))
         
         if (alarmViewController != nil) {
-            alarmViewController.updateAlarmState(AlarmViewController.State.Triggered)
+            alarmViewController.updateAlarmState(AlarmViewController.State.Triggered, isAnimate: false, complete: nil)
         }
         return true
     }
@@ -36,13 +36,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         prepareAudio()
         fadeInAudio(player)
         if (alarmViewController != nil) {
-            alarmViewController.updateAlarmState(AlarmViewController.State.Triggered)
+            alarmViewController.updateAlarmState(AlarmViewController.State.Triggered, isAnimate: true, complete: nil)
         }
     }
 
     // Prepare for audio session settings for background audio
     func prepareAudio() {
-        var path = NSBundle.mainBundle().pathForResource("alarm_sound_3", ofType: "mp3")
+        var path = NSBundle.mainBundle().pathForResource("alarm_sound_normal", ofType: "mp3")
         player = AVAudioPlayer(contentsOfURL: NSURL(fileURLWithPath: path!), error: nil)
         AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback, error: nil)
         AVAudioSession.sharedInstance().setActive(true, error: nil)
@@ -63,14 +63,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func stopPlayer() {
         if (isPlayerPrepared) {
-            player.stop()
-            isPlayerPrepared = false
+            fader.fadeOut(duration: 5, velocity: 2, onFinished: { finished in
+                self.player.stop()
+                self.isPlayerPrepared = false
+            })
         }
     }
-    
-//    func playAlarm(timer: NSTimer) {
-//        println("here!")
-//    }
     
     func applicationWillResignActive(application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
@@ -78,12 +76,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         backgroundIdentifier = UIApplication.sharedApplication().beginBackgroundTaskWithExpirationHandler { () -> Void in
             UIApplication.sharedApplication().endBackgroundTask(self.backgroundIdentifier)
         }
-        
-//        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), { () -> Void in
-//            var timer = NSTimer(fireDate: NSDate(timeIntervalSinceNow: 10), interval: 60.0, target: self, selector: Selector("playAlarm:"), userInfo: nil, repeats: false)
-//            NSRunLoop.currentRunLoop().addTimer(timer, forMode: NSDefaultRunLoopMode)
-//            println("scheduled timer")
-//        })
     }
 
     func applicationDidEnterBackground(application: UIApplication) {
