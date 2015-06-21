@@ -118,7 +118,6 @@ class AlarmViewController: UIViewController, UINavigationControllerDelegate {
     }
     
     func navigationController(navigationController: UINavigationController, interactionControllerForAnimationController animationController: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
-        
         println("-- ASKED FOR NAVIGATION INTERACTIVE ANIAMTION CONTROLLER -- ")
         return alarmTransition
     }
@@ -186,7 +185,6 @@ class AlarmViewController: UIViewController, UINavigationControllerDelegate {
                 unsetLocalNotification()
                 updateAlarmState(State.Unset)
                 
-                self.alarmTransition.isInteractive = false
                 self.alarmTransition.finish()
                 println("-- FINISHED TRANSITION -- ")
             } else {
