@@ -38,6 +38,10 @@ class JournalViewController: UIViewController, UIScrollViewDelegate{
         let inset: CGFloat = 20
         
         scrollView.contentSize.height = textView.frame.origin.y + textView.frame.size.height + inset
+        
+        if scrollView.contentSize.height < self.view.frame.size.height{
+            scrollView.contentSize.height = self.view.frame.size.height + 1
+        }
         backgroundView.frame.size.height = scrollView.contentSize.height
         
         scrollView.delegate = self
@@ -55,7 +59,7 @@ class JournalViewController: UIViewController, UIScrollViewDelegate{
     func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool){
         println("end")
         
-        if scrollView.contentOffset.y <= -150{
+        if scrollView.contentOffset.y <= -80{
             self.dismissViewControllerAnimated(true, completion: nil)
         }
         
