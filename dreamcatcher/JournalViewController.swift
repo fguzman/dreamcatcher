@@ -11,10 +11,9 @@ import UIKit
 class JournalViewController: UIViewController, UIScrollViewDelegate{
     
     
+    @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var backgroundImageView: UIImageView!
-    
     @IBOutlet weak var backgroundView: UIView!
-    
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var titleLabel: UILabel!
@@ -48,17 +47,18 @@ class JournalViewController: UIViewController, UIScrollViewDelegate{
     
     func scrollViewDidScroll(scrollView: UIScrollView){
         var backgroundAlpha = progressValue(scrollView.contentOffset.y, refValueMin: 0, refValueMax: -300, convertValueMin: 1, convertValueMax: 0)
-
-
+       
+        backButton.alpha = progressValue(scrollView.contentOffset.y, refValueMin: 0, refValueMax: -150, convertValueMin: 1, convertValueMax: 0)
         scrollView.backgroundColor = UIColor(white:0, alpha: backgroundAlpha)
-        
-        
     }
     
     func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool){
         println("end")
         
-        self.dismissViewControllerAnimated(true, completion: nil)
+        if scrollView.contentOffset.y <= -150{
+            self.dismissViewControllerAnimated(true, completion: nil)
+        }
+        
     }
     
 

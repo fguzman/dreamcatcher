@@ -257,6 +257,7 @@
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     </view>
                     <connections>
+                        <outlet property="backButton" destination="WWz-5d-R9J" id="hMf-FW-cQG"/>
                         <outlet property="backgroundImageView" destination="oBH-vL-imF" id="M8J-8Z-CUa"/>
                         <outlet property="backgroundView" destination="xUR-HC-hiq" id="gmO-SD-HIw"/>
                         <outlet property="dateLabel" destination="MUf-lA-SGT" id="TgU-em-i4w"/>
