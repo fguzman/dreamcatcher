@@ -48,6 +48,7 @@ class DreamCollectionViewController: UIViewController, UICollectionViewDataSourc
         super.viewDidLoad()
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "segueToAlarm", name: UIApplicationWillEnterForegroundNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "launchAnimation", name: UIApplicationDidFinishLaunchingNotification, object: nil)
         
         //setting background images
         for i in 1...dateArray.count {
@@ -120,6 +121,19 @@ class DreamCollectionViewController: UIViewController, UICollectionViewDataSourc
         if AlarmViewController.getCurrentAlarmState() == AlarmViewController.State.Triggered {
             performSegueWithIdentifier("dreamToAlarmSegue", sender: self)
         }
+    }
+    
+    func launchAnimation() {
+        collectionView.alpha = 0
+        var initialCollectionCenter = collectionView.center
+        collectionView.center = CGPointMake(initialCollectionCenter.x, initialCollectionCenter.y + 20)
+        collectionView.transform = CGAffineTransformScale(CGAffineTransformIdentity, 1.05, 1.05)
+        
+        UIView.animateWithDuration(0.8, delay: 0.3, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.05, options: UIViewAnimationOptions.CurveEaseInOut, animations: { () -> Void in
+            self.collectionView.alpha = 1
+            self.collectionView.center = initialCollectionCenter
+            self.collectionView.transform = CGAffineTransformIdentity
+        }, completion: nil)
     }
 
     deinit {
