@@ -28,11 +28,18 @@ class DreamComposeViewController: UIViewController, UITextViewDelegate {
     let lightTextColor: UIColor = UIColor(red: 45/255, green: 45/255, blue: 64/255, alpha: 0.3)
     let titleMaxLength: Int = 30
     let titleMaxWords: Int = 4
+
+    var todaysDate: NSDate = NSDate()
+    var dateFormatter: NSDateFormatter = NSDateFormatter()
+    var dateString: String!
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        dateLabel.text = "JUNE 17"
+        dateFormatter.dateFormat = "MMMM dd"
+        dateString = dateFormatter.stringFromDate(todaysDate)
+        
+        dateLabel.text = dateString
         titleTextView.backgroundColor = UIColor.clearColor()
         titleTextView.textColor = UIColor.whiteColor()
         titleTextView.delegate = self
