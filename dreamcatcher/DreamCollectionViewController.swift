@@ -46,6 +46,9 @@ class DreamCollectionViewController: UIViewController, UICollectionViewDataSourc
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "segueToAlarm", name: UIApplicationWillEnterForegroundNotification, object: nil)
+        
         //setting background images
         for i in 1...dateArray.count {
             var image: UIImage!
@@ -61,6 +64,7 @@ class DreamCollectionViewController: UIViewController, UICollectionViewDataSourc
         
         collectionView.delegate = self
         collectionView.dataSource = self
+
         currentRowIndex = NSIndexPath(forRow: 0, inSection: 0)
         // Do any additional setup after loading the view.
        
@@ -111,7 +115,17 @@ class DreamCollectionViewController: UIViewController, UICollectionViewDataSourc
             hasNewJournal = false
         }
     }
+    
+    func segueToAlarm() {
+        if AlarmViewController.getCurrentAlarmState() == AlarmViewController.State.Triggered {
+            performSegueWithIdentifier("dreamToAlarmSegue", sender: self)
+        }
+    }
 
+    deinit {
+            NSNotificationCenter.defaultCenter().removeObserver(self)
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

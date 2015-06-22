@@ -95,7 +95,8 @@ class AlarmViewController: UIViewController, UINavigationControllerDelegate {
     
     func initAlarmState() {
         // Set alarm state
-        currentState = getCurrentAlarmState()
+        currentState = AlarmViewController.getCurrentAlarmState()
+        
         updateAlarmState(currentState, isAnimate: false, complete: nil)
 //        userDefaults.setObject(NSDate(), forKey: AlarmUserSettings.Date.rawValue)
 //        updateAlarmState(State.Triggered, isAnimate: false, complete: nil)
@@ -445,8 +446,9 @@ class AlarmViewController: UIViewController, UINavigationControllerDelegate {
         textLabel.textAlignment = NSTextAlignment.Center
     }
     
-    func getCurrentAlarmState() -> State {
-        var state = currentState
+    static func getCurrentAlarmState() -> State {
+        var state: State!
+        let userDefaults: NSUserDefaults = NSUserDefaults.standardUserDefaults()
         
         if userDefaults.objectForKey(AlarmUserSettings.Date.rawValue) != nil {
             let date = userDefaults.objectForKey(AlarmUserSettings.Date.rawValue) as! NSDate
