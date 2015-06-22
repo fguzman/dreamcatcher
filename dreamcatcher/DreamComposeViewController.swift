@@ -165,7 +165,7 @@ class DreamComposeViewController: UIViewController, UITextViewDelegate {
         view.endEditing(true)
         UIView.animateWithDuration(0.3, animations: { () -> Void in
             self.styleScrollView.frame.origin.y += 300
-            self.composeTextView.frame.origin.y += 250
+            self.composeTextView.frame.origin.y = 337
         })
         navLabel.textColor = UIColor.whiteColor()
         closeButton.hidden = true
@@ -179,7 +179,7 @@ class DreamComposeViewController: UIViewController, UITextViewDelegate {
     @IBAction func onBack(sender: AnyObject) {
         UIView.animateWithDuration(0.3, animations: { () -> Void in
             self.styleScrollView.frame.origin.y -= 300
-            self.composeTextView.frame.origin.y -= 250
+            self.composeTextView.frame.origin.y = 82
         })
         navLabel.textColor = UIColor.blackColor()
         closeButton.hidden = false
