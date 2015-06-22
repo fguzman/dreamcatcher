@@ -34,7 +34,7 @@ class DreamComposeViewController: UIViewController, UITextViewDelegate {
         
         // Set up text view
         composeTextView.becomeFirstResponder()
-        styleScrollView.contentSize = CGSize(width: 960, height: 568)
+        styleScrollView.contentSize = CGSize(width: 1920, height: 568)
         composeTextView.delegate = self
         composeTextView.selectedTextRange = composeTextView.textRangeFromPosition(composeTextView.beginningOfDocument, toPosition: composeTextView.beginningOfDocument)
         composeTextView.textColor = lightTextColor
