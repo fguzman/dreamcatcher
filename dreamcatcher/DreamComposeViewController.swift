@@ -209,12 +209,13 @@ class DreamComposeViewController: UIViewController, UITextViewDelegate {
         // Only add new journal if content is not empty
         if composeTextView.textColor == textColor {
             var dreamCollectionViewController = segue.destinationViewController as! DreamCollectionViewController
+            var bgNum : Int = Int(round(styleScrollView.contentOffset.x / 320)) + 1
             
             dreamCollectionViewController.hasNewJournal = true
             dreamCollectionViewController.dateArray.insert(dateLabel.text!, atIndex: 0)
             dreamCollectionViewController.titleArray.insert(titleTextView.text, atIndex: 0)
             dreamCollectionViewController.paragraphArray.insert(composeTextView.text, atIndex: 0)
-            dreamCollectionViewController.imageArray.append(UIImage(named: "bg6")!)
+            dreamCollectionViewController.imageArray.insert(UIImage(named: "bg\(bgNum)")!, atIndex: 0)
             println("Number of journals: \(dreamCollectionViewController.dateArray.count)")
         }
     }
