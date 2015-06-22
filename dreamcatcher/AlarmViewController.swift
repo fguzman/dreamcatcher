@@ -24,7 +24,6 @@ class AlarmViewController: UIViewController, UINavigationControllerDelegate {
     enum AlarmUserSettings: String {
         case Date           = "alarm.date"
         case Repeat         = "alarm.repeat"
-        case State          = "alarm.state"
         case LastSelected   = "alarm.lastSelected"
     }
     
@@ -96,11 +95,9 @@ class AlarmViewController: UIViewController, UINavigationControllerDelegate {
     
     func initAlarmState() {
         // Set alarm state
-        var tempState = State.Unset
-        if (userDefaults.objectForKey(AlarmUserSettings.State.rawValue) != nil) {
-            tempState = State(rawValue: userDefaults.objectForKey(AlarmUserSettings.State.rawValue) as! String)!
-        }
-        updateAlarmState(tempState, isAnimate: false, complete: nil)
+        currentState = AlarmViewController.getCurrentAlarmState()
+        
+        updateAlarmState(currentState, isAnimate: false, complete: nil)
 //        userDefaults.setObject(NSDate(), forKey: AlarmUserSettings.Date.rawValue)
 //        updateAlarmState(State.Triggered, isAnimate: false, complete: nil)
         
@@ -123,7 +120,6 @@ class AlarmViewController: UIViewController, UINavigationControllerDelegate {
             self.buttonLabel.alpha = 0
         }
     }
-    
     
     override func viewDidAppear(animated: Bool) {
         // Bounce the dismiss button
@@ -409,8 +405,8 @@ class AlarmViewController: UIViewController, UINavigationControllerDelegate {
             }
         } else {
             if isAnimate {
-                UIView.animateKeyframesWithDuration(1, delay: 0, options: nil, animations: {
-                    UIView.addKeyframeWithRelativeStartTime(0, relativeDuration: 0.5, animations: {
+                UIView.animateKeyframesWithDuration(0.5, delay: 0, options: nil, animations: {
+                    UIView.addKeyframeWithRelativeStartTime(0, relativeDuration: 0.2, animations: {
                         self.cancelAlarmContainer.alpha = displayAlpha
                         self.dismissAlarmContainer.alpha = displayAlpha
                         self.timeLabel.alpha = displayAlpha
@@ -418,11 +414,11 @@ class AlarmViewController: UIViewController, UINavigationControllerDelegate {
                         self.buttonLabel.alpha = displayAlpha
                     })
                     
-                    UIView.addKeyframeWithRelativeStartTime(0.2, relativeDuration: 0.7, animations: {
+                    UIView.addKeyframeWithRelativeStartTime(0, relativeDuration: 0.4, animations: {
                         self.datePickerContainer.frame = CGRectMake(0, 0, self.screenSize.width, self.screenSize.height)
                     })
                     
-                    UIView.addKeyframeWithRelativeStartTime(0.7, relativeDuration: 0.3, animations: {
+                    UIView.addKeyframeWithRelativeStartTime(0.2, relativeDuration: 0.3, animations: {
                         self.datePicker.alpha = editAlpha
                         self.repeatContainer.alpha = editAlpha
                         self.setAlarmButton.alpha = editAlpha
@@ -450,6 +446,25 @@ class AlarmViewController: UIViewController, UINavigationControllerDelegate {
         textLabel.textAlignment = NSTextAlignment.Center
     }
     
+    static func getCurrentAlarmState() -> State {
+        var state: State!
+        let userDefaults: NSUserDefaults = NSUserDefaults.standardUserDefaults()
+        
+        if userDefaults.objectForKey(AlarmUserSettings.Date.rawValue) != nil {
+            let date = userDefaults.objectForKey(AlarmUserSettings.Date.rawValue) as! NSDate
+            var now = NSDate()
+            if (now.compare(date) == .OrderedAscending) {
+                state = State.Set
+            } else {
+                state = State.Triggered
+            }
+        } else {
+            state = State.Unset
+        }
+        
+        return state
+    }
+    
     // Display current alarm time and repeat setting
     func displayAlarmInfo() {
         var dateFormatter = NSDateFormatter()
@@ -472,11 +487,6 @@ class AlarmViewController: UIViewController, UINavigationControllerDelegate {
     
     // Alarm state controller
     func updateAlarmState(state: State, isAnimate: Bool, complete: (() -> Void)?) {
-        // If user default doesn't have alarm setting yet, default to Unset
-        if (userDefaults.objectForKey(AlarmUserSettings.Date.rawValue) == nil) {
-            currentState = State.Unset
-        }
-        
         currentState = state
         
         if currentState == State.Unset {
@@ -499,8 +509,6 @@ class AlarmViewController: UIViewController, UINavigationControllerDelegate {
             buttonLabel.text = "DRAG TO DISMISS"
             centerTextLabel(buttonLabel)
         }
-        
-        userDefaults.setObject(currentState.rawValue, forKey: AlarmUserSettings.State.rawValue)
     }
     
     /*

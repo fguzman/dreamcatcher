@@ -20,26 +20,44 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var backgroundIdentifier: UIBackgroundTaskIdentifier!
     
     var isPlayerPrepared: Bool = false
+    
+    let userDefaults: NSUserDefaults = NSUserDefaults.standardUserDefaults()
+    let alarmSoundDuration: Int = 23
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
+        println("launch")
         application.registerUserNotificationSettings(UIUserNotificationSettings(forTypes: .Alert | .Badge | .Sound, categories: nil))
-        
-        if (alarmViewController != nil) {
-            alarmViewController.updateAlarmState(AlarmViewController.State.Triggered, isAnimate: false, complete: nil)
-        }
         return true
     }
     
     func application(application: UIApplication, didReceiveLocalNotification notification: UILocalNotification) {
         NSLog("Received local notification")
+
+        // App will start playing from here, so cancelling all sound notifications
+        UIApplication.sharedApplication().cancelAllLocalNotifications()
+        application.applicationIconBadgeNumber = 0
+        
         prepareAudio()
-        fadeInAudio(player)
+        
+        if (userDefaults.objectForKey(AlarmViewController.AlarmUserSettings.Date.rawValue) != nil) {
+            let calendar = NSCalendar.currentCalendar()
+
+            var firedate = userDefaults.objectForKey("alarm.date") as! NSDate
+            var nextFiredate = calendar.dateByAddingUnit(.CalendarUnitSecond, value: alarmSoundDuration, toDate: firedate, options: nil)!
+            
+            if nextFiredate.compare(NSDate()) == .OrderedDescending {
+                fadeInAudio(player)
+            } else {
+                player.play()
+            }
+        }
+        
         if (alarmViewController != nil) {
             alarmViewController.updateAlarmState(AlarmViewController.State.Triggered, isAnimate: true, complete: nil)
         }
     }
-
+    
     // Prepare for audio session settings for background audio
     func prepareAudio() {
         var path = NSBundle.mainBundle().pathForResource("alarm_sound_normal", ofType: "mp3")
@@ -63,10 +81,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func stopPlayer() {
         if (isPlayerPrepared) {
-            fader.fadeOut(duration: 2, velocity: 2, onFinished: { finished in
-                self.player.stop()
-                self.isPlayerPrepared = false
-            })
+            if (fader != nil) {
+                fader.fadeOut(duration: 2, velocity: 2, onFinished: { finished in
+                    self.player.stop()
+                    self.isPlayerPrepared = false
+                })
+            } else {
+                    self.player.stop()
+            }
         }
     }
     

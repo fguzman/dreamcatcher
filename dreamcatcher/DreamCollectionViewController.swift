@@ -46,6 +46,10 @@ class DreamCollectionViewController: UIViewController, UICollectionViewDataSourc
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "segueToAlarm", name: UIApplicationWillEnterForegroundNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "launchAnimation", name: UIApplicationDidFinishLaunchingNotification, object: nil)
+        
         //setting background images
         for i in 1...dateArray.count {
             var image: UIImage!
@@ -61,6 +65,7 @@ class DreamCollectionViewController: UIViewController, UICollectionViewDataSourc
         
         collectionView.delegate = self
         collectionView.dataSource = self
+
         currentRowIndex = NSIndexPath(forRow: 0, inSection: 0)
         // Do any additional setup after loading the view.
        
@@ -85,8 +90,6 @@ class DreamCollectionViewController: UIViewController, UICollectionViewDataSourc
     }
     
     override func viewDidAppear(animated: Bool) {
-        
-        
         if (userDefaults.objectForKey(AlarmViewController.AlarmUserSettings.Date.rawValue) != nil) {
             var dateFormatter = NSDateFormatter()
             dateFormatter.timeStyle = NSDateFormatterStyle.ShortStyle
@@ -115,7 +118,30 @@ class DreamCollectionViewController: UIViewController, UICollectionViewDataSourc
             hasNewJournal = false
         }
     }
+    
+    func segueToAlarm() {
+        if AlarmViewController.getCurrentAlarmState() == AlarmViewController.State.Triggered {
+            performSegueWithIdentifier("dreamToAlarmSegue", sender: self)
+        }
+    }
+    
+    func launchAnimation() {
+        collectionView.alpha = 0
+        var initialCollectionCenter = collectionView.center
+        collectionView.center = CGPointMake(initialCollectionCenter.x, initialCollectionCenter.y + 20)
+        collectionView.transform = CGAffineTransformScale(CGAffineTransformIdentity, 1.05, 1.05)
+        
+        UIView.animateWithDuration(0.8, delay: 0.3, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.05, options: UIViewAnimationOptions.CurveEaseInOut, animations: { () -> Void in
+            self.collectionView.alpha = 1
+            self.collectionView.center = initialCollectionCenter
+            self.collectionView.transform = CGAffineTransformIdentity
+        }, completion: nil)
+    }
 
+    deinit {
+        NSNotificationCenter.defaultCenter().removeObserver(self)
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
