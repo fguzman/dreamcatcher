@@ -20,12 +20,16 @@ class JournalTransition: BaseTransition {
     
     override func presentTransition(containerView: UIView, fromViewController: UIViewController, toViewController: UIViewController) {
         
+        
+        
         containerView.backgroundColor = UIColor(white:0, alpha:0)
         
         var pageViewController = toViewController as! UIPageViewController
         var journalViewController = pageViewController.viewControllers[0] as! JournalViewController
         var dreamCollectionViewController = fromViewController as! DreamCollectionViewController
         var selectedCell = dreamCollectionViewController.collectionView.cellForItemAtIndexPath(dreamCollectionViewController.currentRowIndex) as! CardCollectionViewCell
+        
+        println("transition for \(journalViewController.index)")
         
         var cellFrame = containerView.convertRect(selectedCell.frame, fromView: selectedCell.superview)
         
@@ -101,11 +105,18 @@ class JournalTransition: BaseTransition {
         var pageViewController = fromViewController as! UIPageViewController
         var journalViewController = pageViewController.viewControllers[0] as! JournalViewController
         var dreamCollectionViewController = toViewController as! DreamCollectionViewController
-        var selectedCell = dreamCollectionViewController.collectionView.cellForItemAtIndexPath(dreamCollectionViewController.currentRowIndex) as! CardCollectionViewCell
-        //var indexPath = NSIndexPath(forRow: journalViewController.index, inSection: 0)
+       // var selectedCell = dreamCollectionViewController.collectionView.cellForItemAtIndexPath(dreamCollectionViewController.currentRowIndex) as! CardCollectionViewCell
         
-        //var selectedCell = dreamCollectionViewController.collectionView.cellForItemAtIndexPath(indexPath) as! CardCollectionViewCell
-       
+        
+        var indexPath = NSIndexPath(forRow: 2, inSection: 0)
+        dreamCollectionViewController.collectionView.scrollToItemAtIndexPath(indexPath, atScrollPosition: UICollectionViewScrollPosition.CenteredHorizontally, animated: true)
+        
+        println("current row index \(dreamCollectionViewController.currentRowIndex)")
+        println("index \(indexPath)")
+        println("test \(NSIndexPath(forRow: 0, inSection: 0))")
+        
+        var selectedCell = dreamCollectionViewController.collectionView.cellForItemAtIndexPath(indexPath) as! CardCollectionViewCell
+       println("transition for \(journalViewController.index)")
         
         var cellFrame = containerView.convertRect(selectedCell.frame, fromView: selectedCell.superview)
         

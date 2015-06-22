@@ -27,7 +27,7 @@ class JournalViewController: UIViewController, UIScrollViewDelegate{
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        println("current index \(index)")
+        //println("\(titleText): \(index)")
         
         textView.text = paragraph
         titleLabel.text = titleText
