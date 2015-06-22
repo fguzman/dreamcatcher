@@ -128,6 +128,7 @@ class DreamCollectionViewController: UIViewController, UICollectionViewDataSourc
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath){
         currentRowIndex = indexPath
         NSLog("You selected cell number: \(currentRowIndex.row)!")
+        
 
         // This acts like pageViewController.reloadData
         pageViewController.dataSource = nil;
@@ -139,6 +140,7 @@ class DreamCollectionViewController: UIViewController, UICollectionViewDataSourc
         pageViewController.modalPresentationStyle = UIModalPresentationStyle.Custom
         pageViewController.transitioningDelegate = journalTransition
         presentViewController(pageViewController, animated: true, completion: nil)
+        
     
     }
     
@@ -208,7 +210,7 @@ class DreamCollectionViewController: UIViewController, UICollectionViewDataSourc
     
     @IBAction func onStatsButtonPressed(sender: AnyObject) {
         UIView.animateWithDuration(0.5, animations: { () -> Void in
-            self.statsView.frame.origin.y = self.collectionView.frame.origin.y
+            self.statsView.frame.origin.y = 172
             self.collectionView.frame.origin.y = self.view.frame.size.height
             self.collectionView.alpha = 0
         })

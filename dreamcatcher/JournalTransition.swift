@@ -102,8 +102,14 @@ class JournalTransition: BaseTransition {
         var journalViewController = pageViewController.viewControllers[0] as! JournalViewController
         var dreamCollectionViewController = toViewController as! DreamCollectionViewController
         var selectedCell = dreamCollectionViewController.collectionView.cellForItemAtIndexPath(dreamCollectionViewController.currentRowIndex) as! CardCollectionViewCell
+        //var indexPath = NSIndexPath(forRow: journalViewController.index, inSection: 0)
+        
+        //var selectedCell = dreamCollectionViewController.collectionView.cellForItemAtIndexPath(indexPath) as! CardCollectionViewCell
+       
         
         var cellFrame = containerView.convertRect(selectedCell.frame, fromView: selectedCell.superview)
+        
+
 
         containerView.backgroundColor = journalViewController.scrollView.backgroundColor
         transitionView.frame.origin.y = journalViewController.scrollView.contentOffset.y * CGFloat(-1)
@@ -121,7 +127,7 @@ class JournalTransition: BaseTransition {
         dateLabel.frame = journalViewController.dateLabel.frame
         textView.text = selectedCell.textView.text
         
-        
+    
         var window = UIApplication.sharedApplication().keyWindow
         window?.addSubview(transitionView)
         
