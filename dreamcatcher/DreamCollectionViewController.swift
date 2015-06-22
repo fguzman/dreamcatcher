@@ -83,8 +83,6 @@ class DreamCollectionViewController: UIViewController, UICollectionViewDataSourc
     }
     
     override func viewDidAppear(animated: Bool) {
-        
-        
         if (userDefaults.objectForKey(AlarmViewController.AlarmUserSettings.Date.rawValue) != nil) {
             var dateFormatter = NSDateFormatter()
             dateFormatter.timeStyle = NSDateFormatterStyle.ShortStyle
