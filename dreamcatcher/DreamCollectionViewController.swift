@@ -137,7 +137,7 @@ class DreamCollectionViewController: UIViewController, UICollectionViewDataSourc
     }
 
     deinit {
-            NSNotificationCenter.defaultCenter().removeObserver(self)
+        NSNotificationCenter.defaultCenter().removeObserver(self)
     }
     
     override func didReceiveMemoryWarning() {
