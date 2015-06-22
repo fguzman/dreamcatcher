@@ -10,6 +10,7 @@ import UIKit
 
 class DreamComposeViewController: UIViewController, UITextViewDelegate {
     
+    @IBOutlet weak var pageScroll: UIScrollView!
     @IBOutlet weak var styleScrollView: UIScrollView!
     @IBOutlet weak var composeTextView: UITextView!
     @IBOutlet weak var navLabel: UILabel!
@@ -20,7 +21,9 @@ class DreamComposeViewController: UIViewController, UITextViewDelegate {
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var titleTextView: UITextView!
     
-    let placeholderText: String = "Quickly jot down what you remember from your dream"
+    var panGesture: UIPanGestureRecognizer!
+    
+    let placeholderText: String = "Jot down your dream"
     let textColor: UIColor = UIColor(red: 45/255, green: 45/255, blue: 64/255, alpha: 1)
     let lightTextColor: UIColor = UIColor(red: 45/255, green: 45/255, blue: 64/255, alpha: 0.3)
     
@@ -35,9 +38,44 @@ class DreamComposeViewController: UIViewController, UITextViewDelegate {
         // Set up text view
         styleScrollView.contentSize = CGSize(width: 1920, height: 568)
         composeTextView.delegate = self
+        composeTextView.keyboardDismissMode = .OnDrag
+        
         composeTextView.selectedTextRange = composeTextView.textRangeFromPosition(composeTextView.beginningOfDocument, toPosition: composeTextView.beginningOfDocument)
         composeTextView.textColor = lightTextColor
-
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillShowNotification:", name: UIKeyboardWillShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillHideNotification:", name: UIKeyboardWillHideNotification, object: nil)
+        
+        // Add a pan gesture to dismiss keyboard
+        panGesture = UIPanGestureRecognizer(target: self, action: "dismissKeyboard")
+        view.addGestureRecognizer(panGesture)
+    }
+    
+    func dismissKeyboard() {
+        var translation = panGesture.translationInView(view)
+        
+        if (panGesture.state == UIGestureRecognizerState.Ended) {
+            if translation.y > 0 {
+                view.endEditing(true)
+            }
+        }
+    }
+    
+    func keyboardWillShowNotification(notification: NSNotification) {
+        var keyboardFrame = (notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.CGRectValue()
+        var lineHeight = self.composeTextView.font.lineHeight
+        
+        if (self.composeTextView.frame.origin.y + lineHeight  > keyboardFrame?.origin.y) {
+            self.pageScroll.contentSize = CGSizeMake(self.pageScroll.contentSize.width, self.pageScroll.contentSize.height - keyboardFrame!.size.height)
+            self.pageScroll.contentOffset = CGPointMake(0, keyboardFrame!.size.height)
+        }
+    }
+    
+    func keyboardWillHideNotification(notification: NSNotification) {
+        let screenSize: CGRect = UIScreen.mainScreen().bounds
+        
+        self.pageScroll.contentSize = CGSizeMake(screenSize.width, screenSize.height)
+        self.pageScroll.contentOffset = CGPointMake(0, 0)
     }
     
     override func viewDidAppear(animated: Bool) {
