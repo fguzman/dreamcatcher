@@ -210,7 +210,9 @@ class DreamCollectionViewController: UIViewController, UICollectionViewDataSourc
     
     @IBAction func onStatsButtonPressed(sender: AnyObject) {
         UIView.animateWithDuration(0.5, animations: { () -> Void in
-            self.statsView.frame.origin.y = 172
+            self.statsView.frame.origin.y = self.collectionView.frame.origin.y
+            self.collectionView.frame.origin.y = self.view.frame.size.height
+            self.collectionView.alpha = 0
         })
         
     }
@@ -219,6 +221,8 @@ class DreamCollectionViewController: UIViewController, UICollectionViewDataSourc
     @IBAction func onStatsBackButtonPressed(sender: AnyObject) {
         UIView.animateWithDuration(0.5, animations: { () -> Void in
             self.statsView.frame.origin.y = -250
+            self.collectionView.frame.origin.y = 172
+            self.collectionView.alpha = 1
         })
     }
     
