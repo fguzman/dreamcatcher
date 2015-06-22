@@ -22,6 +22,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var isPlayerPrepared: Bool = false
     
     let userDefaults: NSUserDefaults = NSUserDefaults.standardUserDefaults()
+    let alarmSoundDuration: Int = 23
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
@@ -43,7 +44,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             let calendar = NSCalendar.currentCalendar()
 
             var firedate = userDefaults.objectForKey("alarm.date") as! NSDate
-            var nextFiredate = calendar.dateByAddingUnit(.CalendarUnitSecond, value: alarmViewController.alarmSoundDuration, toDate: firedate, options: nil)!
+            var nextFiredate = calendar.dateByAddingUnit(.CalendarUnitSecond, value: alarmSoundDuration, toDate: firedate, options: nil)!
             
             if nextFiredate.compare(NSDate()) == .OrderedDescending {
                 fadeInAudio(player)

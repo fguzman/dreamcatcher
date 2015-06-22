@@ -26,6 +26,8 @@ class DreamComposeViewController: UIViewController, UITextViewDelegate {
     let placeholderText: String = "Jot down your dream"
     let textColor: UIColor = UIColor(red: 45/255, green: 45/255, blue: 64/255, alpha: 1)
     let lightTextColor: UIColor = UIColor(red: 45/255, green: 45/255, blue: 64/255, alpha: 0.3)
+    let titleMaxLength: Int = 30
+    let titleMaxWords: Int = 4
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,6 +35,7 @@ class DreamComposeViewController: UIViewController, UITextViewDelegate {
         dateLabel.text = "JUNE 17"
         titleTextView.backgroundColor = UIColor.clearColor()
         titleTextView.textColor = UIColor.whiteColor()
+        titleTextView.delegate = self
         styleScrollView.hidden=true
         
         // Set up text view
@@ -62,20 +65,24 @@ class DreamComposeViewController: UIViewController, UITextViewDelegate {
     }
     
     func keyboardWillShowNotification(notification: NSNotification) {
-        var keyboardFrame = (notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.CGRectValue()
-        var lineHeight = self.composeTextView.font.lineHeight
-        
-        if (self.composeTextView.frame.origin.y + lineHeight  > keyboardFrame?.origin.y) {
-            self.pageScroll.contentSize = CGSizeMake(self.pageScroll.contentSize.width, self.pageScroll.contentSize.height - keyboardFrame!.size.height)
-            self.pageScroll.contentOffset = CGPointMake(0, keyboardFrame!.size.height)
+        if composeTextView.isFirstResponder() {
+            var keyboardFrame = (notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.CGRectValue()
+            var lineHeight = self.composeTextView.font.lineHeight
+            
+            if (self.composeTextView.frame.origin.y + lineHeight  > keyboardFrame?.origin.y) {
+                self.pageScroll.contentSize = CGSizeMake(self.pageScroll.contentSize.width, self.pageScroll.contentSize.height - keyboardFrame!.size.height)
+                self.pageScroll.contentOffset = CGPointMake(0, keyboardFrame!.size.height)
+            }
         }
     }
     
     func keyboardWillHideNotification(notification: NSNotification) {
-        let screenSize: CGRect = UIScreen.mainScreen().bounds
-        
-        self.pageScroll.contentSize = CGSizeMake(screenSize.width, screenSize.height)
-        self.pageScroll.contentOffset = CGPointMake(0, 0)
+        if composeTextView.isFirstResponder() {
+            let screenSize: CGRect = UIScreen.mainScreen().bounds
+            
+            self.pageScroll.contentSize = CGSizeMake(screenSize.width, screenSize.height)
+            self.pageScroll.contentOffset = CGPointMake(0, 0)
+        }
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -89,45 +96,63 @@ class DreamComposeViewController: UIViewController, UITextViewDelegate {
     
     func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
         
-        // Combine the textView text and the replacement text to
-        // create the updated text string
-        let currentText:NSString = textView.text
-        let updatedText = currentText.stringByReplacingCharactersInRange(range, withString:text)
-        
-        // If updated text view will be empty, add the placeholder
-        // and set the cursor to the beginning of the text view
-        if count(updatedText) == 0 {
+        if textView == self.composeTextView {
+            // Combine the textView text and the replacement text to
+            // create the updated text string
+            let currentText:NSString = textView.text
+            let updatedText = currentText.stringByReplacingCharactersInRange(range, withString:text)
             
-            textView.text = placeholderText
-            textView.textColor = lightTextColor
+            // If updated text view will be empty, add the placeholder
+            // and set the cursor to the beginning of the text view
+            if count(updatedText) == 0 {
+                
+                textView.text = placeholderText
+                textView.textColor = lightTextColor
+                
+                textView.selectedTextRange = textView.textRangeFromPosition(textView.beginningOfDocument, toPosition: textView.beginningOfDocument)
+                
+                return false
+            }
+                
+                // Else if the text view's placeholder is showing and the
+                // length of the replacement string is greater than 0, clear
+                // the text view and set its color to black to prepare for
+                // the user's entry
+            else if textView.textColor == lightTextColor && count(text) > 0 {
+                textView.text = nil
+                textView.textColor = textColor
+            }
             
-            textView.selectedTextRange = textView.textRangeFromPosition(textView.beginningOfDocument, toPosition: textView.beginningOfDocument)
-            
-            return false
+            return true
+        } else if (textView == titleTextView) {
+            if count(textView.text) - range.length + count(text) > titleMaxLength {
+                return false
+            } else {
+                return true
+            }
+        } else {
+            return true
         }
-            
-            // Else if the text view's placeholder is showing and the
-            // length of the replacement string is greater than 0, clear
-            // the text view and set its color to black to prepare for
-            // the user's entry
-        else if textView.textColor == lightTextColor && count(text) > 0 {
-            textView.text = nil
-            textView.textColor = textColor
-        }
-        
-        return true
     }
     
     func textViewDidChangeSelection(textView: UITextView) {
-        if self.view.window != nil {
-            if textView.textColor == UIColor.lightGrayColor() {
-                textView.selectedTextRange = textView.textRangeFromPosition(textView.beginningOfDocument, toPosition: textView.beginningOfDocument)
+        if textView == self.composeTextView {
+            if self.view.window != nil {
+                if textView.textColor == UIColor.lightGrayColor() {
+                    textView.selectedTextRange = textView.textRangeFromPosition(textView.beginningOfDocument, toPosition: textView.beginningOfDocument)
+                }
             }
         }
     }
     
     @IBAction func onNext(sender: AnyObject) {
-        titleTextView.text = composeTextView.text
+        // Use the first 5 words from the compose field as title
+        var words = composeTextView.text.componentsSeparatedByString(" ")
+        println("words: \(words.count)")
+        var index = words.count > titleMaxWords ? titleMaxWords - 1 : words.count - 1
+        var firstWords = Array(words[0...index])
+        titleTextView.text = " ".join(firstWords)
+        
         //println(composeTextView.text)
         styleScrollView.hidden = false
         view.endEditing(true)
