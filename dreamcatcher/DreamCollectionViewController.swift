@@ -13,6 +13,7 @@ class DreamCollectionViewController: UIViewController, UICollectionViewDataSourc
     var hasNewJournal: Bool = false
     var journalTransition: JournalTransition!
     var currentRowIndex: NSIndexPath!
+    var newJournalTransition: NewJournalTransition!
     
     @IBOutlet weak var statsView: UIView!
 
@@ -77,6 +78,9 @@ class DreamCollectionViewController: UIViewController, UICollectionViewDataSourc
         
         pageViewController = UIPageViewController(transitionStyle: UIPageViewControllerTransitionStyle.Scroll, navigationOrientation: UIPageViewControllerNavigationOrientation.Horizontal, options: nil)
         pageViewController.dataSource = self
+        var redSquare = UIView(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
+        redSquare.backgroundColor = UIColor.redColor()
+        pageViewController.view.addSubview(redSquare)
         
         
         var storyboard = UIStoryboard(name: "Main", bundle:nil)
@@ -260,6 +264,19 @@ class DreamCollectionViewController: UIViewController, UICollectionViewDataSourc
             self.collectionView.frame.origin.y = 172
             self.collectionView.alpha = 1
         })
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "composeSegue"{
+            println("compose Segue")
+            
+            var destinationVC = segue.destinationViewController as! DreamComposeViewController
+            destinationVC.modalPresentationStyle = UIModalPresentationStyle.Custom
+            newJournalTransition = NewJournalTransition()
+            destinationVC.transitioningDelegate = newJournalTransition
+
+        
+        }
     }
     
     

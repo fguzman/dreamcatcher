@@ -8,7 +8,7 @@
 
 import UIKit
 
-class DreamComposeViewController: UIViewController, UITextViewDelegate {
+class DreamComposeViewController: UIViewController, UITextViewDelegate{
     
     @IBOutlet weak var pageScroll: UIScrollView!
     @IBOutlet weak var styleScrollView: UIScrollView!
@@ -20,6 +20,7 @@ class DreamComposeViewController: UIViewController, UITextViewDelegate {
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var titleTextView: UITextView!
+    
     
     var panGesture: UIPanGestureRecognizer!
     
@@ -52,7 +53,7 @@ class DreamComposeViewController: UIViewController, UITextViewDelegate {
         }
         
         // Set up text view
-        styleScrollView.contentSize = CGSize(width: 1920, height: 568)
+        styleScrollView.contentSize = CGSize(width: 1920, height: styleScrollView.frame.size.height)
         composeTextView.delegate = self
         composeTextView.keyboardDismissMode = .OnDrag
         
@@ -69,6 +70,8 @@ class DreamComposeViewController: UIViewController, UITextViewDelegate {
         // Add a pan gesture to dismiss keyboard
         panGesture = UIPanGestureRecognizer(target: self, action: "dismissKeyboard")
         view.addGestureRecognizer(panGesture)
+        nextButton.enabled = false
+        
     }
     
     func dismissKeyboard() {
@@ -89,6 +92,7 @@ class DreamComposeViewController: UIViewController, UITextViewDelegate {
             if (self.composeTextView.frame.origin.y + lineHeight  > keyboardFrame?.origin.y) {
                 self.pageScroll.contentSize = CGSizeMake(self.pageScroll.contentSize.width, self.pageScroll.contentSize.height - keyboardFrame!.size.height)
                 self.pageScroll.contentOffset = CGPointMake(0, keyboardFrame!.size.height)
+                
             }
         }
     }
@@ -127,7 +131,9 @@ class DreamComposeViewController: UIViewController, UITextViewDelegate {
                 textView.textColor = lightTextColor
                 
                 textView.selectedTextRange = textView.textRangeFromPosition(textView.beginningOfDocument, toPosition: textView.beginningOfDocument)
-                
+                nextButton.enabled = false
+                doneButton.enabled = false
+                doneButton.alpha = 0.5
                 return false
             }
                 
@@ -138,6 +144,9 @@ class DreamComposeViewController: UIViewController, UITextViewDelegate {
             else if textView.textColor == lightTextColor && count(text) > 0 {
                 textView.text = nil
                 textView.textColor = textColor
+                nextButton.enabled = true
+                doneButton.enabled = true
+                doneButton.alpha = 1
             }
             
             return true
@@ -174,7 +183,7 @@ class DreamComposeViewController: UIViewController, UITextViewDelegate {
         styleScrollView.hidden = false
         view.endEditing(true)
         UIView.animateWithDuration(0.3, animations: { () -> Void in
-            self.styleScrollView.frame.origin.y = -251
+            self.styleScrollView.frame.origin.y = 0
             self.composeTextView.frame.origin.y = 337
         })
         navLabel.textColor = UIColor.whiteColor()
@@ -188,7 +197,7 @@ class DreamComposeViewController: UIViewController, UITextViewDelegate {
     
     @IBAction func onBack(sender: AnyObject) {
         UIView.animateWithDuration(0.3, animations: { () -> Void in
-            self.styleScrollView.frame.origin.y = -568
+            self.styleScrollView.frame.origin.y = self.styleScrollView.frame.size.height * CGFloat(-1)
             self.composeTextView.frame.origin.y = 82
         })
         navLabel.textColor = UIColor.blackColor()
@@ -212,12 +221,23 @@ class DreamComposeViewController: UIViewController, UITextViewDelegate {
         view.endEditing(true)
         styleScrollView.hidden = true
     }
+    
+    
+    override func segueForUnwindingToViewController(toViewController: UIViewController,
+        fromViewController: UIViewController,
+        identifier: String?) -> UIStoryboardSegue {
+            println("transitioning")
+            return UIStoryboardSegue(identifier: identifier, source: fromViewController, destination: toViewController) {
+                
+            }
+    }
 
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         println("====== PREPARE FOR SEGUE ======!")
         
         // Only add new journal if content is not empty
         if composeTextView.textColor == textColor {
+            
             var dreamCollectionViewController = segue.destinationViewController as! DreamCollectionViewController
             var bgNum : Int = Int(round(styleScrollView.contentOffset.x / 320)) + 1
             
