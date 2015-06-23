@@ -142,11 +142,12 @@ class DreamComposeViewController: UIViewController, UITextViewDelegate{
                 // the text view and set its color to black to prepare for
                 // the user's entry
             else if textView.textColor == lightTextColor && count(text) > 0 {
-                textView.text = text
+                textView.text = nil
                 textView.textColor = textColor
                 nextButton.enabled = true
                 doneButton.enabled = true
                 doneButton.alpha = 1
+                return true
             }
             
             return true
