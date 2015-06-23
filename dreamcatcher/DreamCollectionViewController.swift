@@ -26,6 +26,7 @@ class DreamCollectionViewController: UIViewController, UICollectionViewDataSourc
     @IBOutlet weak var alarmButton: UIButton!
     @IBOutlet weak var composeButton: UIButton!
     @IBOutlet weak var alarmTimeLabel: UILabel!
+    @IBOutlet weak var alarmTimeContainer: UIView!
     
     @IBOutlet weak var statsBackButton: UIButton!
     
@@ -74,7 +75,8 @@ class DreamCollectionViewController: UIViewController, UICollectionViewDataSourc
         settingButton.alpha = defaultNavAlpha
         alarmButton.alpha = defaultNavAlpha
         composeButton.alpha = defaultNavAlpha
-        alarmTimeLabel.alpha = 0
+        alarmTimeContainer.alpha = 0
+        alarmTimeLabel.alpha = 1
         
         pageViewController = UIPageViewController(transitionStyle: UIPageViewControllerTransitionStyle.Scroll, navigationOrientation: UIPageViewControllerNavigationOrientation.Horizontal, options: nil)
         pageViewController.dataSource = self
@@ -102,18 +104,18 @@ class DreamCollectionViewController: UIViewController, UICollectionViewDataSourc
             alarmTimeLabel.text = strDate
             alarmTimeLabel.sizeToFit()
             alarmTimeLabel.textAlignment = NSTextAlignment.Center
-            alarmTimeLabel.center = CGPointMake(UIScreen.mainScreen().bounds.width/2, alarmTimeLabel.center.y)
+            alarmTimeLabel.center = CGPointMake(alarmTimeContainer.bounds.width/2, alarmTimeLabel.center.y)
             
             // Fade in the alarm time label
             UIView.animateWithDuration(0.5, delay: 0.1, options: .CurveEaseInOut, animations: {
                 self.alarmButton.alpha = 1
-                self.alarmTimeLabel.alpha = 1
+                self.alarmTimeContainer.alpha = 1
             }, completion: nil)
         } else {
             // Fade out the alarm time label
             UIView.animateWithDuration(0.5, delay: 0.1, options: .CurveEaseInOut, animations: {
                 self.alarmButton.alpha = self.defaultNavAlpha
-                self.alarmTimeLabel.alpha = 0
+                self.alarmTimeContainer.alpha = 0
                 }, completion: nil)
         }
         
