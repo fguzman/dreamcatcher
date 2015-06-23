@@ -161,8 +161,8 @@ class DreamCollectionViewController: UIViewController, UICollectionViewDataSourc
         
 
         // This acts like pageViewController.reloadData
-        pageViewController.dataSource = nil;
-        pageViewController.dataSource = self;
+        pageViewController.dataSource = nil
+        pageViewController.dataSource = self
         
         pageViewController.setViewControllers([journalViewControllerAtIndex(currentRowIndex.row)], direction: UIPageViewControllerNavigationDirection.Forward, animated: true, completion: nil)
         println("row \(currentRowIndex.row)")
@@ -171,7 +171,7 @@ class DreamCollectionViewController: UIViewController, UICollectionViewDataSourc
         pageViewController.modalPresentationStyle = UIModalPresentationStyle.Custom
         pageViewController.transitioningDelegate = journalTransition
         presentViewController(pageViewController, animated: true, completion: nil)
-        
+        pageViewController.reloadInputViews()
     
     }
     

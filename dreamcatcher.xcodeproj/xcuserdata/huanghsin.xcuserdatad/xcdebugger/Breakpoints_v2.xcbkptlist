@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "dreamcatcher/JournalTransition.swift"
-            timestampString = "456680871.445398"
+            timestampString = "456719167.048709"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "53"
-            endingLineNumber = "53"
+            startingLineNumber = "52"
+            endingLineNumber = "52"
             landmarkName = "presentTransition(_:fromViewController:toViewController:)"
             landmarkType = "5">
          </BreakpointContent>

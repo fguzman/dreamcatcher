@@ -29,10 +29,9 @@ class JournalTransition: BaseTransition {
         var dreamCollectionViewController = fromViewController as! DreamCollectionViewController
         var selectedCell = dreamCollectionViewController.collectionView.cellForItemAtIndexPath(dreamCollectionViewController.currentRowIndex) as! CardCollectionViewCell
         
-        println("transition for \(journalViewController.index)")
+        
         
         var cellFrame = containerView.convertRect(selectedCell.frame, fromView: selectedCell.superview)
-        
         
         fullTextView.text = journalViewController.textView.text
         fullTextView.frame.size = journalViewController.textView.frame.size
@@ -105,26 +104,26 @@ class JournalTransition: BaseTransition {
         var pageViewController = fromViewController as! UIPageViewController
         var journalViewController = pageViewController.viewControllers[0] as! JournalViewController
         var dreamCollectionViewController = toViewController as! DreamCollectionViewController
-       // var selectedCell = dreamCollectionViewController.collectionView.cellForItemAtIndexPath(dreamCollectionViewController.currentRowIndex) as! CardCollectionViewCell
         
         
-        var indexPath = NSIndexPath(forRow: 2, inSection: 0)
+        var collectionView = dreamCollectionViewController.collectionView
+        
+        var indexPath = NSIndexPath(forRow: journalViewController.index, inSection: 0)
+        
         dreamCollectionViewController.collectionView.scrollToItemAtIndexPath(indexPath, atScrollPosition: UICollectionViewScrollPosition.CenteredHorizontally, animated: true)
+      
         
-        println("current row index \(dreamCollectionViewController.currentRowIndex)")
-        println("index \(indexPath)")
-        println("test \(NSIndexPath(forRow: 0, inSection: 0))")
+        var selectedCell: CardCollectionViewCell
         
-        var selectedCell = dreamCollectionViewController.collectionView.cellForItemAtIndexPath(indexPath) as! CardCollectionViewCell
-       println("transition for \(journalViewController.index)")
+    
+        selectedCell = dreamCollectionViewController.collectionView.cellForItemAtIndexPath(dreamCollectionViewController.currentRowIndex) as! CardCollectionViewCell
+        
         
         var cellFrame = containerView.convertRect(selectedCell.frame, fromView: selectedCell.superview)
         
 
-
         containerView.backgroundColor = journalViewController.scrollView.backgroundColor
         transitionView.frame.origin.y = journalViewController.scrollView.contentOffset.y * CGFloat(-1)
-        println("transition \(transitionView.frame.origin.y)")
         
         backgroundImageView.image = journalViewController.backgroundImageView.image
         backgroundImageView.frame = journalViewController.backgroundImageView.frame
@@ -136,7 +135,7 @@ class JournalTransition: BaseTransition {
         titleLabel.frame = journalViewController.titleLabel.frame
         dateLabel.text = journalViewController.dateLabel.text
         dateLabel.frame = journalViewController.dateLabel.frame
-        textView.text = selectedCell.textView.text
+        textView.text = journalViewController.textView.text
         
     
         var window = UIApplication.sharedApplication().keyWindow
@@ -146,7 +145,7 @@ class JournalTransition: BaseTransition {
         
         UIView.animateWithDuration(duration, animations: {
             self.transitionView.frame.size = selectedCell.frame.size
-            self.transitionView.frame.origin = cellFrame.origin
+            self.transitionView.frame.origin = CGPoint(x: dreamCollectionViewController.collectionView.contentInset.left, y:cellFrame.origin.y)
             self.backgroundImageView.frame = selectedCell.backgroundImageView.frame
             self.titleLabel.frame = selectedCell.titleLabel.frame
             self.dateLabel.frame = selectedCell.dateLabel.frame
