@@ -77,6 +77,7 @@ class NewJournalTransition: BaseTransition {
         dateLabel.font = UIFont(name: selectedCell.dateLabel.font.fontName, size: 11)
         
         transitionView.clipsToBounds = true
+        
         transitionView.addSubview(backgroundImageView)
         transitionView.addSubview(titleLabel)
         transitionView.addSubview(dateLabel)
@@ -103,7 +104,7 @@ class NewJournalTransition: BaseTransition {
             containerView.backgroundColor = UIColor(white:0, alpha:1)
             var window = UIApplication.sharedApplication().keyWindow
             window?.addSubview(transitionView)
-            UIView.animateWithDuration(2, animations: {
+            UIView.animateWithDuration(duration, animations: {
                 self.transitionView.frame.size = selectedCell.frame.size
                 self.transitionView.frame.origin = CGPoint(x: dreamCollectionViewController.collectionView.contentInset.left, y:cellFrame.origin.y)
                 self.backgroundImageView.frame = selectedCell.backgroundImageView.frame
