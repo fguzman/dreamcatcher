@@ -15,6 +15,7 @@
 		94A48D781B2E5BA400978643 /* DreamComposeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A48D771B2E5BA400978643 /* DreamComposeViewController.swift */; };
 		A40B26391B2FD21C00D21DE6 /* CardCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A40B26381B2FD21C00D21DE6 /* CardCollectionViewCell.swift */; };
 		A40B263D1B2FD2D500D21DE6 /* DreamCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A40B263C1B2FD2D500D21DE6 /* DreamCollectionViewController.swift */; };
+		A4DECA181B38FD8D00837132 /* NewJournalTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4DECA171B38FD8D00837132 /* NewJournalTransition.swift */; };
 		A4E4E3DC1B31200B00E4410B /* FadeTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4E4E3DB1B31200B00E4410B /* FadeTransition.swift */; };
 		A4E4E3DE1B31206600E4410B /* BaseTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4E4E3DD1B31206600E4410B /* BaseTransition.swift */; };
 		A4E4E3E11B3120A600E4410B /* JournalTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4E4E3E01B3120A600E4410B /* JournalTransition.swift */; };
@@ -54,6 +55,7 @@
 		94A48D771B2E5BA400978643 /* DreamComposeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DreamComposeViewController.swift; sourceTree = "<group>"; };
 		A40B26381B2FD21C00D21DE6 /* CardCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardCollectionViewCell.swift; sourceTree = "<group>"; };
 		A40B263C1B2FD2D500D21DE6 /* DreamCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DreamCollectionViewController.swift; sourceTree = "<group>"; usesTabs = 0; };
+		A4DECA171B38FD8D00837132 /* NewJournalTransition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewJournalTransition.swift; sourceTree = "<group>"; };
 		A4E4E3DB1B31200B00E4410B /* FadeTransition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FadeTransition.swift; sourceTree = "<group>"; };
 		A4E4E3DD1B31206600E4410B /* BaseTransition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseTransition.swift; sourceTree = "<group>"; };
 		A4E4E3E01B3120A600E4410B /* JournalTransition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JournalTransition.swift; sourceTree = "<group>"; };
@@ -163,6 +165,7 @@
 				B51DE7401B332F8500BA7954 /* InteractiveBaseTransition.swift */,
 				A4E4E3E01B3120A600E4410B /* JournalTransition.swift */,
 				B51DE73E1B32758200BA7954 /* AlarmTransition.swift */,
+				A4DECA171B38FD8D00837132 /* NewJournalTransition.swift */,
 			);
 			name = Transition;
 			sourceTree = "<group>";
@@ -292,6 +295,7 @@
 				B569E07E1B2AB3CC00A8D608 /* StatsViewController.swift in Sources */,
 				94A48D781B2E5BA400978643 /* DreamComposeViewController.swift in Sources */,
 				B51DE73F1B32758200BA7954 /* AlarmTransition.swift in Sources */,
+				A4DECA181B38FD8D00837132 /* NewJournalTransition.swift in Sources */,
 				9455DD7D1B249E300080CE79 /* AppDelegate.swift in Sources */,
 				B569E0821B2AC2E000A8D608 /* JournalViewController.swift in Sources */,
 				A4E4E3DE1B31206600E4410B /* BaseTransition.swift in Sources */,

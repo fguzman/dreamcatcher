@@ -110,7 +110,7 @@
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
-                                            <segue destination="t7P-0f-ZQo" kind="modal" id="5Em-sb-ivQ"/>
+                                            <segue destination="t7P-0f-ZQo" kind="modal" identifier="composeSegue" id="5Em-sb-ivQ"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="a3Y-aE-sXs">
@@ -302,31 +302,31 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
                                     <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" directionalLockEnabled="YES" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" id="yn5-80-zT9" userLabel="imageScroll">
-                                        <rect key="frame" x="0.0" y="-568" width="320" height="568"/>
+                                        <rect key="frame" x="0.0" y="-319" width="320" height="319"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         <subviews>
-                                            <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" image="bg1" id="lSH-Oi-OzR">
-                                                <rect key="frame" x="0.0" y="250" width="321" height="317"/>
+                                            <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFill" image="bg1" id="lSH-Oi-OzR">
+                                                <rect key="frame" x="0.0" y="0.0" width="321" height="319"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                             </imageView>
-                                            <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" image="bg2" id="ZSH-pr-3G7">
-                                                <rect key="frame" x="320" y="250" width="321" height="317"/>
+                                            <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFill" image="bg2" id="ZSH-pr-3G7">
+                                                <rect key="frame" x="320" y="0.0" width="321" height="319"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                             </imageView>
-                                            <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" image="bg3" id="01f-70-9rr">
-                                                <rect key="frame" x="640" y="250" width="321" height="317"/>
+                                            <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFill" image="bg3" id="01f-70-9rr">
+                                                <rect key="frame" x="640" y="0.0" width="321" height="319"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                             </imageView>
-                                            <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" image="bg4" id="aQK-Kq-YZI">
-                                                <rect key="frame" x="960" y="250" width="321" height="317"/>
+                                            <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFill" image="bg4" id="aQK-Kq-YZI">
+                                                <rect key="frame" x="960" y="0.0" width="321" height="319"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                             </imageView>
-                                            <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" image="bg5" id="ctl-3Q-sqK">
-                                                <rect key="frame" x="1280" y="250" width="321" height="317"/>
+                                            <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFill" image="bg5" id="ctl-3Q-sqK">
+                                                <rect key="frame" x="1280" y="0.0" width="321" height="319"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                             </imageView>
-                                            <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" image="bg6" id="j1l-Ve-5xt">
-                                                <rect key="frame" x="1600" y="250" width="321" height="317"/>
+                                            <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFill" image="bg6" id="j1l-Ve-5xt">
+                                                <rect key="frame" x="1600" y="0.0" width="321" height="319"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                             </imageView>
                                         </subviews>
