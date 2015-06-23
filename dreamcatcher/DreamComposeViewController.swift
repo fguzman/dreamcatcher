@@ -20,6 +20,7 @@ class DreamComposeViewController: UIViewController, UITextViewDelegate{
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var titleTextView: UITextView!
+    var exitButton: UIButton!
     
     
     var panGesture: UIPanGestureRecognizer!
@@ -214,24 +215,19 @@ class DreamComposeViewController: UIViewController, UITextViewDelegate{
     @IBAction func onClose(sender: AnyObject) {
         view.endEditing(true)
         styleScrollView.hidden = true
+        exitButton = closeButton
         dismissViewControllerAnimated(true, completion: nil)
     }
     
     
     @IBAction func onDone(sender: AnyObject) {
         view.endEditing(true)
+        exitButton = doneButton
         styleScrollView.hidden = true
     }
     
     
-    override func segueForUnwindingToViewController(toViewController: UIViewController,
-        fromViewController: UIViewController,
-        identifier: String?) -> UIStoryboardSegue {
-            println("transitioning")
-            return UIStoryboardSegue(identifier: identifier, source: fromViewController, destination: toViewController) {
-                
-            }
-    }
+
 
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         println("====== PREPARE FOR SEGUE ======!")

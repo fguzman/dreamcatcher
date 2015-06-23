@@ -31,14 +31,10 @@ class NewJournalTransition: BaseTransition {
     
     override func dismissTransition(containerView: UIView, fromViewController: UIViewController, toViewController: UIViewController) {
         
-        fromViewController.view.alpha = 0
-        
-        
+
         var dreamComposeViewController = fromViewController as! DreamComposeViewController
         var dreamCollectionViewController = toViewController as! DreamCollectionViewController
-        
-        
-        
+
         var collectionView = dreamCollectionViewController.collectionView
         var indexPath = NSIndexPath(forRow: 0, inSection: 0)
         
@@ -98,19 +94,21 @@ class NewJournalTransition: BaseTransition {
         
         
         
-        if dreamComposeViewController.composeTextView.text == dreamComposeViewController.placeholderText || dreamComposeViewController.composeTextView.text.isEmpty{
-            println("no entry")
-            UIView.animateWithDuration(duration, animations: {
-                dreamComposeViewController.view.frame.origin.y = containerView.frame.size.height
-                }) { (finished: Bool) -> Void in
-                    self.finish()
-            }
-
+        if dreamComposeViewController.exitButton == dreamComposeViewController.closeButton{
+            println(fromViewController.view.frame.origin.y)
+            fromViewController.view.frame.origin.y = 0
+            UIView.animateWithDuration(duration, animations: { () -> Void in
+                fromViewController.view.frame.origin.y = fromViewController.view.frame.size.height
+            }, completion: { (Bool) -> Void in
+                self.finish()
+            })
+            
             
         }
             
-        else{ // if some entry
+        else if dreamComposeViewController.exitButton == dreamComposeViewController.doneButton { // if some entry
             println("some entry")
+            fromViewController.view.alpha = 0
             containerView.backgroundColor = UIColor(white:0, alpha:1)
             var window = UIApplication.sharedApplication().keyWindow
             window?.addSubview(transitionView)
