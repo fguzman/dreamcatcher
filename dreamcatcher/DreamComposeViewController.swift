@@ -57,12 +57,12 @@ class DreamComposeViewController: UIViewController, UITextViewDelegate{
         composeTextView.delegate = self
         composeTextView.keyboardDismissMode = .OnDrag
         
-        composeTextView.selectedTextRange = composeTextView.textRangeFromPosition(composeTextView.beginningOfDocument, toPosition: composeTextView.beginningOfDocument)
-        
         var tmpTextView = paragraphStyle(placeholderText)
         composeTextView.attributedText = tmpTextView.attributedText
         composeTextView.font = tmpTextView.font
         composeTextView.textColor = lightTextColor
+
+        composeTextView.selectedTextRange = composeTextView.textRangeFromPosition(composeTextView.beginningOfDocument, toPosition: composeTextView.beginningOfDocument)
 
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillShowNotification:", name: UIKeyboardWillShowNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillHideNotification:", name: UIKeyboardWillHideNotification, object: nil)
@@ -142,7 +142,7 @@ class DreamComposeViewController: UIViewController, UITextViewDelegate{
                 // the text view and set its color to black to prepare for
                 // the user's entry
             else if textView.textColor == lightTextColor && count(text) > 0 {
-                textView.text = nil
+                textView.text = text
                 textView.textColor = textColor
                 nextButton.enabled = true
                 doneButton.enabled = true
