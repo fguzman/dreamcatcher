@@ -20,8 +20,6 @@ class JournalTransition: BaseTransition {
     
     override func presentTransition(containerView: UIView, fromViewController: UIViewController, toViewController: UIViewController) {
         
-        
-        
         containerView.backgroundColor = UIColor(white:0, alpha:0)
         
         var pageViewController = toViewController as! UIPageViewController
@@ -29,22 +27,19 @@ class JournalTransition: BaseTransition {
         var dreamCollectionViewController = fromViewController as! DreamCollectionViewController
         var selectedCell = dreamCollectionViewController.collectionView.cellForItemAtIndexPath(dreamCollectionViewController.currentRowIndex) as! CardCollectionViewCell
         
-        
-        
         var cellFrame = containerView.convertRect(selectedCell.frame, fromView: selectedCell.superview)
         
-        fullTextView.text = journalViewController.textView.text
         fullTextView.frame.size = journalViewController.textView.frame.size
         fullTextView.frame.origin = selectedCell.textView.frame.origin
-        
         fullTextView.font = UIFont(name: selectedCell.textView.font.fontName, size: 18)
+        fullTextView.attributedText = selectedCell.textView.attributedText
+        fullTextView.font = selectedCell.textView.font
         fullTextView.alpha = 0
     
         transitionView.clipsToBounds = true
         transitionView.backgroundColor = UIColor(white:1, alpha:1)
         transitionView.frame.size = selectedCell.frame.size
         transitionView.frame.origin = containerView.convertRect(selectedCell.frame, fromView: selectedCell.superview).origin
-        
         
         backgroundImageView.image = selectedCell.backgroundImageView.image
         backgroundImageView.frame = selectedCell.backgroundImageView.frame
@@ -59,11 +54,10 @@ class JournalTransition: BaseTransition {
         dateLabel.frame = selectedCell.dateLabel.frame
         dateLabel.textColor = UIColor.whiteColor()
         dateLabel.font = UIFont(name: selectedCell.dateLabel.font.fontName, size: 11)
-        textView.text = selectedCell.textView.text
         textView.frame = selectedCell.textView.frame
-        textView.font = UIFont(name: selectedCell.textView.font.fontName, size: 18)
+        textView.attributedText = selectedCell.textView.attributedText
+        textView.font = selectedCell.textView.font
         textView.alpha = 1
-        
         
         transitionView.addSubview(backgroundImageView)
         transitionView.addSubview(titleLabel)
@@ -71,10 +65,8 @@ class JournalTransition: BaseTransition {
         transitionView.addSubview(textView)
         transitionView.addSubview(fullTextView)
         
-
         var window = UIApplication.sharedApplication().keyWindow
         window?.addSubview(transitionView)
-    
         
         toViewController.view.alpha = 0
         UIView.animateWithDuration(duration, animations: {
@@ -99,49 +91,39 @@ class JournalTransition: BaseTransition {
     override func dismissTransition(containerView: UIView, fromViewController: UIViewController, toViewController: UIViewController) {
         fromViewController.view.alpha = 0
         
-        
-        
         var pageViewController = fromViewController as! UIPageViewController
         var journalViewController = pageViewController.viewControllers[0] as! JournalViewController
         var dreamCollectionViewController = toViewController as! DreamCollectionViewController
-        
         
         var collectionView = dreamCollectionViewController.collectionView
         
         var indexPath = NSIndexPath(forRow: journalViewController.index, inSection: 0)
         
         dreamCollectionViewController.collectionView.scrollToItemAtIndexPath(indexPath, atScrollPosition: UICollectionViewScrollPosition.CenteredHorizontally, animated: true)
-      
         
         var selectedCell: CardCollectionViewCell
-        
-    
         selectedCell = dreamCollectionViewController.collectionView.cellForItemAtIndexPath(dreamCollectionViewController.currentRowIndex) as! CardCollectionViewCell
-        
         
         var cellFrame = containerView.convertRect(selectedCell.frame, fromView: selectedCell.superview)
         
-
         containerView.backgroundColor = journalViewController.scrollView.backgroundColor
         transitionView.frame.origin.y = journalViewController.scrollView.contentOffset.y * CGFloat(-1)
         
         backgroundImageView.image = journalViewController.backgroundImageView.image
         backgroundImageView.frame = journalViewController.backgroundImageView.frame
         
-        fullTextView.text = journalViewController.textView.text
-        
+        fullTextView.attributedText = journalViewController.textView.attributedText
+        fullTextView.font = journalViewController.textView.font
         
         titleLabel.text = journalViewController.titleLabel.text
         titleLabel.frame = journalViewController.titleLabel.frame
         dateLabel.text = journalViewController.dateLabel.text
         dateLabel.frame = journalViewController.dateLabel.frame
-        textView.text = journalViewController.textView.text
-        
+        textView.attributedText = journalViewController.textView.attributedText
+        textView.font = journalViewController.textView.font
     
         var window = UIApplication.sharedApplication().keyWindow
         window?.addSubview(transitionView)
-        
-    
         
         UIView.animateWithDuration(duration, animations: {
             self.transitionView.frame.size = selectedCell.frame.size
@@ -160,5 +142,4 @@ class JournalTransition: BaseTransition {
                 self.finish()
         }
     }
-
 }

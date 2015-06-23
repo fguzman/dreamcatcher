@@ -184,6 +184,10 @@ class DreamCollectionViewController: UIViewController, UICollectionViewDataSourc
         cell.textView.text = paragraphArray[indexPath.row]
         cell.backgroundImageView.image = imageArray[indexPath.row]
         
+        var tmpTextView = paragraphStyle(cell.textView.text)
+        cell.textView.attributedText = tmpTextView.attributedText
+        cell.textView.font = tmpTextView.font
+        
         return cell
     }
     

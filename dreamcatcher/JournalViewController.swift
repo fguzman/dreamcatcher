@@ -29,7 +29,10 @@ class JournalViewController: UIViewController, UIScrollViewDelegate{
         super.viewDidLoad()
         //println("\(titleText): \(index)")
         
-        textView.text = paragraph
+        var tmpTextView = paragraphStyle(paragraph)
+        textView.attributedText = tmpTextView.attributedText
+        textView.font = tmpTextView.font
+        
         titleLabel.text = titleText
         dateLabel.text = dateText
         backgroundImageView.image = image

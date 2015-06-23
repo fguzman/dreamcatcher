@@ -27,3 +27,15 @@ func convertValue(value: CGFloat, r1Min: CGFloat, r1Max: CGFloat, r2Min: CGFloat
     return value * ratio + r2Min - r1Min * ratio
 }
 
+func paragraphStyle(paragraph: String) -> UITextView {
+    var style = NSMutableParagraphStyle()
+    style.lineSpacing = 8
+    let attributes = [NSParagraphStyleAttributeName: style]
+    var textView = UITextView()
+    
+    textView.attributedText = NSAttributedString(string: paragraph, attributes: attributes)
+    textView.font = UIFont(name: "Times New Roman", size: 20)
+    
+    return textView
+}
+
