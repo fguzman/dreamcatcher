@@ -47,7 +47,7 @@ class JournalViewController: UIViewController, UIScrollViewDelegate{
         
         scrollView.delegate = self
         
-        
+//        println("=== I'm showing \(index), \(titleText)")
     }
     
     func scrollViewDidScroll(scrollView: UIScrollView){

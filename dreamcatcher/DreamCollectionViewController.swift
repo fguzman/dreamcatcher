@@ -9,7 +9,7 @@
 import UIKit
 
 class DreamCollectionViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UIPageViewControllerDataSource {
-    
+        
     var hasNewJournal: Bool = false
     var journalTransition: JournalTransition!
     var currentRowIndex: NSIndexPath!
@@ -168,8 +168,7 @@ class DreamCollectionViewController: UIViewController, UICollectionViewDataSourc
         pageViewController.dataSource = nil
         pageViewController.dataSource = self
         
-        pageViewController.setViewControllers([journalViewControllerAtIndex(currentRowIndex.row)], direction: UIPageViewControllerNavigationDirection.Forward, animated: true, completion: nil)
-        println("row \(currentRowIndex.row)")
+        pageViewController.setViewControllers([journalViewControllerAtIndex(currentRowIndex.row)], direction: UIPageViewControllerNavigationDirection.Forward, animated: false, completion: nil)
 
         journalTransition = JournalTransition()
         pageViewController.modalPresentationStyle = UIModalPresentationStyle.Custom
@@ -193,18 +192,17 @@ class DreamCollectionViewController: UIViewController, UICollectionViewDataSourc
     }
     
     func pageViewController(pageViewController: UIPageViewController, viewControllerBeforeViewController viewController: UIViewController) -> UIViewController? {
-        println("before")
         var journalViewController = viewController as! JournalViewController
+//        println("Fetching for previous page from page: \(journalViewController.index)")
         if journalViewController.index > 0 {
-            println("returning \(journalViewController.index)")
-            return journalViewControllerAtIndex(journalViewController.index - 1)
+            var previousJournal = journalViewControllerAtIndex(journalViewController.index - 1)
+            return previousJournal
         }
         
         return nil
     }
     
     func pageViewController(pageViewController: UIPageViewController, viewControllerAfterViewController viewController: UIViewController) -> UIViewController? {
-        println("after")
         var journalViewController = viewController as! JournalViewController
         if journalViewController.index < dateArray.count - 1 {
             return journalViewControllerAtIndex(journalViewController.index + 1)

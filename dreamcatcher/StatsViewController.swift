@@ -9,9 +9,6 @@
 import UIKit
 
 class StatsViewController: UIViewController {
-
-
-    
     @IBOutlet weak var scrollView: UIScrollView!
     
     override func viewDidLoad() {
@@ -26,10 +23,5 @@ class StatsViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
-    
-    
-
-
 
 }
