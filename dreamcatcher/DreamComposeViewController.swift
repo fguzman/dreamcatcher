@@ -39,7 +39,7 @@ class DreamComposeViewController: UIViewController, UITextViewDelegate {
         dateFormatter.dateFormat = "MMMM dd"
         dateString = dateFormatter.stringFromDate(todaysDate)
         
-        dateLabel.text = dateString
+        dateLabel.text = dateString.uppercaseString
         titleTextView.backgroundColor = UIColor.clearColor()
         titleTextView.textColor = UIColor.whiteColor()
         titleTextView.delegate = self
@@ -164,8 +164,8 @@ class DreamComposeViewController: UIViewController, UITextViewDelegate {
         styleScrollView.hidden = false
         view.endEditing(true)
         UIView.animateWithDuration(0.3, animations: { () -> Void in
-            self.styleScrollView.frame.origin.y += 300
-            self.composeTextView.frame.origin.y += 250
+            self.styleScrollView.frame.origin.y = -251
+            self.composeTextView.frame.origin.y = 337
         })
         navLabel.textColor = UIColor.whiteColor()
         closeButton.hidden = true
@@ -178,8 +178,8 @@ class DreamComposeViewController: UIViewController, UITextViewDelegate {
     
     @IBAction func onBack(sender: AnyObject) {
         UIView.animateWithDuration(0.3, animations: { () -> Void in
-            self.styleScrollView.frame.origin.y -= 300
-            self.composeTextView.frame.origin.y -= 250
+            self.styleScrollView.frame.origin.y = -568
+            self.composeTextView.frame.origin.y = 82
         })
         navLabel.textColor = UIColor.blackColor()
         closeButton.hidden = false
