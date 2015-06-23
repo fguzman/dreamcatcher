@@ -10,7 +10,6 @@ import UIKit
 
 class JournalViewController: UIViewController, UIScrollViewDelegate{
     
-    
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var backgroundImageView: UIImageView!
     @IBOutlet weak var backgroundView: UIView!
@@ -27,7 +26,9 @@ class JournalViewController: UIViewController, UIScrollViewDelegate{
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //println("\(titleText): \(index)")
+//        println("\(titleText): \(index)")
+        
+        UIApplication.sharedApplication().setStatusBarHidden(true, withAnimation: UIStatusBarAnimation.None)
         
         var tmpTextView = paragraphStyle(paragraph)
         textView.attributedText = tmpTextView.attributedText
@@ -51,6 +52,10 @@ class JournalViewController: UIViewController, UIScrollViewDelegate{
         scrollView.delegate = self
         
 //        println("=== I'm showing \(index), \(titleText)")
+    }
+    
+    override func viewDidDisappear(animated: Bool) {
+        UIApplication.sharedApplication().setStatusBarHidden(false, withAnimation: UIStatusBarAnimation.None)
     }
     
     func scrollViewDidScroll(scrollView: UIScrollView){
