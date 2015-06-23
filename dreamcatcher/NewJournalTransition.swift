@@ -43,9 +43,19 @@ class NewJournalTransition: BaseTransition {
         var indexPath = NSIndexPath(forRow: 0, inSection: 0)
         
         dreamCollectionViewController.collectionView.scrollToItemAtIndexPath(indexPath, atScrollPosition: UICollectionViewScrollPosition.CenteredHorizontally, animated: true)
+        dreamCollectionViewController.currentRowIndex = NSIndexPath(forRow: 0, inSection: 0)
+
         
+        var selectedCell: CardCollectionViewCell
         
-        var selectedCell: CardCollectionViewCell = dreamCollectionViewController.collectionView.cellForItemAtIndexPath(dreamCollectionViewController.currentRowIndex) as! CardCollectionViewCell
+        if dreamCollectionViewController.collectionView.indexPathsForVisibleItems()[0].row != 0{
+            selectedCell = dreamCollectionViewController.collectionView.cellForItemAtIndexPath(dreamCollectionViewController.collectionView.indexPathsForVisibleItems()[1] as! NSIndexPath) as! CardCollectionViewCell
+        }
+        else{
+            selectedCell = dreamCollectionViewController.collectionView.cellForItemAtIndexPath(dreamCollectionViewController.currentRowIndex) as! CardCollectionViewCell
+        }
+        
+       
         
         
         var cellFrame = containerView.convertRect(selectedCell.frame, fromView: selectedCell.superview)
