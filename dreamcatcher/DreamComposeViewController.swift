@@ -46,14 +46,24 @@ class DreamComposeViewController: UIViewController, UITextViewDelegate{
         titleTextView.delegate = self
         styleScrollView.hidden=true
         
+        // If come from alarm, hide nav bar
+        if (self.navigationController != nil) {
+            self.navigationController?.setNavigationBarHidden(true, animated: false)
+            self.automaticallyAdjustsScrollViewInsets = false
+        }
+        
         // Set up text view
         styleScrollView.contentSize = CGSize(width: 1920, height: styleScrollView.frame.size.height)
         composeTextView.delegate = self
         composeTextView.keyboardDismissMode = .OnDrag
         
         composeTextView.selectedTextRange = composeTextView.textRangeFromPosition(composeTextView.beginningOfDocument, toPosition: composeTextView.beginningOfDocument)
-        composeTextView.textColor = lightTextColor
         
+        var tmpTextView = paragraphStyle(placeholderText)
+        composeTextView.attributedText = tmpTextView.attributedText
+        composeTextView.font = tmpTextView.font
+        composeTextView.textColor = lightTextColor
+
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillShowNotification:", name: UIKeyboardWillShowNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillHideNotification:", name: UIKeyboardWillHideNotification, object: nil)
         
