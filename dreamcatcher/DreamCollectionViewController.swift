@@ -68,6 +68,8 @@ class DreamCollectionViewController: UIViewController, UICollectionViewDataSourc
     let userDefaults: NSUserDefaults = NSUserDefaults.standardUserDefaults()
     let hardcodedJournals: Int = 6
     
+    var statsViewController: StatsViewController!
+    
     override func viewDidLoad() {
         
         super.viewDidLoad()
@@ -109,7 +111,8 @@ class DreamCollectionViewController: UIViewController, UICollectionViewDataSourc
         
         
         var storyboard = UIStoryboard(name: "Main", bundle:nil)
-        var statsViewController = storyboard.instantiateViewControllerWithIdentifier("StatsViewController") as! StatsViewController
+        statsViewController = storyboard.instantiateViewControllerWithIdentifier("StatsViewController") as! StatsViewController
+        
         statsViewController.view.frame = statsView.bounds
         addChildViewController(statsViewController)
         statsView.addSubview(statsViewController.view)
@@ -184,19 +187,25 @@ class DreamCollectionViewController: UIViewController, UICollectionViewDataSourc
     @IBAction func onThemeButtonPress(sender: AnyObject) {
         revealStatsView()
         didChangeTabToTabNumber(1)
-        //statsViewController.scrollView.contentOffset = CGPoint(x: 0,y: 0)
+        UIView.animateWithDuration(0.5, animations: { () -> Void in
+            self.statsViewController.scrollView.contentOffset = CGPoint(x: 0,y: 0)
+        })
     }
     
     @IBAction func onPlaceButtonPress(sender: AnyObject) {
         revealStatsView()
         didChangeTabToTabNumber(2)
-        //statsViewController.scrollView.contentOffset = CGPointMake(320, 0)
+        UIView.animateWithDuration(0.5, animations: { () -> Void in
+            self.statsViewController.scrollView.contentOffset = CGPointMake(320, 0)
+        })
     }
     
     @IBAction func onEmotionButtonPress(sender: AnyObject) {
         revealStatsView()
         didChangeTabToTabNumber(3)
-        //statsViewController.scrollView.contentOffset = CGPointMake(640, 0)
+        UIView.animateWithDuration(0.5, animations: { () -> Void in
+            self.statsViewController.scrollView.contentOffset = CGPointMake(640, 0)
+        })
     }
     
     
