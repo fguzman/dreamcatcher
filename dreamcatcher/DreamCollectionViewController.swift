@@ -9,7 +9,7 @@
 import UIKit
 
 class DreamCollectionViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UIPageViewControllerDataSource {
-        
+    
     var hasNewJournal: Bool = false
     var journalTransition: JournalTransition!
     var currentRowIndex: NSIndexPath!
@@ -17,7 +17,7 @@ class DreamCollectionViewController: UIViewController, UICollectionViewDataSourc
     var newJournalWithAlarmTransition: NewJournalWithAlarmTransition!
     
     @IBOutlet weak var statsView: UIView!
-
+    
     @IBOutlet weak var collectionView: UICollectionView!
     
     var pageViewController: UIPageViewController!
@@ -48,6 +48,13 @@ class DreamCollectionViewController: UIViewController, UICollectionViewDataSourc
     let yellowColor = UIColor(red: 245/255, green: 189/255, blue: 35/255, alpha: 1)
     let orangeColor = UIColor(red: 255/255, green: 108/255, blue: 0/255, alpha: 1)
     
+    var themeTabTapCount: Int = 0
+    var placeTabTapCount: Int = 0
+    var emotionTabTapCount: Int = 0
+    
+    var themeActive: Bool = false
+    var placeActive: Bool = false
+    var emotionActive: Bool = false
     
     
     @IBOutlet weak var statsBackButton: UIButton!
@@ -92,10 +99,10 @@ class DreamCollectionViewController: UIViewController, UICollectionViewDataSourc
         
         collectionView.delegate = self
         collectionView.dataSource = self
-
+        
         currentRowIndex = NSIndexPath(forRow: 0, inSection: 0)
         // Do any additional setup after loading the view.
-       
+        
         // Set all nav buttons to 70% alpha by default
         settingButton.alpha = defaultNavAlpha
         alarmButton.alpha = defaultNavAlpha
@@ -117,9 +124,8 @@ class DreamCollectionViewController: UIViewController, UICollectionViewDataSourc
         addChildViewController(statsViewController)
         statsView.addSubview(statsViewController.view)
         statsView.addSubview(statsBackButton)
-       
-        statsViewController.dreamVC = self
         
+        statsViewController.dreamVC = self
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -137,7 +143,7 @@ class DreamCollectionViewController: UIViewController, UICollectionViewDataSourc
             UIView.animateWithDuration(0.5, delay: 0.1, options: .CurveEaseInOut, animations: {
                 self.alarmButton.alpha = 1
                 self.alarmTimeContainer.alpha = 1
-            }, completion: nil)
+                }, completion: nil)
         } else {
             // Fade out the alarm time label
             UIView.animateWithDuration(0.5, delay: 0.1, options: .CurveEaseInOut, animations: {
@@ -168,9 +174,9 @@ class DreamCollectionViewController: UIViewController, UICollectionViewDataSourc
             self.collectionView.alpha = 1
             self.collectionView.center = initialCollectionCenter
             self.collectionView.transform = CGAffineTransformIdentity
-        }, completion: nil)
+            }, completion: nil)
     }
-
+    
     deinit {
         NSNotificationCenter.defaultCenter().removeObserver(self)
     }
@@ -181,37 +187,96 @@ class DreamCollectionViewController: UIViewController, UICollectionViewDataSourc
     }
     
     @IBAction func unwindToSegue (segue : UIStoryboardSegue) {
-//        println("UNWIND TO SEGUE")
+        //        println("UNWIND TO SEGUE")
     }
     
     @IBAction func onThemeButtonPress(sender: AnyObject) {
-        revealStatsView()
-        didChangeTabToTabNumber(1)
-        UIView.animateWithDuration(0.5, animations: { () -> Void in
-            self.statsViewController.scrollView.contentOffset = CGPoint(x: 0,y: 0)
-        })
+        if !themeActive && !placeActive && !emotionActive {
+            themeActive=true
+            placeActive=false
+            emotionActive=false
+            
+            //special case
+            themeCountLabel.textColor = blueColor
+            themeLabel.textColor = blueColor
+            statsViewController.scrollView.contentOffset=CGPoint(x: 0,y: 0)
+            
+            revealStatsView()
+        } else if !themeActive {
+            themeActive=true
+            placeActive=false
+            emotionActive=false
+            refreshTabColors()
+            didChangeTabToTabNumber(1)
+        } else if themeActive {
+            refreshTabColors()
+            self.closeStatsView()
+            themeActive = false
+            placeActive=false
+            emotionActive=false
+        }
     }
     
+    
     @IBAction func onPlaceButtonPress(sender: AnyObject) {
-        revealStatsView()
-        didChangeTabToTabNumber(2)
-        UIView.animateWithDuration(0.5, animations: { () -> Void in
-            self.statsViewController.scrollView.contentOffset = CGPointMake(320, 0)
-        })
+        
+        if !themeActive && !placeActive && !emotionActive {
+            placeActive=true
+            themeActive=false
+            emotionActive=false
+
+            //special case
+            placesCountLabel.textColor = yellowColor
+            placesLabel.textColor = yellowColor
+            statsViewController.scrollView.contentOffset=CGPoint(x: 320,y: 0)
+            
+            revealStatsView()
+        } else if !placeActive {
+            placeActive=true
+            themeActive=false
+            emotionActive=false
+            refreshTabColors()
+            didChangeTabToTabNumber(2)
+        } else if placeActive {
+            refreshTabColors()
+            self.closeStatsView()
+            themeActive = false
+            placeActive=false
+            emotionActive=false
+        }
     }
     
     @IBAction func onEmotionButtonPress(sender: AnyObject) {
-        revealStatsView()
-        didChangeTabToTabNumber(3)
-        UIView.animateWithDuration(0.5, animations: { () -> Void in
-            self.statsViewController.scrollView.contentOffset = CGPointMake(640, 0)
-        })
+        
+        if !themeActive && !placeActive && !emotionActive {
+            emotionActive=true
+            themeActive=false
+            placeActive=false
+
+            //special case
+            //special case
+            emotionCountLabel.textColor = orangeColor
+            emotionLabel.textColor = orangeColor
+            statsViewController.scrollView.contentOffset=CGPoint(x: 640,y: 0)
+            
+            revealStatsView()
+        } else if !emotionActive {
+            emotionActive=true
+            themeActive=false
+            placeActive=false
+            refreshTabColors()
+            didChangeTabToTabNumber(3)
+        } else if emotionActive {
+            refreshTabColors()
+            self.closeStatsView()
+            themeActive = false
+            placeActive=false
+            emotionActive=false
+        }
     }
     
     
-    
-    
-    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int{        
+    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int{
         return titleArray.count
     }
     
@@ -219,24 +284,24 @@ class DreamCollectionViewController: UIViewController, UICollectionViewDataSourc
         currentRowIndex = indexPath
         NSLog("You selected cell number: \(currentRowIndex.row)!")
         
-
+        
         // This acts like pageViewController.reloadData
         pageViewController.dataSource = nil
         pageViewController.dataSource = self
         
         pageViewController.setViewControllers([journalViewControllerAtIndex(currentRowIndex.row)], direction: UIPageViewControllerNavigationDirection.Forward, animated: false, completion: nil)
-
+        
         journalTransition = JournalTransition()
         pageViewController.modalPresentationStyle = UIModalPresentationStyle.Custom
         pageViewController.transitioningDelegate = journalTransition
         presentViewController(pageViewController, animated: true, completion: nil)
         pageViewController.reloadInputViews()
-    
+        
     }
     
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell{
-       
+        
         var cell = collectionView.dequeueReusableCellWithReuseIdentifier("cardCollectionViewCell", forIndexPath: indexPath) as! CardCollectionViewCell
         
         cell.titleLabel.text = titleArray[indexPath.row]
@@ -253,7 +318,7 @@ class DreamCollectionViewController: UIViewController, UICollectionViewDataSourc
     
     func pageViewController(pageViewController: UIPageViewController, viewControllerBeforeViewController viewController: UIViewController) -> UIViewController? {
         var journalViewController = viewController as! JournalViewController
-//        println("Fetching for previous page from page: \(journalViewController.index)")
+        //        println("Fetching for previous page from page: \(journalViewController.index)")
         if journalViewController.index > 0 {
             var previousJournal = journalViewControllerAtIndex(journalViewController.index - 1)
             return previousJournal
@@ -267,14 +332,14 @@ class DreamCollectionViewController: UIViewController, UICollectionViewDataSourc
         if journalViewController.index < dateArray.count - 1 {
             return journalViewControllerAtIndex(journalViewController.index + 1)
         }
-
+        
         return nil
     }
     
     func journalViewControllerAtIndex(index: Int) -> JournalViewController {
         var storyboard = UIStoryboard(name: "Main", bundle: nil)
         var journalViewController = storyboard.instantiateViewControllerWithIdentifier("JournalViewController") as! JournalViewController
-
+        
         journalViewController.paragraph = paragraphArray[index]
         journalViewController.titleText = titleArray[index]
         journalViewController.dateText = dateArray[index]
@@ -313,6 +378,16 @@ class DreamCollectionViewController: UIViewController, UICollectionViewDataSourc
     
     
     @IBAction func onStatsBackButtonPressed(sender: AnyObject) {
+        refreshTabColors()
+        UIView.animateWithDuration(0.5, animations: { () -> Void in
+            self.statsView.frame.origin.y = -250
+            self.collectionView.frame.origin.y = 172
+            self.collectionView.alpha = 1
+        })
+    }
+    
+    func closeStatsView() {
+        refreshTabColors()
         UIView.animateWithDuration(0.5, animations: { () -> Void in
             self.statsView.frame.origin.y = -250
             self.collectionView.frame.origin.y = 172
@@ -336,17 +411,25 @@ class DreamCollectionViewController: UIViewController, UICollectionViewDataSourc
             refreshTabColors()
             themeCountLabel.textColor = blueColor
             themeLabel.textColor = blueColor
+            UIView.animateWithDuration(0.5, animations: { () -> Void in
+                self.statsViewController.scrollView.contentOffset=CGPoint(x: 0,y: 0)
+            })
             
         } else if tabNumber == 2 {
             refreshTabColors()
             placesCountLabel.textColor = yellowColor
             placesLabel.textColor = yellowColor
+            UIView.animateWithDuration(0.5, animations: { () -> Void in
+                self.statsViewController.scrollView.contentOffset=CGPoint(x: 320,y: 0)
+            })
             
         } else if tabNumber == 3 {
             refreshTabColors()
             emotionCountLabel.textColor = orangeColor
             emotionLabel.textColor = orangeColor
-            
+            UIView.animateWithDuration(0.5, animations: { () -> Void in
+                self.statsViewController.scrollView.contentOffset=CGPoint(x: 640,y: 0)
+            })
         } else {
             
         }
@@ -360,7 +443,7 @@ class DreamCollectionViewController: UIViewController, UICollectionViewDataSourc
             destinationVC.modalPresentationStyle = UIModalPresentationStyle.Custom
             newJournalTransition = NewJournalTransition()
             destinationVC.transitioningDelegate = newJournalTransition
-
+            
         }
         else if segue.identifier == "dreamToAlarmSegue"{
             

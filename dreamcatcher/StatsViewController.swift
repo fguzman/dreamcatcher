@@ -13,6 +13,7 @@ class StatsViewController: UIViewController, UIScrollViewDelegate{
     @IBOutlet weak var scrollView: UIScrollView!
     
     weak var dreamVC: DreamCollectionViewController!
+    var tab: Int!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,7 +25,30 @@ class StatsViewController: UIViewController, UIScrollViewDelegate{
     }
 
     func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
-        dreamVC.didChangeTabToTabNumber(Int(round(scrollView.contentOffset.x / 320)) + 1)
+        tab = Int(round(scrollView.contentOffset.x / 320)) + 1
+        
+        if tab==1 {
+            
+            dreamVC.themeActive=true
+            dreamVC.placeActive=false
+            dreamVC.emotionActive=false
+            
+            dreamVC.didChangeTabToTabNumber(tab)
+        } else if tab==2 {
+            
+            dreamVC.themeActive=false
+            dreamVC.placeActive=true
+            dreamVC.emotionActive=false
+            
+            dreamVC.didChangeTabToTabNumber(tab)
+        } else if tab==3 {
+            
+            dreamVC.themeActive=false
+            dreamVC.placeActive=false
+            dreamVC.emotionActive=true
+            dreamVC.didChangeTabToTabNumber(tab)
+        }
+        
     }
     
     override func didReceiveMemoryWarning() {
