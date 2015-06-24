@@ -21,7 +21,7 @@ class NewJournalTransition: BaseTransition {
         
         toViewController.view.frame.origin.y = containerView.frame.size.height
         
-        UIView.animateWithDuration(duration, animations: {
+        UIView.animateWithDuration(0.3, animations: {
             toViewController.view.frame.origin.y = 0
             toViewController.view.alpha = 1
             }) { (finished: Bool) -> Void in
@@ -31,16 +31,16 @@ class NewJournalTransition: BaseTransition {
     
     override func dismissTransition(containerView: UIView, fromViewController: UIViewController, toViewController: UIViewController) {
         
-
         var dreamComposeViewController = fromViewController as! DreamComposeViewController
         var dreamCollectionViewController = toViewController as! DreamCollectionViewController
-
+        
+        
         var collectionView = dreamCollectionViewController.collectionView
         var indexPath = NSIndexPath(forRow: 0, inSection: 0)
         
         dreamCollectionViewController.collectionView.scrollToItemAtIndexPath(indexPath, atScrollPosition: UICollectionViewScrollPosition.CenteredHorizontally, animated: true)
         dreamCollectionViewController.currentRowIndex = NSIndexPath(forRow: 0, inSection: 0)
-
+        
         
         var selectedCell: CardCollectionViewCell
         
@@ -51,26 +51,24 @@ class NewJournalTransition: BaseTransition {
             selectedCell = dreamCollectionViewController.collectionView.cellForItemAtIndexPath(dreamCollectionViewController.currentRowIndex) as! CardCollectionViewCell
         }
         
-       
+        
         
         
         var cellFrame = containerView.convertRect(selectedCell.frame, fromView: selectedCell.superview)
         
+        
         transitionView.backgroundColor = UIColor(white:1, alpha:1)
         transitionView.frame = dreamComposeViewController.view.frame
-        println(transitionView.frame)
         
         backgroundImageView.frame = dreamComposeViewController.styleScrollView.frame
         backgroundImageView.image = dreamCollectionViewController.imageArray[0]
         backgroundImageView.clipsToBounds = true
         
-        
-        
         fullTextView.text = dreamComposeViewController.composeTextView.text
-        fullTextView.font = UIFont(name: selectedCell.textView.font.fontName, size: 18)
+        fullTextView.font = UIFont(name: selectedCell.textView.font.fontName, size: 20)
         textView.text = dreamComposeViewController.composeTextView.text
         textView.frame = dreamComposeViewController.composeTextView.frame
-        textView.font = UIFont(name: selectedCell.textView.font.fontName, size: 18)
+        textView.font = UIFont(name: selectedCell.textView.font.fontName, size: 20)
         
         
         titleLabel.text = dreamComposeViewController.titleTextView.text
@@ -89,15 +87,14 @@ class NewJournalTransition: BaseTransition {
         transitionView.addSubview(dateLabel)
         transitionView.addSubview(textView)
         transitionView.addSubview(fullTextView)
+
         
-        
-        
-        
-        
+
         if dreamComposeViewController.exitButton == dreamComposeViewController.closeButton{
-            println(fromViewController.view.frame.origin.y)
+            println("no entry")
+            containerView.backgroundColor = UIColor(white:0, alpha:0)
             fromViewController.view.frame.origin.y = 0
-            UIView.animateWithDuration(duration, animations: { () -> Void in
+            UIView.animateWithDuration(0.3, animations: { () -> Void in
                 fromViewController.view.frame.origin.y = fromViewController.view.frame.size.height
             }, completion: { (Bool) -> Void in
                 self.finish()
@@ -108,10 +105,17 @@ class NewJournalTransition: BaseTransition {
             
         else if dreamComposeViewController.exitButton == dreamComposeViewController.doneButton { // if some entry
             println("some entry")
-            fromViewController.view.alpha = 0
+            
+            
+
             containerView.backgroundColor = UIColor(white:0, alpha:1)
+            fromViewController.view.alpha = 0
             var window = UIApplication.sharedApplication().keyWindow
             window?.addSubview(transitionView)
+            
+            
+           // containerView.backgroundColor = UIColor(white:0, alpha:0)///tesing only
+            
             UIView.animateWithDuration(duration, animations: {
                 self.transitionView.frame.size = selectedCell.frame.size
                 self.transitionView.frame.origin = CGPoint(x: dreamCollectionViewController.collectionView.contentInset.left, y:cellFrame.origin.y)
@@ -122,11 +126,14 @@ class NewJournalTransition: BaseTransition {
                 self.textView.alpha = 1
                 self.fullTextView.alpha = 0
                 self.fullTextView.frame.origin = selectedCell.textView.frame.origin
+                
                 containerView.backgroundColor = UIColor(white:0, alpha:0)
                 
                 }) { (finished: Bool) -> Void in
-                    self.transitionView.removeFromSuperview()
+                    println("title label \(self.titleLabel.frame.origin) and after \(selectedCell.titleLabel.frame.origin)")
                     dreamCollectionViewController.collectionView.reloadData()
+                   self.transitionView.removeFromSuperview()
+                    
                     self.finish()
             }//animation
 

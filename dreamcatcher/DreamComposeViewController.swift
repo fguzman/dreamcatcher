@@ -221,12 +221,22 @@ class DreamComposeViewController: UIViewController, UITextViewDelegate{
     @IBAction func onClose(sender: AnyObject) {
         view.endEditing(true)
         styleScrollView.hidden = true
+        if self.parentViewController != nil{ //if embded in AlarmNavController
+            var alarmNavController = self.parentViewController as! AlarmNavController
+            alarmNavController.exitButtonName = "close"
+            
+        }
+
         exitButton = closeButton
         dismissViewControllerAnimated(true, completion: nil)
     }
     
     
     @IBAction func onDone(sender: AnyObject) {
+        if self.parentViewController != nil{ //if embded in AlarmNavController
+            var alarmNavController = self.parentViewController as! AlarmNavController
+            alarmNavController.exitButtonName = "done"
+        }
         view.endEditing(true)
         exitButton = doneButton
         styleScrollView.hidden = true
