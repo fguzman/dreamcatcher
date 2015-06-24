@@ -31,7 +31,7 @@ class JournalTransition: BaseTransition {
         
         fullTextView.frame.size = journalViewController.textView.frame.size
         fullTextView.frame.origin = selectedCell.textView.frame.origin
-        fullTextView.font = UIFont(name: selectedCell.textView.font.fontName, size: 18)
+        fullTextView.font = UIFont(name: selectedCell.textView.font.fontName, size: 20)
         fullTextView.attributedText = selectedCell.textView.attributedText
         fullTextView.font = selectedCell.textView.font
         fullTextView.alpha = 0

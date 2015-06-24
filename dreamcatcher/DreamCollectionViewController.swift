@@ -14,6 +14,7 @@ class DreamCollectionViewController: UIViewController, UICollectionViewDataSourc
     var journalTransition: JournalTransition!
     var currentRowIndex: NSIndexPath!
     var newJournalTransition: NewJournalTransition!
+    var newJournalWithAlarmTransition: NewJournalWithAlarmTransition!
     
     @IBOutlet weak var statsView: UIView!
 
@@ -80,9 +81,9 @@ class DreamCollectionViewController: UIViewController, UICollectionViewDataSourc
         
         pageViewController = UIPageViewController(transitionStyle: UIPageViewControllerTransitionStyle.Scroll, navigationOrientation: UIPageViewControllerNavigationOrientation.Horizontal, options: nil)
         pageViewController.dataSource = self
-        var redSquare = UIView(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
-        redSquare.backgroundColor = UIColor.redColor()
-        pageViewController.view.addSubview(redSquare)
+        //var redSquare = UIView(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
+        //redSquare.backgroundColor = UIColor.redColor()
+        //pageViewController.view.addSubview(redSquare)
         
         
         var storyboard = UIStoryboard(name: "Main", bundle:nil)
@@ -277,7 +278,13 @@ class DreamCollectionViewController: UIViewController, UICollectionViewDataSourc
             newJournalTransition = NewJournalTransition()
             destinationVC.transitioningDelegate = newJournalTransition
 
-        
+        }
+        else if segue.identifier == "dreamToAlarmSegue"{
+            
+            var destinationVC = segue.destinationViewController as! AlarmNavController
+            destinationVC.modalPresentationStyle = UIModalPresentationStyle.Custom
+            newJournalWithAlarmTransition = NewJournalWithAlarmTransition()
+            destinationVC.transitioningDelegate = newJournalWithAlarmTransition
         }
     }
     

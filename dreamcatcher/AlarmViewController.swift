@@ -98,8 +98,8 @@ class AlarmViewController: UIViewController, UINavigationControllerDelegate {
         currentState = AlarmViewController.getCurrentAlarmState()
         
         updateAlarmState(currentState, isAnimate: false, complete: nil)
-//        userDefaults.setObject(NSDate(), forKey: AlarmUserSettings.Date.rawValue)
-//        updateAlarmState(State.Triggered, isAnimate: false, complete: nil)
+        //userDefaults.setObject(NSDate(), forKey: AlarmUserSettings.Date.rawValue)
+        //updateAlarmState(State.Triggered, isAnimate: false, complete: nil)
         
         // Display last selected alarm date
         if (userDefaults.objectForKey(AlarmUserSettings.LastSelected.rawValue) != nil) {
@@ -154,6 +154,8 @@ class AlarmViewController: UIViewController, UINavigationControllerDelegate {
     }
 
     @IBAction func onPressCloseButton(sender: AnyObject) {
+        var alarmNavController = self.parentViewController as! AlarmNavController
+        alarmNavController.exitButtonName = "close"
         dismissModal()
     }
     
