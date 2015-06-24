@@ -27,6 +27,27 @@ class DreamCollectionViewController: UIViewController, UICollectionViewDataSourc
     @IBOutlet weak var composeButton: UIButton!
     @IBOutlet weak var alarmTimeLabel: UILabel!
     @IBOutlet weak var alarmTimeContainer: UIView!
+    @IBOutlet weak var themeButton: UIButton!
+    @IBOutlet weak var placesButton: UIButton!
+    @IBOutlet weak var emotionsButton: UIButton!
+    
+    
+    //tabs
+    @IBOutlet weak var themeCountLabel: UILabel!
+    @IBOutlet weak var themeLabel: UILabel!
+    
+    @IBOutlet weak var placesCountLabel: UILabel!
+    @IBOutlet weak var placesLabel: UILabel!
+    
+    @IBOutlet weak var emotionCountLabel: UILabel!
+    @IBOutlet weak var emotionLabel: UILabel!
+    
+    //colors
+    let blueColor = UIColor(red: 0/255, green: 155/255, blue: 255/255, alpha: 1)
+    let yellowColor = UIColor(red: 245/255, green: 189/255, blue: 35/255, alpha: 1)
+    let orangeColor = UIColor(red: 255/255, green: 108/255, blue: 0/255, alpha: 1)
+    
+    
     
     @IBOutlet weak var statsBackButton: UIButton!
     
@@ -47,6 +68,7 @@ class DreamCollectionViewController: UIViewController, UICollectionViewDataSourc
     let hardcodedJournals: Int = 6
     
     override func viewDidLoad() {
+        
         super.viewDidLoad()
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "segueToAlarm", name: UIApplicationWillEnterForegroundNotification, object: nil)
@@ -92,6 +114,7 @@ class DreamCollectionViewController: UIViewController, UICollectionViewDataSourc
         statsView.addSubview(statsViewController.view)
         statsView.addSubview(statsBackButton)
        
+        statsViewController.dreamVC = self
         
     }
     
@@ -156,6 +179,27 @@ class DreamCollectionViewController: UIViewController, UICollectionViewDataSourc
     @IBAction func unwindToSegue (segue : UIStoryboardSegue) {
 //        println("UNWIND TO SEGUE")
     }
+    
+    @IBAction func onThemeButtonPress(sender: AnyObject) {
+        revealStatsView()
+        didChangeTabToTabNumber(1)
+        //statsViewController.scrollView.contentOffset = CGPoint(x: 0,y: 0)
+    }
+    
+    @IBAction func onPlaceButtonPress(sender: AnyObject) {
+        revealStatsView()
+        didChangeTabToTabNumber(2)
+        //statsViewController.scrollView.contentOffset = CGPointMake(320, 0)
+    }
+    
+    @IBAction func onEmotionButtonPress(sender: AnyObject) {
+        revealStatsView()
+        didChangeTabToTabNumber(3)
+        //statsViewController.scrollView.contentOffset = CGPointMake(640, 0)
+    }
+    
+    
+    
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int{        
         return titleArray.count
@@ -249,14 +293,12 @@ class DreamCollectionViewController: UIViewController, UICollectionViewDataSourc
         
     }
     
-    
-    @IBAction func onStatsButtonPressed(sender: AnyObject) {
+    func revealStatsView() {
         UIView.animateWithDuration(0.5, animations: { () -> Void in
             self.statsView.frame.origin.y = 172
             self.collectionView.frame.origin.y = self.view.frame.size.height
             self.collectionView.alpha = 0
         })
-        
     }
     
     
@@ -266,6 +308,38 @@ class DreamCollectionViewController: UIViewController, UICollectionViewDataSourc
             self.collectionView.frame.origin.y = 172
             self.collectionView.alpha = 1
         })
+    }
+    
+    func refreshTabColors() {
+        themeCountLabel.textColor = UIColor.blackColor()
+        themeLabel.textColor = UIColor.blackColor()
+        
+        placesCountLabel.textColor = UIColor.blackColor()
+        placesLabel.textColor = UIColor.blackColor()
+        
+        emotionCountLabel.textColor = UIColor.blackColor()
+        emotionLabel.textColor = UIColor.blackColor()
+    }
+    
+    func didChangeTabToTabNumber(tabNumber: Int) {
+        if tabNumber == 1 {
+            refreshTabColors()
+            themeCountLabel.textColor = blueColor
+            themeLabel.textColor = blueColor
+            
+        } else if tabNumber == 2 {
+            refreshTabColors()
+            placesCountLabel.textColor = yellowColor
+            placesLabel.textColor = yellowColor
+            
+        } else if tabNumber == 3 {
+            refreshTabColors()
+            emotionCountLabel.textColor = orangeColor
+            emotionLabel.textColor = orangeColor
+            
+        } else {
+            
+        }
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {

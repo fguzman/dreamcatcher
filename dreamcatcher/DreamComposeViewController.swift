@@ -10,6 +10,8 @@ import UIKit
 
 class DreamComposeViewController: UIViewController, UITextViewDelegate{
     
+    
+    
     @IBOutlet weak var pageScroll: UIScrollView!
     @IBOutlet weak var styleScrollView: UIScrollView!
     @IBOutlet weak var composeTextView: UITextView!
@@ -37,7 +39,7 @@ class DreamComposeViewController: UIViewController, UITextViewDelegate{
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         dateFormatter.dateFormat = "MMMM dd"
         dateString = dateFormatter.stringFromDate(todaysDate)
         
@@ -73,6 +75,10 @@ class DreamComposeViewController: UIViewController, UITextViewDelegate{
         view.addGestureRecognizer(panGesture)
         nextButton.enabled = false
         
+    }
+    
+    func didChangeTabToTabNumber(tabNumber: Int) {
+    
     }
     
     func dismissKeyboard() {
