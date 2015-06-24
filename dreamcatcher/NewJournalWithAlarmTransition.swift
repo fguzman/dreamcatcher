@@ -27,11 +27,12 @@ class NewJournalWithAlarmTransition: BaseTransition {
         var dreamCollectionViewController = toViewController as! DreamCollectionViewController
         
         
-        if alarmNavController.exitButtonName == "close"{
+        if alarmNavController.exitButtonName == "close" || alarmNavController.exitButtonName == "set" {
             
             UIView.animateWithDuration(0.3, animations: {
                 fromViewController.view.frame.origin.y = containerView.frame.size.height
                 }) { (finished: Bool) -> Void in
+                    dreamCollectionViewController.viewDidAppear(true)
                     self.finish()
             }
         }//if
@@ -122,6 +123,7 @@ class NewJournalWithAlarmTransition: BaseTransition {
                 }) { (finished: Bool) -> Void in
                     transitionView.removeFromSuperview()
                     dreamCollectionViewController.collectionView.reloadData()
+                    dreamCollectionViewController.viewDidAppear(true)
                     self.finish()
             }
 

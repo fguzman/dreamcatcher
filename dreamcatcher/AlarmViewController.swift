@@ -164,8 +164,10 @@ class AlarmViewController: UIViewController, UINavigationControllerDelegate {
     }
     
     @IBAction func onPressSetAlarm(sender: AnyObject) {
+        var alarmNavController = self.parentViewController as! AlarmNavController
         setLocalNotification(datePicker.date)
         updateAlarmState(State.Set, isAnimate: true, complete: nil)
+        alarmNavController.exitButtonName = "set"
         dismissModal()
     }
 
