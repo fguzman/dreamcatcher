@@ -35,7 +35,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         // App will start playing from here, so cancelling all sound notifications
         UIApplication.sharedApplication().cancelAllLocalNotifications()
-        application.applicationIconBadgeNumber = 0
         
         prepareAudio()
         
@@ -84,9 +83,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 fader.fadeOut(duration: 2, velocity: 2, onFinished: { finished in
                     self.player.stop()
                     self.isPlayerPrepared = false
+                    UIApplication.sharedApplication().applicationIconBadgeNumber = 0
                 })
             } else {
                     self.player.stop()
+                    UIApplication.sharedApplication().applicationIconBadgeNumber = 0
             }
         }
     }

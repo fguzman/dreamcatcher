@@ -42,6 +42,12 @@ class NewJournalTransition: BaseTransition {
         dreamCollectionViewController.currentRowIndex = NSIndexPath(forRow: 0, inSection: 0)
         
         
+        if dreamComposeViewController.exitButton == dreamComposeViewController.doneButton {
+            if (dreamCollectionViewController.themeActive || dreamCollectionViewController.placeActive || dreamCollectionViewController.emotionActive) {
+                dreamCollectionViewController.closeStatsView()
+            }
+        }
+        
         var selectedCell: CardCollectionViewCell
         
         if dreamCollectionViewController.collectionView.indexPathsForVisibleItems()[0].row != 0{
@@ -105,14 +111,11 @@ class NewJournalTransition: BaseTransition {
             
         else if dreamComposeViewController.exitButton == dreamComposeViewController.doneButton { // if some entry
             println("some entry")
-            
-            
 
             containerView.backgroundColor = UIColor(white:0, alpha:1)
             fromViewController.view.alpha = 0
             var window = UIApplication.sharedApplication().keyWindow
             window?.addSubview(transitionView)
-            
             
            // containerView.backgroundColor = UIColor(white:0, alpha:0)///tesing only
             
@@ -130,7 +133,8 @@ class NewJournalTransition: BaseTransition {
                 containerView.backgroundColor = UIColor(white:0, alpha:0)
                 
                 }) { (finished: Bool) -> Void in
-                    println("title label \(self.titleLabel.frame.origin) and after \(selectedCell.titleLabel.frame.origin)")
+//                    println("title label \(self.titleLabel.frame.origin) and after \(selectedCell.titleLabel.frame.origin)")
+                    
                     dreamCollectionViewController.collectionView.reloadData()
                    self.transitionView.removeFromSuperview()
                     
