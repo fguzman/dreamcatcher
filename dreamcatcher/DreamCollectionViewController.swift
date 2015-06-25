@@ -197,8 +197,13 @@ class DreamCollectionViewController: UIViewController, UICollectionViewDataSourc
             emotionActive=false
             
             //special case
-            themeCountLabel.textColor = blueColor
-            themeLabel.textColor = blueColor
+            
+            
+            UIView.animateWithDuration(0.8, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.05, options: UIViewAnimationOptions.CurveEaseInOut, animations: { () -> Void in
+                self.themeCountLabel.textColor = self.blueColor
+                self.themeLabel.textColor = self.blueColor
+                }, completion: nil)
+            
             statsViewController.scrollView.contentOffset=CGPoint(x: 0,y: 0)
             
             revealStatsView()
@@ -224,7 +229,7 @@ class DreamCollectionViewController: UIViewController, UICollectionViewDataSourc
             placeActive=true
             themeActive=false
             emotionActive=false
-
+            
             //special case
             placesCountLabel.textColor = yellowColor
             placesLabel.textColor = yellowColor
@@ -252,7 +257,7 @@ class DreamCollectionViewController: UIViewController, UICollectionViewDataSourc
             emotionActive=true
             themeActive=false
             placeActive=false
-
+            
             //special case
             //special case
             emotionCountLabel.textColor = orangeColor
