@@ -123,7 +123,6 @@ class DreamCollectionViewController: UIViewController, UICollectionViewDataSourc
         statsViewController.view.frame = statsView.bounds
         addChildViewController(statsViewController)
         statsView.addSubview(statsViewController.view)
-        statsView.addSubview(statsBackButton)
         
         statsViewController.dreamVC = self
     }
@@ -321,9 +320,19 @@ class DreamCollectionViewController: UIViewController, UICollectionViewDataSourc
         return cell
     }
     
+    func collectionView(collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewLayout,
+        sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+            let deviceSize = UIScreen.mainScreen().applicationFrame.size
+            let collectionSize = collectionView.bounds.size
+            let collectionFlowLayout: UICollectionViewFlowLayout = collectionViewLayout as! UICollectionViewFlowLayout
+            let cellHeight = collectionSize.height - collectionFlowLayout.sectionInset.top - collectionFlowLayout.sectionInset.bottom
+            let cellWidth = deviceSize.width - collectionFlowLayout.sectionInset.left - collectionFlowLayout.sectionInset.right
+            return CGSize(width: cellWidth, height: cellHeight)
+    }
+    
     func pageViewController(pageViewController: UIPageViewController, viewControllerBeforeViewController viewController: UIViewController) -> UIViewController? {
         var journalViewController = viewController as! JournalViewController
-        //        println("Fetching for previous page from page: \(journalViewController.index)")
         if journalViewController.index > 0 {
             var previousJournal = journalViewControllerAtIndex(journalViewController.index - 1)
             return previousJournal
@@ -360,9 +369,6 @@ class DreamCollectionViewController: UIViewController, UICollectionViewDataSourc
         //var indexPath = collectionView.indexPathForCell(cell)!
         
         if sender.state == UIGestureRecognizerState.Began{
-            println("pan")
-            println(sender.view)
-            
         }
         else if sender.state == UIGestureRecognizerState.Changed{
         }
@@ -442,8 +448,6 @@ class DreamCollectionViewController: UIViewController, UICollectionViewDataSourc
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "composeSegue"{
-            println("compose Segue")
-            
             var destinationVC = segue.destinationViewController as! DreamComposeViewController
             destinationVC.modalPresentationStyle = UIModalPresentationStyle.Custom
             newJournalTransition = NewJournalTransition()

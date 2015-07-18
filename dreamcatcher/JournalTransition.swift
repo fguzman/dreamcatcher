@@ -71,7 +71,7 @@ class JournalTransition: BaseTransition {
         toViewController.view.alpha = 0
         UIView.animateWithDuration(duration, animations: {
             self.transitionView.frame = toViewController.view.frame
-            self.backgroundImageView.frame = journalViewController.backgroundImageView.frame
+            self.backgroundImageView.frame = CGRectMake(0, 0, toViewController.view.frame.width, journalViewController.backgroundImageView.frame.height)
             self.dateLabel.frame = journalViewController.dateLabel.frame
             self.titleLabel.frame  = journalViewController.titleLabel.frame
             self.textView.frame.origin = journalViewController.textView.frame.origin
@@ -125,9 +125,11 @@ class JournalTransition: BaseTransition {
         var window = UIApplication.sharedApplication().keyWindow
         window?.addSubview(transitionView)
         
+        let collectionFlowLayout: UICollectionViewFlowLayout = dreamCollectionViewController.collectionView.collectionViewLayout as! UICollectionViewFlowLayout
+
         UIView.animateWithDuration(duration, animations: {
             self.transitionView.frame.size = selectedCell.frame.size
-            self.transitionView.frame.origin = CGPoint(x: dreamCollectionViewController.collectionView.contentInset.left, y:cellFrame.origin.y)
+            self.transitionView.frame.origin = CGPoint(x: collectionFlowLayout.sectionInset.left, y:cellFrame.origin.y)
             self.backgroundImageView.frame = selectedCell.backgroundImageView.frame
             self.titleLabel.frame = selectedCell.titleLabel.frame
             self.dateLabel.frame = selectedCell.dateLabel.frame

@@ -17,6 +17,7 @@ class JournalViewController: UIViewController, UIScrollViewDelegate{
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var textView: UITextView!
+    
     var paragraph: String!
     var titleText: String!
     var dateText: String!
@@ -38,7 +39,9 @@ class JournalViewController: UIViewController, UIScrollViewDelegate{
         dateLabel.text = dateText
         backgroundImageView.image = image
         let size: CGSize = textView.sizeThatFits(CGSizeMake(textView.frame.size.width, CGFloat.max))
+        
         textView.frame.size.height = size.height
+        
         textView.scrollEnabled = false
         let inset: CGFloat = 20
         
@@ -50,8 +53,6 @@ class JournalViewController: UIViewController, UIScrollViewDelegate{
         backgroundView.frame.size.height = scrollView.contentSize.height
         
         scrollView.delegate = self
-        
-//        println("=== I'm showing \(index), \(titleText)")
     }
     
     override func viewDidDisappear(animated: Bool) {

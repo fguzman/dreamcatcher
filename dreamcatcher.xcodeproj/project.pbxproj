@@ -116,8 +116,9 @@
 			isa = PBXGroup;
 			children = (
 				B551D3AF1B36155000E6B555 /* Sounds */,
-				9455DD7C1B249E300080CE79 /* AppDelegate.swift */,
+				9455DD7A1B249E300080CE79 /* Supporting Files */,
 				A4E4E3DF1B31207000E4410B /* Transition */,
+				9455DD7C1B249E300080CE79 /* AppDelegate.swift */,
 				B5F960D61B2D12D000E5AAB3 /* iiFaderForAvAudioPlayer.swift */,
 				9455DD7E1B249E300080CE79 /* ViewController.swift */,
 				B5DC5B8E1B3160C800DD8E6E /* Common.swift */,
@@ -130,7 +131,6 @@
 				B569E07D1B2AB3CC00A8D608 /* StatsViewController.swift */,
 				B569E07B1B2AA7C400A8D608 /* Images.xcassets */,
 				9455DD851B249E300080CE79 /* LaunchScreen.xib */,
-				9455DD7A1B249E300080CE79 /* Supporting Files */,
 				A40B26381B2FD21C00D21DE6 /* CardCollectionViewCell.swift */,
 				A40B263C1B2FD2D500D21DE6 /* DreamCollectionViewController.swift */,
 			);
