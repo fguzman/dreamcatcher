@@ -25,6 +25,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     let alarmSoundDuration: Int = 23
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+        
+        Parse.setApplicationId("6lMW6J4FlIcfwtowQuiRFVFSOQbYrjHd53cVAM0l", clientKey: "ENl3CTOUmgRLhJYira0SQYQfMrPc70t0L1WYNi9y")
+        
         // Override point for customization after application launch.
         application.registerUserNotificationSettings(UIUserNotificationSettings(forTypes: .Alert | .Badge | .Sound, categories: nil))
         return true
