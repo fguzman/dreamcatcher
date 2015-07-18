@@ -21,7 +21,7 @@ class DreamComposeViewController: UIViewController, UITextViewDelegate{
     @IBOutlet weak var doneButton: UIButton!
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var dateLabel: UILabel!
-    @IBOutlet weak var titleTextView: UITextView!
+    @IBOutlet weak var titleLabel: UILabel!
     var exitButton: UIButton!
     
     
@@ -31,7 +31,7 @@ class DreamComposeViewController: UIViewController, UITextViewDelegate{
     let textColor: UIColor = UIColor(red: 45/255, green: 45/255, blue: 64/255, alpha: 1)
     let lightTextColor: UIColor = UIColor(red: 45/255, green: 45/255, blue: 64/255, alpha: 0.3)
     let titleMaxLength: Int = 30
-    let titleMaxWords: Int = 4
+    let titleMaxWords: Int = 10
 
     var todaysDate: NSDate = NSDate()
     var dateFormatter: NSDateFormatter = NSDateFormatter()
@@ -44,9 +44,7 @@ class DreamComposeViewController: UIViewController, UITextViewDelegate{
         dateString = dateFormatter.stringFromDate(todaysDate)
         
         dateLabel.text = dateString.uppercaseString
-        titleTextView.backgroundColor = UIColor.clearColor()
-        titleTextView.textColor = UIColor.whiteColor()
-        titleTextView.delegate = self
+
         styleScrollView.hidden=true
         
         // If come from alarm, hide nav bar
@@ -158,12 +156,6 @@ class DreamComposeViewController: UIViewController, UITextViewDelegate{
             }
             
             return true
-        } else if (textView == titleTextView) {
-            if count(textView.text) - range.length + count(text) > titleMaxLength {
-                return false
-            } else {
-                return true
-            }
         } else {
             return true
         }
@@ -180,12 +172,12 @@ class DreamComposeViewController: UIViewController, UITextViewDelegate{
     }
     
     @IBAction func onNext(sender: AnyObject) {
-        // Use the first 5 words from the compose field as title
+        // Use the first 10 words from the compose field as title
         var words = composeTextView.text.componentsSeparatedByString(" ")
         println("words: \(words.count)")
         var index = words.count > titleMaxWords ? titleMaxWords - 1 : words.count - 1
         var firstWords = Array(words[0...index])
-        titleTextView.text = " ".join(firstWords)
+        titleLabel.text = " ".join(firstWords)
         
         //println(composeTextView.text)
         styleScrollView.hidden = false
@@ -200,7 +192,7 @@ class DreamComposeViewController: UIViewController, UITextViewDelegate{
         backButton.hidden = false
         doneButton.hidden = false
         dateLabel.hidden = false
-        titleTextView.hidden = false
+        titleLabel.hidden = false
     }
     
     @IBAction func onBack(sender: AnyObject) {
@@ -215,7 +207,7 @@ class DreamComposeViewController: UIViewController, UITextViewDelegate{
         doneButton.hidden = true
         composeTextView.becomeFirstResponder()
         dateLabel.hidden = true
-        titleTextView.hidden = true
+        titleLabel.hidden = true
     }
     
     @IBAction func onClose(sender: AnyObject) {
@@ -256,7 +248,7 @@ class DreamComposeViewController: UIViewController, UITextViewDelegate{
             
             dreamCollectionViewController.hasNewJournal = true
             dreamCollectionViewController.dateArray.insert(dateLabel.text!, atIndex: 0)
-            dreamCollectionViewController.titleArray.insert(titleTextView.text, atIndex: 0)
+            dreamCollectionViewController.titleArray.insert(titleLabel.text!, atIndex: 0)
             dreamCollectionViewController.paragraphArray.insert(composeTextView.text, atIndex: 0)
             dreamCollectionViewController.imageArray.insert(UIImage(named: "bg\(bgNum)")!, atIndex: 0)
             println("Number of journals: \(dreamCollectionViewController.dateArray.count)")
