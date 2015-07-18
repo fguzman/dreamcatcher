@@ -7,12 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		592648032F2B5AA21A77D5B6 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FA84778EFDEE303AEFA98763 /* libPods.a */; };
 		9455DD7D1B249E300080CE79 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9455DD7C1B249E300080CE79 /* AppDelegate.swift */; };
-		9455DD7F1B249E300080CE79 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9455DD7E1B249E300080CE79 /* ViewController.swift */; };
 		9455DD821B249E300080CE79 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9455DD801B249E300080CE79 /* Main.storyboard */; };
 		9455DD871B249E300080CE79 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9455DD851B249E300080CE79 /* LaunchScreen.xib */; };
 		9455DD931B249E300080CE79 /* dreamcatcherTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9455DD921B249E300080CE79 /* dreamcatcherTests.swift */; };
 		94A48D781B2E5BA400978643 /* DreamComposeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A48D771B2E5BA400978643 /* DreamComposeViewController.swift */; };
+		94AF75381B5AFC36000B4216 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94AF75371B5AFC36000B4216 /* LoginViewController.swift */; };
 		A40B26391B2FD21C00D21DE6 /* CardCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A40B26381B2FD21C00D21DE6 /* CardCollectionViewCell.swift */; };
 		A40B263D1B2FD2D500D21DE6 /* DreamCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A40B263C1B2FD2D500D21DE6 /* DreamCollectionViewController.swift */; };
 		A448A16A1B3A0D7D00FFEB79 /* NewJournalWithAlarmTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = A448A1691B3A0D7D00FFEB79 /* NewJournalWithAlarmTransition.swift */; };
@@ -45,16 +46,18 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		8DA537EC4EC790AF11D4F56C /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		9455DD771B249E300080CE79 /* dreamcatcher.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = dreamcatcher.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9455DD7B1B249E300080CE79 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9455DD7C1B249E300080CE79 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		9455DD7E1B249E300080CE79 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		9455DD811B249E300080CE79 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		9455DD861B249E300080CE79 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		9455DD8C1B249E300080CE79 /* dreamcatcherTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = dreamcatcherTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		9455DD911B249E300080CE79 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9455DD921B249E300080CE79 /* dreamcatcherTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = dreamcatcherTests.swift; sourceTree = "<group>"; };
 		94A48D771B2E5BA400978643 /* DreamComposeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DreamComposeViewController.swift; sourceTree = "<group>"; };
+		94AF75341B5AFA62000B4216 /* dreamcatcher-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "dreamcatcher-Bridging-Header.h"; sourceTree = "<group>"; };
+		94AF75371B5AFC36000B4216 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoginViewController.swift; path = ../LoginViewController.swift; sourceTree = "<group>"; };
 		A40B26381B2FD21C00D21DE6 /* CardCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardCollectionViewCell.swift; sourceTree = "<group>"; };
 		A40B263C1B2FD2D500D21DE6 /* DreamCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DreamCollectionViewController.swift; sourceTree = "<group>"; usesTabs = 0; };
 		A448A1691B3A0D7D00FFEB79 /* NewJournalWithAlarmTransition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewJournalWithAlarmTransition.swift; sourceTree = "<group>"; };
@@ -63,6 +66,7 @@
 		A4E4E3DB1B31200B00E4410B /* FadeTransition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FadeTransition.swift; sourceTree = "<group>"; };
 		A4E4E3DD1B31206600E4410B /* BaseTransition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseTransition.swift; sourceTree = "<group>"; };
 		A4E4E3E01B3120A600E4410B /* JournalTransition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JournalTransition.swift; sourceTree = "<group>"; };
+		A6FDC803859C7965C3ADC62A /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		B51DE73E1B32758200BA7954 /* AlarmTransition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlarmTransition.swift; sourceTree = "<group>"; };
 		B51DE7401B332F8500BA7954 /* InteractiveBaseTransition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InteractiveBaseTransition.swift; sourceTree = "<group>"; };
 		B551D3B01B36178500E6B555 /* alarm_sound_fadedIn.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = alarm_sound_fadedIn.mp3; sourceTree = "<group>"; };
@@ -74,6 +78,7 @@
 		B5F960D21B2CDC3C00E5AAB3 /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		B5F960D41B2CEA2600E5AAB3 /* alarm_sound_normal.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = alarm_sound_normal.mp3; sourceTree = "<group>"; };
 		B5F960D61B2D12D000E5AAB3 /* iiFaderForAvAudioPlayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = iiFaderForAvAudioPlayer.swift; sourceTree = "<group>"; };
+		FA84778EFDEE303AEFA98763 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,6 +86,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				592648032F2B5AA21A77D5B6 /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -94,12 +100,24 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0BC623B6B783FBBDE695C56E /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				8DA537EC4EC790AF11D4F56C /* Pods.debug.xcconfig */,
+				A6FDC803859C7965C3ADC62A /* Pods.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		9455DD6E1B249E2F0080CE79 = {
 			isa = PBXGroup;
 			children = (
 				9455DD791B249E300080CE79 /* dreamcatcher */,
 				9455DD8F1B249E300080CE79 /* dreamcatcherTests */,
 				9455DD781B249E300080CE79 /* Products */,
+				0BC623B6B783FBBDE695C56E /* Pods */,
+				E19322E78EF35BC973BCA521 /* Frameworks */,
+				94AF75341B5AFA62000B4216 /* dreamcatcher-Bridging-Header.h */,
 			);
 			sourceTree = "<group>";
 		};
@@ -119,7 +137,7 @@
 				9455DD7C1B249E300080CE79 /* AppDelegate.swift */,
 				A4E4E3DF1B31207000E4410B /* Transition */,
 				B5F960D61B2D12D000E5AAB3 /* iiFaderForAvAudioPlayer.swift */,
-				9455DD7E1B249E300080CE79 /* ViewController.swift */,
+				94AF75371B5AFC36000B4216 /* LoginViewController.swift */,
 				B5DC5B8E1B3160C800DD8E6E /* Common.swift */,
 				9455DD801B249E300080CE79 /* Main.storyboard */,
 				A448A16B1B3A10EA00FFEB79 /* AlarmNavController.swift */,
@@ -185,6 +203,14 @@
 			name = Sounds;
 			sourceTree = "<group>";
 		};
+		E19322E78EF35BC973BCA521 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				FA84778EFDEE303AEFA98763 /* libPods.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -192,9 +218,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 9455DD961B249E300080CE79 /* Build configuration list for PBXNativeTarget "dreamcatcher" */;
 			buildPhases = (
+				B13EC06C6C75E572953DF20D /* Check Pods Manifest.lock */,
 				9455DD731B249E300080CE79 /* Sources */,
 				9455DD741B249E300080CE79 /* Frameworks */,
 				9455DD751B249E300080CE79 /* Resources */,
+				C8608B68279CED9B4DD15C14 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -287,6 +315,39 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		B13EC06C6C75E572953DF20D /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		C8608B68279CED9B4DD15C14 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		9455DD731B249E300080CE79 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -295,11 +356,11 @@
 				A4E4E3E11B3120A600E4410B /* JournalTransition.swift in Sources */,
 				A40B26391B2FD21C00D21DE6 /* CardCollectionViewCell.swift in Sources */,
 				B569E0801B2AB7F200A8D608 /* AlarmViewController.swift in Sources */,
-				9455DD7F1B249E300080CE79 /* ViewController.swift in Sources */,
 				B5F960D71B2D12D000E5AAB3 /* iiFaderForAvAudioPlayer.swift in Sources */,
 				B5F960D31B2CDC3C00E5AAB3 /* HomeViewController.swift in Sources */,
 				B569E07E1B2AB3CC00A8D608 /* StatsViewController.swift in Sources */,
 				A448A16A1B3A0D7D00FFEB79 /* NewJournalWithAlarmTransition.swift in Sources */,
+				94AF75381B5AFC36000B4216 /* LoginViewController.swift in Sources */,
 				94A48D781B2E5BA400978643 /* DreamComposeViewController.swift in Sources */,
 				B51DE73F1B32758200BA7954 /* AlarmTransition.swift in Sources */,
 				A4DECA181B38FD8D00837132 /* NewJournalTransition.swift in Sources */,
@@ -435,23 +496,30 @@
 		};
 		9455DD971B249E300080CE79 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8DA537EC4EC790AF11D4F56C /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = dreamcatcher/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "dreamcatcher-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
 		9455DD981B249E300080CE79 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A6FDC803859C7965C3ADC62A /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = dreamcatcher/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "dreamcatcher-Bridging-Header.h";
 			};
 			name = Release;
 		};

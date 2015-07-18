@@ -9,9 +9,7 @@
 import UIKit
 
 class DreamComposeViewController: UIViewController, UITextViewDelegate{
-    
-    
-    
+
     @IBOutlet weak var pageScroll: UIScrollView!
     @IBOutlet weak var styleScrollView: UIScrollView!
     @IBOutlet weak var composeTextView: UITextView!
@@ -225,18 +223,28 @@ class DreamComposeViewController: UIViewController, UITextViewDelegate{
     
     
     @IBAction func onDone(sender: AnyObject) {
+
+        var journal = PFObject(className: "Journal")
+        
+        journal["date"] = dateLabel.text
+        journal["title"] = titleLabel.text
+        journal["body"] = composeTextView.text
+        journal["user"] = PFUser.currentUser()
+        
+        journal.saveInBackgroundWithBlock { (success: Bool, error: NSError?) -> Void in
+            println("Saved the entry!")
+        }
+        
         if self.parentViewController != nil{ //if embded in AlarmNavController
             var alarmNavController = self.parentViewController as! AlarmNavController
             alarmNavController.exitButtonName = "done"
         }
+        
         view.endEditing(true)
         exitButton = doneButton
         styleScrollView.hidden = true
     }
     
-    
-
-
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         println("====== PREPARE FOR SEGUE ======!")
         

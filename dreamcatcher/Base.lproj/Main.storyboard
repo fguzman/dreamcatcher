@@ -1,9 +1,76 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="vXZ-lx-hvc">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14F6a" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="OMw-IL-rRP">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
     </dependencies>
     <scenes>
+        <!--Login View Controller-->
+        <scene sceneID="NwF-53-Xfg">
+            <objects>
+                <viewController id="OMw-IL-rRP" customClass="LoginViewController" customModule="dreamcatcher" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="KbR-Ja-bPZ">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" id="qhk-zH-XB5">
+                                <rect key="frame" x="99" y="55" width="199" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" id="lto-A9-cm7">
+                                <rect key="frame" x="99" y="110" width="199" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Y8w-7w-P9y">
+                                <rect key="frame" x="32" y="184" width="55" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Sign Up">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="didPressSignUp:" destination="OMw-IL-rRP" eventType="touchUpInside" id="Es6-0j-94T"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="WMu-I4-fnG">
+                                <rect key="frame" x="243" y="184" width="48" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Sign In">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="didPressSignIn:" destination="OMw-IL-rRP" eventType="touchUpInside" id="mmN-Az-XwI"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="username" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="eD6-gk-nKB">
+                                <rect key="frame" x="15" y="59" width="76" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="password" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="VxE-eY-yD5">
+                                <rect key="frame" x="16" y="119" width="75" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <connections>
+                        <outlet property="passwordField" destination="lto-A9-cm7" id="me1-VL-Ssg"/>
+                        <outlet property="usernameField" destination="qhk-zH-XB5" id="11q-6O-UiK"/>
+                        <segue destination="vXZ-lx-hvc" kind="modal" identifier="loginSegue" id="lv4-Kt-W8H"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="doN-zY-Cxq" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1097" y="248"/>
+        </scene>
         <!--Dream Collection View Controller-->
         <scene sceneID="ufC-wZ-h7g">
             <objects>
@@ -723,20 +790,20 @@
 YnBsaXN0MDDUAQIDBAUGOzxYJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK0HCBEW
 GxwgISksLzU4VSRudWxs1AkKCwwNDg8QViRjbGFzc1xOU0ltYWdlRmxhZ3NWTlNSZXBzV05TQ29sb3KA
 DBIAwAAAgAKACtISCRMVWk5TLm9iamVjdHOhFIADgAnSEgkXGqIYGYAEgAWACBAA0h0JHh9fEBROU1RJ
-RkZSZXByZXNlbnRhdGlvboAGgAdPERAmTU0AKgAAAyD///8A////AP///wD///8A////AP///wD///8A
-////ABcXF1AXFxcQ////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A
-////AP///wD///8AFxcXYBcXF/8XFxfQFxcXEP///wD///8A////AP///wD///8A////AP///wD///8A
-////AP///wD///8A////AP///wAXFxdgFxcX/xcXF+AXFxf/FxcX0BcXFxD///8A////AP///wD///8A
-////AP///wD///8A////AP///wD///8A////ABcXF2AXFxf/FxcX0BcXFxAXFxdgFxcX/xcXF9AXFxcQ
-////AP///wD///8A////AP///wD///8A////AP///wD///8AFxcXYBcXF/8XFxfQFxcXEP///wD///8A
-FxcXYBcXF/8XFxfQFxcXEP///wD///8A////AP///wD///8A////AP///wAXFxdgFxcX/xcXF9AXFxcQ
-////AP///wD///8A////ABcXF2AXFxf/FxcX0BcXFxD///8A////AP///wD///8A////ABcXF2AXFxf/
-FxcX0BcXFxD///8A////AP///wD///8A////AP///wAXFxdgFxcX/xcXF9AXFxcQ////AP///wD///8A
-FxcXYBcXF/8XFxfQFxcXEP///wD///8A////AP///wD///8A////AP///wD///8AFxcXYBcXF/8XFxfQ
-FxcXEP///wAXFxdgFxcX/xcXF9AXFxcQ////AP///wD///8A////AP///wD///8A////AP///wD///8A
-////ABcXF2AXFxf/FxcX0BcXFxAXFxdgFxcX0BcXFxD///8A////AP///wD///8A////AP///wD///8A
-////AP///wD///8A////AP///wAXFxdgFxcX8BcXFyD///8A////AP///wD///8A////AP///wD///8A
-////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wAADgEAAAMAAAABABIAAAEB
+RkZSZXByZXNlbnRhdGlvboAGgAdPERAmTU0AKgAAAyAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAABYWFlAQEBAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAGBgYYBcXF/8XFxfQEBAQEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAYGBhgFxcX/xcXF+AXFxf/FxcX0BAQEBAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABgYGGAXFxf/FxcX0BAQEBAYGBhgFxcX/xcXF9AQEBAQ
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGBgYYBcXF/8XFxfQEBAQEAAAAAAAAAAA
+GBgYYBcXF/8XFxfQEBAQEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAYGBhgFxcX/xcXF9AQEBAQ
+AAAAAAAAAAAAAAAAAAAAABgYGGAXFxf/FxcX0BAQEBAAAAAAAAAAAAAAAAAAAAAAAAAAABgYGGAXFxf/
+FxcX0BAQEBAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAYGBhgFxcX/xcXF9AQEBAQAAAAAAAAAAAAAAAA
+GBgYYBcXF/8XFxfQEBAQEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGBgYYBcXF/8XFxfQ
+EBAQEAAAAAAYGBhgFxcX/xcXF9AQEBAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAABgYGGAXFxf/FxcX0BAQEBAYGBhgFxcX0BAQEBAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAYGBhgFxcX8BgYGCAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADgEAAAMAAAABABIAAAEB
 AAMAAAABAAsAAAECAAMAAAAEAAADzgEDAAMAAAABAAEAAAEGAAMAAAABAAIAAAERAAQAAAABAAAACAES
 AAMAAAABAAEAAAEVAAMAAAABAAQAAAEWAAMAAAABAAsAAAEXAAQAAAABAAADGAEcAAMAAAABAAEAAAFS
 AAMAAAABAAIAAAFTAAMAAAAEAAAD1odzAAcAAAxIAAAD3gAAAAAACAAIAAgACAABAAEAAQABAAAMSExp
