@@ -12,6 +12,7 @@ class JournalTransition: BaseTransition {
     
     var transitionView =  UIView()
     var titleLabel = UILabel()
+    var fullTitleLabel = UILabel()
     var dateLabel =  UILabel()
     var textView = UITextView()
     var backgroundImageView = UIImageView()
@@ -45,11 +46,21 @@ class JournalTransition: BaseTransition {
         backgroundImageView.frame = selectedCell.backgroundImageView.frame
         backgroundImageView.contentMode = UIViewContentMode.ScaleAspectFill
         backgroundImageView.clipsToBounds = true
+        
+        fullTitleLabel.text = journalViewController.titleLabel.text
+        fullTitleLabel.frame.size = journalViewController.titleLabel.frame.size
+        fullTitleLabel.frame.origin = selectedCell.titleLabel.frame.origin
+        fullTitleLabel.numberOfLines = 0
+        fullTitleLabel.font = UIFont(name: selectedCell.titleLabel.font.fontName, size: 28)
+        fullTitleLabel.textColor = UIColor.whiteColor()
+        fullTitleLabel.alpha = 0
         titleLabel.text = selectedCell.titleLabel.text
         titleLabel.frame = selectedCell.titleLabel.frame
         titleLabel.numberOfLines = 0
         titleLabel.font = UIFont(name: selectedCell.titleLabel.font.fontName, size: 28)
         titleLabel.textColor = UIColor.whiteColor()
+        
+        
         dateLabel.text = selectedCell.dateLabel.text
         dateLabel.frame = selectedCell.dateLabel.frame
         dateLabel.textColor = UIColor.whiteColor()
@@ -61,6 +72,7 @@ class JournalTransition: BaseTransition {
         
         transitionView.addSubview(backgroundImageView)
         transitionView.addSubview(titleLabel)
+        transitionView.addSubview(fullTitleLabel)
         transitionView.addSubview(dateLabel)
         transitionView.addSubview(textView)
         transitionView.addSubview(fullTextView)
@@ -73,7 +85,10 @@ class JournalTransition: BaseTransition {
             self.transitionView.frame = toViewController.view.frame
             self.backgroundImageView.frame = journalViewController.backgroundImageView.frame
             self.dateLabel.frame = journalViewController.dateLabel.frame
-            self.titleLabel.frame  = journalViewController.titleLabel.frame
+            self.titleLabel.frame.origin  = journalViewController.titleLabel.frame.origin
+            self.titleLabel.alpha = 0
+            self.fullTitleLabel.alpha = 1
+            self.fullTitleLabel.frame = journalViewController.titleLabel.frame
             self.textView.frame.origin = journalViewController.textView.frame.origin
             self.textView.alpha = 0
             self.fullTextView.alpha = 1
@@ -110,28 +125,36 @@ class JournalTransition: BaseTransition {
         transitionView.frame.origin.y = journalViewController.scrollView.contentOffset.y * CGFloat(-1)
         
         backgroundImageView.image = journalViewController.backgroundImageView.image
-        backgroundImageView.frame = journalViewController.backgroundImageView.frame
+        transitionView.clipsToBounds = true
         
         fullTextView.attributedText = journalViewController.textView.attributedText
-        fullTextView.font = journalViewController.textView.font
         
+        fullTitleLabel.text = journalViewController.titleLabel.text
         titleLabel.text = journalViewController.titleLabel.text
-        titleLabel.frame = journalViewController.titleLabel.frame
         dateLabel.text = journalViewController.dateLabel.text
         dateLabel.frame = journalViewController.dateLabel.frame
         textView.attributedText = journalViewController.textView.attributedText
-        textView.font = journalViewController.textView.font
-    
+
+        
         var window = UIApplication.sharedApplication().keyWindow
         window?.addSubview(transitionView)
         
         UIView.animateWithDuration(duration, animations: {
             self.transitionView.frame.size = selectedCell.frame.size
             self.transitionView.frame.origin = CGPoint(x: dreamCollectionViewController.collectionView.contentInset.left, y:cellFrame.origin.y)
-            self.backgroundImageView.frame = selectedCell.backgroundImageView.frame
-            self.titleLabel.frame = selectedCell.titleLabel.frame
-            self.dateLabel.frame = selectedCell.dateLabel.frame
-            self.textView.frame.origin = selectedCell.textView.frame.origin
+            self.backgroundImageView.frame.size = selectedCell.backgroundImageView.frame.size
+            self.backgroundImageView.frame.origin = CGPoint(x: selectedCell.backgroundImageView.frame.origin.x-1, y: selectedCell.backgroundImageView.frame.origin.y)
+            
+            self.fullTitleLabel.alpha = 0
+            self.fullTitleLabel.frame.origin = selectedCell.titleLabel.frame.origin
+            self.titleLabel.alpha = 1
+            self.titleLabel.frame.origin = CGPoint(x: selectedCell.titleLabel.frame.origin.x-1, y: selectedCell.titleLabel.frame.origin.y) //manually moving the x position by 1 pixel to fix the jumpy bug
+            
+            self.dateLabel.frame.size = selectedCell.dateLabel.frame.size
+            self.dateLabel.frame.origin = CGPoint(x: selectedCell.dateLabel.frame.origin.x-1, y: selectedCell.dateLabel.frame.origin.y)//manually moving the x position by 1 pixel to fix the jumpy bug
+
+            self.textView.frame.origin = CGPoint(x: selectedCell.textView.frame.origin.x-1, y: selectedCell.textView.frame.origin.y)
+ 
             self.textView.alpha = 1
             self.fullTextView.alpha = 0
             self.fullTextView.frame.origin = selectedCell.textView.frame.origin

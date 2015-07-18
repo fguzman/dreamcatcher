@@ -11,6 +11,7 @@ import UIKit
 class NewJournalTransition: BaseTransition {
     var transitionView =  UIView()
     var titleLabel = UILabel()
+    var fullTitleLabel = UILabel()
     var dateLabel =  UILabel()
     var textView = UITextView()
     var backgroundImageView = UIImageView()
@@ -42,6 +43,7 @@ class NewJournalTransition: BaseTransition {
         dreamCollectionViewController.currentRowIndex = NSIndexPath(forRow: 0, inSection: 0)
         
         
+        
         if dreamComposeViewController.exitButton == dreamComposeViewController.doneButton {
             if (dreamCollectionViewController.themeActive || dreamCollectionViewController.placeActive || dreamCollectionViewController.emotionActive) {
                 dreamCollectionViewController.closeStatsView()
@@ -65,34 +67,52 @@ class NewJournalTransition: BaseTransition {
         
         transitionView.backgroundColor = UIColor(white:1, alpha:1)
         transitionView.frame = dreamComposeViewController.view.frame
+        transitionView.clipsToBounds = true
         
-        backgroundImageView.frame = dreamComposeViewController.styleScrollView.frame
+        backgroundImageView.frame.origin = dreamComposeViewController.styleScrollView.frame.origin
+        backgroundImageView.frame.size = CGSize(width: dreamComposeViewController.styleScrollView.frame.size.width+1, height: dreamComposeViewController.styleScrollView.frame.size.height)
         backgroundImageView.image = dreamCollectionViewController.imageArray[0]
+        backgroundImageView.contentMode = UIViewContentMode.ScaleAspectFill
         backgroundImageView.clipsToBounds = true
         
-        fullTextView.text = dreamComposeViewController.composeTextView.text
-        fullTextView.font = UIFont(name: selectedCell.textView.font.fontName, size: 20)
-        textView.text = dreamComposeViewController.composeTextView.text
-        textView.frame = dreamComposeViewController.composeTextView.frame
-        textView.font = UIFont(name: selectedCell.textView.font.fontName, size: 20)
         
+        fullTextView.attributedText = dreamComposeViewController.composeTextView.attributedText
+        fullTextView.frame = dreamComposeViewController.composeTextView.frame
         
-        titleLabel.text = dreamComposeViewController.titleTextView.text
-        titleLabel.frame = dreamComposeViewController.titleTextView.frame
+        textView.attributedText = dreamComposeViewController.composeTextView.attributedText
+        textView.frame.origin = dreamComposeViewController.composeTextView.frame.origin
+        textView.alpha = 0
+        textView.frame.size = selectedCell.textView.frame.size
+
+    
+        fullTitleLabel.text = dreamComposeViewController.titleLabel.text
+        fullTitleLabel.frame = dreamComposeViewController.titleLabel.frame
+        fullTitleLabel.numberOfLines = 0
+        fullTitleLabel.font = UIFont(name: selectedCell.titleLabel.font.fontName, size: 28)
+        fullTitleLabel.textColor = UIColor.whiteColor()
+        titleLabel.frame = dreamComposeViewController.titleLabel.frame
+        titleLabel.text = dreamComposeViewController.titleLabel.text
+        titleLabel.numberOfLines = 0
         titleLabel.font = UIFont(name: selectedCell.titleLabel.font.fontName, size: 28)
         titleLabel.textColor = UIColor.whiteColor()
+        titleLabel.alpha = 0
+        
         dateLabel.text = dreamComposeViewController.dateLabel.text
         dateLabel.frame = dreamComposeViewController.dateLabel.frame
         dateLabel.textColor = UIColor.whiteColor()
         dateLabel.font = UIFont(name: selectedCell.dateLabel.font.fontName, size: 11)
         
-        transitionView.clipsToBounds = true
         
         transitionView.addSubview(backgroundImageView)
         transitionView.addSubview(titleLabel)
         transitionView.addSubview(dateLabel)
+        transitionView.addSubview(fullTitleLabel)
         transitionView.addSubview(textView)
         transitionView.addSubview(fullTextView)
+        
+        
+        dreamCollectionViewController.collectionView.reloadData()
+        
 
         
 
@@ -122,22 +142,29 @@ class NewJournalTransition: BaseTransition {
             UIView.animateWithDuration(duration, animations: {
                 self.transitionView.frame.size = selectedCell.frame.size
                 self.transitionView.frame.origin = CGPoint(x: dreamCollectionViewController.collectionView.contentInset.left, y:cellFrame.origin.y)
-                self.backgroundImageView.frame = selectedCell.backgroundImageView.frame
-                self.titleLabel.frame = selectedCell.titleLabel.frame
-                self.dateLabel.frame = selectedCell.dateLabel.frame
-                self.textView.frame.origin = selectedCell.textView.frame.origin
+                self.backgroundImageView.frame.size = selectedCell.backgroundImageView.frame.size
+                self.backgroundImageView.frame.origin = CGPoint(x: selectedCell.backgroundImageView.frame.origin.x-1, y: selectedCell.backgroundImageView.frame.origin.y)
+                self.fullTitleLabel.frame.origin = selectedCell.titleLabel.frame.origin
+                self.fullTitleLabel.alpha = 0
+                self.titleLabel.frame.size = selectedCell.titleLabel.frame.size
+                self.titleLabel.frame.origin = CGPoint(x: selectedCell.titleLabel.frame.origin.x-1, y: selectedCell.titleLabel.frame.origin.y) //manually moving the x position by 1 pixel to fix the jumpy bug
+                self.titleLabel.alpha = 1
+
+                self.dateLabel.frame.size = selectedCell.dateLabel.frame.size
+                self.dateLabel.frame.origin = CGPoint(x: selectedCell.dateLabel.frame.origin.x-1, y: selectedCell.dateLabel.frame.origin.y)
+                self.textView.frame.origin = CGPoint(x: selectedCell.textView.frame.origin.x-1, y:selectedCell.textView.frame.origin.y)
                 self.textView.alpha = 1
                 self.fullTextView.alpha = 0
-                self.fullTextView.frame.origin = selectedCell.textView.frame.origin
+                self.fullTextView.frame.origin = CGPoint(x: selectedCell.textView.frame.origin.x-1, y:selectedCell.textView.frame.origin.y)
                 
                 containerView.backgroundColor = UIColor(white:0, alpha:0)
                 
                 }) { (finished: Bool) -> Void in
 //                    println("title label \(self.titleLabel.frame.origin) and after \(selectedCell.titleLabel.frame.origin)")
                     
-                    dreamCollectionViewController.collectionView.reloadData()
-                   self.transitionView.removeFromSuperview()
                     
+                    self.transitionView.removeFromSuperview()
+                    dreamCollectionViewController.collectionView.reloadData()
                     self.finish()
             }//animation
 

@@ -87,8 +87,8 @@ class NewJournalWithAlarmTransition: BaseTransition {
             textView.font = UIFont(name: selectedCell.textView.font.fontName, size: 20)
             
             
-            titleLabel.text = dreamComposeViewController.titleTextView.text
-            titleLabel.frame = dreamComposeViewController.titleTextView.frame
+            titleLabel.text = dreamComposeViewController.titleLabel.text
+            titleLabel.frame = dreamComposeViewController.titleLabel.frame
             titleLabel.font = UIFont(name: selectedCell.titleLabel.font.fontName, size: 28)
             titleLabel.textColor = UIColor.whiteColor()
             dateLabel.text = dreamComposeViewController.dateLabel.text
