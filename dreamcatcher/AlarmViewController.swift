@@ -97,9 +97,9 @@ class AlarmViewController: UIViewController, UINavigationControllerDelegate {
         // Set alarm state
         currentState = AlarmViewController.getCurrentAlarmState()
         
-        //updateAlarmState(currentState, isAnimate: false, complete: nil)
-        userDefaults.setObject(NSDate(), forKey: AlarmUserSettings.Date.rawValue)
-        updateAlarmState(State.Triggered, isAnimate: false, complete: nil)
+        updateAlarmState(currentState, isAnimate: false, complete: nil)
+        //userDefaults.setObject(NSDate(), forKey: AlarmUserSettings.Date.rawValue)
+        //updateAlarmState(State.Triggered, isAnimate: false, complete: nil)
         
         // Display last selected alarm date
         if (userDefaults.objectForKey(AlarmUserSettings.LastSelected.rawValue) != nil) {
