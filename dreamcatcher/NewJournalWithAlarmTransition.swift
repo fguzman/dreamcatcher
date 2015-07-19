@@ -40,10 +40,15 @@ class NewJournalWithAlarmTransition: BaseTransition {
             
         else if alarmNavController.exitButtonName == "done"{
             
+            fromViewController.view.alpha = 0
+            (fromViewController as! AlarmNavController).topViewController.view.alpha = 0
+            containerView.backgroundColor = UIColor(white:0, alpha:1)
+            
             var dreamComposeViewController = alarmNavController.topViewController as! DreamComposeViewController
             
             var transitionView =  UIView()
             var titleLabel = UILabel()
+            var fullTitleLabel = UILabel()
             var dateLabel =  UILabel()
             var textView = UITextView()
             var backgroundImageView = UIImageView()
@@ -74,23 +79,35 @@ class NewJournalWithAlarmTransition: BaseTransition {
             transitionView.frame = dreamComposeViewController.view.frame
             println(transitionView.frame)
             
-            backgroundImageView.frame = dreamComposeViewController.styleScrollView.frame
+            backgroundImageView.frame.origin = dreamComposeViewController.styleScrollView.frame.origin
+            backgroundImageView.frame.size = CGSize(width: dreamComposeViewController.styleScrollView.frame.size.width+1, height: dreamComposeViewController.styleScrollView.frame.size.height)
             backgroundImageView.image = dreamCollectionViewController.imageArray[0]
+            backgroundImageView.contentMode = UIViewContentMode.ScaleAspectFill
             backgroundImageView.clipsToBounds = true
             
             
             
-            fullTextView.text = dreamComposeViewController.composeTextView.text
-            fullTextView.font = UIFont(name: selectedCell.textView.font.fontName, size: 20)
-            textView.text = dreamComposeViewController.composeTextView.text
-            textView.frame = dreamComposeViewController.composeTextView.frame
-            textView.font = UIFont(name: selectedCell.textView.font.fontName, size: 20)
+            fullTextView.attributedText = dreamComposeViewController.composeTextView.attributedText
+            fullTextView.frame = dreamComposeViewController.composeTextView.frame
+            textView.attributedText = dreamComposeViewController.composeTextView.attributedText
+            textView.frame.size = selectedCell.textView.frame.size
+            textView.frame.origin = dreamComposeViewController.composeTextView.frame.origin
+            textView.alpha = 0
             
-            
+            titleLabel.numberOfLines = 0
             titleLabel.text = dreamComposeViewController.titleLabel.text
+            
             titleLabel.frame = dreamComposeViewController.titleLabel.frame
             titleLabel.font = UIFont(name: selectedCell.titleLabel.font.fontName, size: 28)
             titleLabel.textColor = UIColor.whiteColor()
+            titleLabel.alpha = 0
+            fullTitleLabel.numberOfLines = 0
+            fullTitleLabel.text = dreamComposeViewController.titleLabel.text
+            fullTitleLabel.frame = dreamComposeViewController.titleLabel.frame
+            fullTitleLabel.font = UIFont(name: selectedCell.titleLabel.font.fontName, size: 28)
+            fullTitleLabel.textColor = UIColor.whiteColor()
+            
+            
             dateLabel.text = dreamComposeViewController.dateLabel.text
             dateLabel.frame = dreamComposeViewController.dateLabel.frame
             dateLabel.textColor = UIColor.whiteColor()
@@ -100,29 +117,43 @@ class NewJournalWithAlarmTransition: BaseTransition {
             
             transitionView.addSubview(backgroundImageView)
             transitionView.addSubview(titleLabel)
+            transitionView.addSubview(fullTitleLabel)
             transitionView.addSubview(dateLabel)
             transitionView.addSubview(textView)
             transitionView.addSubview(fullTextView)
+            
+            dreamCollectionViewController.collectionView.reloadData()
 
-            fromViewController.view.alpha = 0
-            (fromViewController as! AlarmNavController).topViewController.view.alpha = 0
-            containerView.backgroundColor = UIColor(white:0, alpha:1)
+           
             var window = UIApplication.sharedApplication().keyWindow
             window?.addSubview(transitionView)
+            
             UIView.animateWithDuration(duration, animations: {
                 transitionView.frame.size = selectedCell.frame.size
                 transitionView.frame.origin = CGPoint(x: dreamCollectionViewController.collectionView.contentInset.left, y:cellFrame.origin.y)
-                backgroundImageView.frame = selectedCell.backgroundImageView.frame
-                titleLabel.frame = selectedCell.titleLabel.frame
-                dateLabel.frame = selectedCell.dateLabel.frame
-                textView.frame.origin = selectedCell.textView.frame.origin
+                
+                backgroundImageView.frame.origin = CGPoint(x: selectedCell.backgroundImageView.frame.origin.x-1, y: selectedCell.backgroundImageView.frame.origin.y)
+                backgroundImageView.frame.size = selectedCell.backgroundImageView.frame.size
+                
+                
+                
+                titleLabel.alpha = 1
+                titleLabel.frame.size = selectedCell.titleLabel.frame.size
+                titleLabel.frame.origin = CGPoint(x: selectedCell.titleLabel.frame.origin.x-1, y: selectedCell.titleLabel.frame.origin.y)
+                fullTitleLabel.alpha = 0
+                fullTitleLabel.frame.origin = CGPoint(x: selectedCell.titleLabel.frame.origin.x-1, y: selectedCell.titleLabel.frame.origin.y)
+                dateLabel.frame.size = selectedCell.dateLabel.frame.size
+                dateLabel.frame.origin = CGPoint(x: selectedCell.dateLabel.frame.origin.x-1, y: selectedCell.dateLabel.frame.origin.y)
+
+                textView.frame.origin = CGPoint(x: selectedCell.textView.frame.origin.x-1, y: selectedCell.textView.frame.origin.y)
+
                 textView.alpha = 1
                 fullTextView.alpha = 0
-                fullTextView.frame.origin = selectedCell.textView.frame.origin
+                fullTextView.frame.origin = CGPoint(x: selectedCell.textView.frame.origin.x-1, y: selectedCell.textView.frame.origin.y)
                 containerView.backgroundColor = UIColor(white:0, alpha:0)
                 }) { (finished: Bool) -> Void in
                     transitionView.removeFromSuperview()
-                    dreamCollectionViewController.collectionView.reloadData()
+                    
                     dreamCollectionViewController.viewDidAppear(true)
                     self.finish()
             }
