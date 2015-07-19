@@ -17,6 +17,8 @@ class JournalTransition: BaseTransition {
     var backgroundImageView = UIImageView()
     var fullTextView = UITextView()
     
+    // For existing, fake journals, for some reason the textView layout is 8pt below what it should be. So the transition to page view has a jitter. But this problem doesn't exist for newly created journals. Both existing and new journals have textView.frame.origin of (13.0, 255.0).
+    let hackyPadding: CGFloat = 0.0
     
     override func presentTransition(containerView: UIView, fromViewController: UIViewController, toViewController: UIViewController) {
         
@@ -30,7 +32,8 @@ class JournalTransition: BaseTransition {
         var cellFrame = containerView.convertRect(selectedCell.frame, fromView: selectedCell.superview)
         
         fullTextView.frame.size = journalViewController.textView.frame.size
-        fullTextView.frame.origin = selectedCell.textView.frame.origin
+        // TODO: fix and remove the 8pt hack
+        fullTextView.frame.origin = CGPointMake(selectedCell.textView.frame.origin.x, selectedCell.textView.frame.origin.y - hackyPadding)
         fullTextView.font = UIFont(name: selectedCell.textView.font.fontName, size: 20)
         fullTextView.attributedText = selectedCell.textView.attributedText
         fullTextView.font = selectedCell.textView.font
@@ -54,10 +57,13 @@ class JournalTransition: BaseTransition {
         dateLabel.frame = selectedCell.dateLabel.frame
         dateLabel.textColor = UIColor.whiteColor()
         dateLabel.font = UIFont(name: selectedCell.dateLabel.font.fontName, size: 11)
-        textView.frame = selectedCell.textView.frame
+        // TODO: fix and remove the 8pt hack
+        textView.frame = CGRectMake(selectedCell.textView.frame.origin.x, selectedCell.textView.frame.origin.y - hackyPadding, selectedCell.textView.frame.width, selectedCell.textView.frame.height)
         textView.attributedText = selectedCell.textView.attributedText
         textView.font = selectedCell.textView.font
         textView.alpha = 1
+        
+//        println("selectedCell.textView.frame.origin: \(selectedCell.textView.frame.origin.x), \(selectedCell.textView.frame.origin.y)")
         
         transitionView.addSubview(backgroundImageView)
         transitionView.addSubview(titleLabel)
@@ -74,6 +80,7 @@ class JournalTransition: BaseTransition {
             self.backgroundImageView.frame = CGRectMake(0, 0, toViewController.view.frame.width, journalViewController.backgroundImageView.frame.height)
             self.dateLabel.frame = journalViewController.dateLabel.frame
             self.titleLabel.frame  = journalViewController.titleLabel.frame
+            self.textView.frame.origin = CGPointMake(0, 400)
             self.textView.frame.origin = journalViewController.textView.frame.origin
             self.textView.alpha = 0
             self.fullTextView.alpha = 1
@@ -121,13 +128,14 @@ class JournalTransition: BaseTransition {
         dateLabel.frame = journalViewController.dateLabel.frame
         textView.attributedText = journalViewController.textView.attributedText
         textView.font = journalViewController.textView.font
-    
+
         var window = UIApplication.sharedApplication().keyWindow
         window?.addSubview(transitionView)
         
         let collectionFlowLayout: UICollectionViewFlowLayout = dreamCollectionViewController.collectionView.collectionViewLayout as! UICollectionViewFlowLayout
 
         UIView.animateWithDuration(duration, animations: {
+            toViewController.view.layoutIfNeeded()
             self.transitionView.frame.size = selectedCell.frame.size
             self.transitionView.frame.origin = CGPoint(x: collectionFlowLayout.sectionInset.left, y:cellFrame.origin.y)
             self.backgroundImageView.frame = selectedCell.backgroundImageView.frame
@@ -136,7 +144,12 @@ class JournalTransition: BaseTransition {
             self.textView.frame.origin = selectedCell.textView.frame.origin
             self.textView.alpha = 1
             self.fullTextView.alpha = 0
-            self.fullTextView.frame.origin = selectedCell.textView.frame.origin
+            // TODO: fix and remove the 8pt hack
+            self.textView.frame.origin = CGPointMake(selectedCell.textView.frame.origin.x, selectedCell.textView.frame.origin.y - self.hackyPadding)
+            self.fullTextView.frame.origin = CGPointMake(selectedCell.textView.frame.origin.x, selectedCell.textView.frame.origin.y - self.hackyPadding)
+
+//            println("selectedCell.textView.frame.origin: \(selectedCell.textView.frame.origin.x), \(selectedCell.textView.frame.origin.y)")
+            
             containerView.backgroundColor = UIColor(white:0, alpha:0)
             }) { (finished: Bool) -> Void in
                 containerView.backgroundColor = UIColor(white:0, alpha:1)

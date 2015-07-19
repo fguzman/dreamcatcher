@@ -109,9 +109,12 @@ class NewJournalWithAlarmTransition: BaseTransition {
             containerView.backgroundColor = UIColor(white:0, alpha:1)
             var window = UIApplication.sharedApplication().keyWindow
             window?.addSubview(transitionView)
+            
+            let collectionFlowLayout: UICollectionViewFlowLayout = dreamCollectionViewController.collectionView.collectionViewLayout as! UICollectionViewFlowLayout
+            
             UIView.animateWithDuration(duration, animations: {
                 transitionView.frame.size = selectedCell.frame.size
-                transitionView.frame.origin = CGPoint(x: dreamCollectionViewController.collectionView.contentInset.left, y:cellFrame.origin.y)
+                transitionView.frame.origin = CGPoint(x: collectionFlowLayout.sectionInset.left, y:cellFrame.origin.y)
                 backgroundImageView.frame = selectedCell.backgroundImageView.frame
                 titleLabel.frame = selectedCell.titleLabel.frame
                 dateLabel.frame = selectedCell.dateLabel.frame

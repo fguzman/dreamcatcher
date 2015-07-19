@@ -12,11 +12,21 @@ class JournalViewController: UIViewController, UIScrollViewDelegate{
     
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var backgroundImageView: UIImageView!
-    @IBOutlet weak var backgroundView: UIView!
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var textView: UITextView!
+    
+    //constraints
+    @IBOutlet weak var textViewWidthConstraint: NSLayoutConstraint!
+    @IBOutlet weak var textViewHeightConstraint: NSLayoutConstraint!
+    @IBOutlet weak var textViewLeadingConstraint: NSLayoutConstraint!
+    @IBOutlet weak var textViewTrailingConstraint: NSLayoutConstraint!
+    @IBOutlet weak var textViewTopConstraint: NSLayoutConstraint!
+    
+    @IBOutlet weak var contentContainerWidthConstraint: NSLayoutConstraint!
+    @IBOutlet weak var contentContainerHeightConstraint: NSLayoutConstraint!
+    @IBOutlet weak var imageBackgroundHeightConstraint: NSLayoutConstraint!
     
     var paragraph: String!
     var titleText: String!
@@ -27,7 +37,6 @@ class JournalViewController: UIViewController, UIScrollViewDelegate{
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        println("\(titleText): \(index)")
         
         UIApplication.sharedApplication().setStatusBarHidden(true, withAnimation: UIStatusBarAnimation.None)
         
@@ -38,21 +47,24 @@ class JournalViewController: UIViewController, UIScrollViewDelegate{
         titleLabel.text = titleText
         dateLabel.text = dateText
         backgroundImageView.image = image
-        let size: CGSize = textView.sizeThatFits(CGSizeMake(textView.frame.size.width, CGFloat.max))
         
-        textView.frame.size.height = size.height
+        textViewWidthConstraint.constant = UIScreen.mainScreen().applicationFrame.width - textViewLeadingConstraint.constant - textViewTrailingConstraint.constant
+
+        var size: CGSize = textView.sizeThatFits(CGSizeMake(textViewWidthConstraint.constant, CGFloat.max))
         
+        textViewHeightConstraint.constant = size.height
         textView.scrollEnabled = false
-        let inset: CGFloat = 20
         
-        scrollView.contentSize.height = textView.frame.origin.y + textView.frame.size.height + inset
+        contentContainerWidthConstraint.constant = UIScreen.mainScreen().applicationFrame.width
+        contentContainerHeightConstraint.constant = imageBackgroundHeightConstraint.constant + textViewTopConstraint.constant * 2 + textViewHeightConstraint.constant
         
-        if scrollView.contentSize.height < self.view.frame.size.height{
-            scrollView.contentSize.height = self.view.frame.size.height + 1
+        if contentContainerHeightConstraint.constant < self.view.frame.size.height {
+            contentContainerHeightConstraint.constant = self.view.frame.size.height + 1
         }
-        backgroundView.frame.size.height = scrollView.contentSize.height
-        
+
         scrollView.delegate = self
+        
+        view.layoutIfNeeded()
     }
     
     override func viewDidDisappear(animated: Bool) {
@@ -67,7 +79,6 @@ class JournalViewController: UIViewController, UIScrollViewDelegate{
     }
     
     func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool){
-        println("end")
         
         if scrollView.contentOffset.y <= -80{
             self.dismissViewControllerAnimated(true, completion: nil)

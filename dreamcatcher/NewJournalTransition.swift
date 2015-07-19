@@ -109,19 +109,19 @@ class NewJournalTransition: BaseTransition {
             
         }
             
-        else if dreamComposeViewController.exitButton == dreamComposeViewController.doneButton { // if some entry
-            println("some entry")
+        else if dreamComposeViewController.exitButton == dreamComposeViewController.doneButton {
 
             containerView.backgroundColor = UIColor(white:0, alpha:1)
             fromViewController.view.alpha = 0
+            
             var window = UIApplication.sharedApplication().keyWindow
             window?.addSubview(transitionView)
             
-           // containerView.backgroundColor = UIColor(white:0, alpha:0)///tesing only
+            let collectionFlowLayout: UICollectionViewFlowLayout = dreamCollectionViewController.collectionView.collectionViewLayout as! UICollectionViewFlowLayout
             
             UIView.animateWithDuration(duration, animations: {
                 self.transitionView.frame.size = selectedCell.frame.size
-                self.transitionView.frame.origin = CGPoint(x: dreamCollectionViewController.collectionView.contentInset.left, y:cellFrame.origin.y)
+                self.transitionView.frame.origin = CGPoint(x: collectionFlowLayout.sectionInset.left, y:cellFrame.origin.y)
                 self.backgroundImageView.frame = selectedCell.backgroundImageView.frame
                 self.titleLabel.frame = selectedCell.titleLabel.frame
                 self.dateLabel.frame = selectedCell.dateLabel.frame
@@ -133,7 +133,6 @@ class NewJournalTransition: BaseTransition {
                 containerView.backgroundColor = UIColor(white:0, alpha:0)
                 
                 }) { (finished: Bool) -> Void in
-//                    println("title label \(self.titleLabel.frame.origin) and after \(selectedCell.titleLabel.frame.origin)")
                     
                     dreamCollectionViewController.collectionView.reloadData()
                    self.transitionView.removeFromSuperview()

@@ -18,4 +18,5 @@ class CardCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var backgroundImageView: UIImageView!
     
+    @IBOutlet weak var textViewTopConstraint: NSLayoutConstraint!
 }
