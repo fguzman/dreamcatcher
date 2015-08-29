@@ -330,6 +330,17 @@ class DreamCollectionViewController: UIViewController, UICollectionViewDataSourc
         return cell
     }
     
+    func collectionView(collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewLayout,
+        sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+            let deviceSize = UIScreen.mainScreen().applicationFrame.size
+            let collectionSize = collectionView.bounds.size
+            let collectionFlowLayout: UICollectionViewFlowLayout = collectionViewLayout as! UICollectionViewFlowLayout
+            let cellHeight = collectionSize.height - collectionFlowLayout.sectionInset.top - collectionFlowLayout.sectionInset.bottom
+            let cellWidth = deviceSize.width - collectionFlowLayout.sectionInset.left - collectionFlowLayout.sectionInset.right
+            return CGSize(width: cellWidth, height: cellHeight)
+    }
+    
     func pageViewController(pageViewController: UIPageViewController, viewControllerBeforeViewController viewController: UIViewController) -> UIViewController? {
         var journalViewController = viewController as! JournalViewController
         //        println("Fetching for previous page from page: \(journalViewController.index)")

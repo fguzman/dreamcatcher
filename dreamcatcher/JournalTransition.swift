@@ -128,20 +128,21 @@ class JournalTransition: BaseTransition {
         transitionView.clipsToBounds = true
         
         fullTextView.attributedText = journalViewController.textView.attributedText
-        
         fullTitleLabel.text = journalViewController.titleLabel.text
+        
         titleLabel.text = journalViewController.titleLabel.text
         dateLabel.text = journalViewController.dateLabel.text
         dateLabel.frame = journalViewController.dateLabel.frame
         textView.attributedText = journalViewController.textView.attributedText
 
+        let collectionFlowLayout: UICollectionViewFlowLayout = dreamCollectionViewController.collectionView.collectionViewLayout as! UICollectionViewFlowLayout
         
         var window = UIApplication.sharedApplication().keyWindow
         window?.addSubview(transitionView)
         
         UIView.animateWithDuration(duration, animations: {
             self.transitionView.frame.size = selectedCell.frame.size
-            self.transitionView.frame.origin = CGPoint(x: dreamCollectionViewController.collectionView.contentInset.left, y:cellFrame.origin.y)
+            self.transitionView.frame.origin = CGPoint(x: collectionFlowLayout.sectionInset.left, y:cellFrame.origin.y)
             self.backgroundImageView.frame.size = selectedCell.backgroundImageView.frame.size
             self.backgroundImageView.frame.origin = CGPoint(x: selectedCell.backgroundImageView.frame.origin.x-1, y: selectedCell.backgroundImageView.frame.origin.y)
             
