@@ -32,12 +32,9 @@ class NewJournalTransition: BaseTransition {
     
     override func dismissTransition(containerView: UIView, fromViewController: UIViewController, toViewController: UIViewController) {
         
-        var dreamComposeViewController = fromViewController as! DreamComposeViewController
-        var dreamCollectionViewController = toViewController as! DreamCollectionViewController
-        
-        
-        var collectionView = dreamCollectionViewController.collectionView
-        var indexPath = NSIndexPath(forRow: 0, inSection: 0)
+        let dreamComposeViewController = fromViewController as! DreamComposeViewController
+        let dreamCollectionViewController = toViewController as! DreamCollectionViewController
+        let indexPath = NSIndexPath(forRow: 0, inSection: 0)
         
         dreamCollectionViewController.collectionView.scrollToItemAtIndexPath(indexPath, atScrollPosition: UICollectionViewScrollPosition.CenteredHorizontally, animated: true)
         dreamCollectionViewController.currentRowIndex = NSIndexPath(forRow: 0, inSection: 0)
@@ -53,7 +50,7 @@ class NewJournalTransition: BaseTransition {
         var selectedCell: CardCollectionViewCell
         
         if dreamCollectionViewController.collectionView.indexPathsForVisibleItems()[0].row != 0{
-            selectedCell = dreamCollectionViewController.collectionView.cellForItemAtIndexPath(dreamCollectionViewController.collectionView.indexPathsForVisibleItems()[1] as! NSIndexPath) as! CardCollectionViewCell
+            selectedCell = dreamCollectionViewController.collectionView.cellForItemAtIndexPath(dreamCollectionViewController.collectionView.indexPathsForVisibleItems()[1] ) as! CardCollectionViewCell
         }
         else{
             selectedCell = dreamCollectionViewController.collectionView.cellForItemAtIndexPath(dreamCollectionViewController.currentRowIndex) as! CardCollectionViewCell
@@ -62,7 +59,7 @@ class NewJournalTransition: BaseTransition {
         
         
         
-        var cellFrame = containerView.convertRect(selectedCell.frame, fromView: selectedCell.superview)
+        let cellFrame = containerView.convertRect(selectedCell.frame, fromView: selectedCell.superview)
         
         
         transitionView.backgroundColor = UIColor(white:1, alpha:1)
@@ -134,7 +131,7 @@ class NewJournalTransition: BaseTransition {
 
             containerView.backgroundColor = UIColor(white:0, alpha:1)
             fromViewController.view.alpha = 0
-            var window = UIApplication.sharedApplication().keyWindow
+            let window = UIApplication.sharedApplication().keyWindow
             window?.addSubview(transitionView)
             
            // containerView.backgroundColor = UIColor(white:0, alpha:0)///tesing only

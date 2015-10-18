@@ -45,8 +45,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if (userDefaults.objectForKey(AlarmViewController.AlarmUserSettings.Date.rawValue) != nil) {
             let calendar = NSCalendar.currentCalendar()
 
-            var firedate = userDefaults.objectForKey("alarm.date") as! NSDate
-            var nextFiredate = calendar.dateByAddingUnit(.Second, value: alarmSoundDuration, toDate: firedate, options: [])!
+            let firedate = userDefaults.objectForKey("alarm.date") as! NSDate
+            let nextFiredate = calendar.dateByAddingUnit(.Second, value: alarmSoundDuration, toDate: firedate, options: [])!
             
             if nextFiredate.compare(NSDate()) == .OrderedDescending {
                 fadeInAudio(player)
@@ -62,7 +62,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     // Prepare for audio session settings for background audio
     func prepareAudio() {
-        var path = NSBundle.mainBundle().pathForResource("alarm_sound_normal", ofType: "mp3")
+        let path = NSBundle.mainBundle().pathForResource("alarm_sound_normal", ofType: "mp3")
         
         do {
             try player = AVAudioPlayer(contentsOfURL: NSURL(fileURLWithPath: path!), fileTypeHint: nil)

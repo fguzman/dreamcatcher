@@ -23,8 +23,8 @@ class NewJournalWithAlarmTransition: BaseTransition {
     
     override func dismissTransition(containerView: UIView, fromViewController: UIViewController, toViewController: UIViewController) {
         
-        var alarmNavController = fromViewController as! AlarmNavController
-        var dreamCollectionViewController = toViewController as! DreamCollectionViewController
+        let alarmNavController = fromViewController as! AlarmNavController
+        let dreamCollectionViewController = toViewController as! DreamCollectionViewController
         
         
         if alarmNavController.exitButtonName == "close" || alarmNavController.exitButtonName == "set" {
@@ -44,18 +44,17 @@ class NewJournalWithAlarmTransition: BaseTransition {
             (fromViewController as! AlarmNavController).topViewController!.view.alpha = 0
             containerView.backgroundColor = UIColor(white:0, alpha:1)
             
-            var dreamComposeViewController = alarmNavController.topViewController as! DreamComposeViewController
+            let dreamComposeViewController = alarmNavController.topViewController as! DreamComposeViewController
             
-            var transitionView =  UIView()
-            var titleLabel = UILabel()
-            var fullTitleLabel = UILabel()
-            var dateLabel =  UILabel()
-            var textView = UITextView()
-            var backgroundImageView = UIImageView()
-            var fullTextView = UITextView()
+            let transitionView =  UIView()
+            let titleLabel = UILabel()
+            let fullTitleLabel = UILabel()
+            let dateLabel =  UILabel()
+            let textView = UITextView()
+            let backgroundImageView = UIImageView()
+            let fullTextView = UITextView()
             
-            var collectionView = dreamCollectionViewController.collectionView
-            var indexPath = NSIndexPath(forRow: 0, inSection: 0)
+            let indexPath = NSIndexPath(forRow: 0, inSection: 0)
             
             dreamCollectionViewController.collectionView.scrollToItemAtIndexPath(indexPath, atScrollPosition: UICollectionViewScrollPosition.CenteredHorizontally, animated: true)
             dreamCollectionViewController.currentRowIndex = NSIndexPath(forRow: 0, inSection: 0)
@@ -64,16 +63,13 @@ class NewJournalWithAlarmTransition: BaseTransition {
             var selectedCell: CardCollectionViewCell
             
             if dreamCollectionViewController.collectionView.indexPathsForVisibleItems()[0].row != 0{
-                selectedCell = dreamCollectionViewController.collectionView.cellForItemAtIndexPath(dreamCollectionViewController.collectionView.indexPathsForVisibleItems()[1] as! NSIndexPath) as! CardCollectionViewCell
+                selectedCell = dreamCollectionViewController.collectionView.cellForItemAtIndexPath(dreamCollectionViewController.collectionView.indexPathsForVisibleItems()[1] ) as! CardCollectionViewCell
             }
             else{
                 selectedCell = dreamCollectionViewController.collectionView.cellForItemAtIndexPath(dreamCollectionViewController.currentRowIndex) as! CardCollectionViewCell
             }
             
-            
-            
-            
-            var cellFrame = containerView.convertRect(selectedCell.frame, fromView: selectedCell.superview)
+            let cellFrame = containerView.convertRect(selectedCell.frame, fromView: selectedCell.superview)
             
             transitionView.backgroundColor = UIColor(white:1, alpha:1)
             transitionView.frame = dreamComposeViewController.view.frame
@@ -125,7 +121,7 @@ class NewJournalWithAlarmTransition: BaseTransition {
             dreamCollectionViewController.collectionView.reloadData()
 
            
-            var window = UIApplication.sharedApplication().keyWindow
+            let window = UIApplication.sharedApplication().keyWindow
             window?.addSubview(transitionView)
             
             UIView.animateWithDuration(duration, animations: {

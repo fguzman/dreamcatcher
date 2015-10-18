@@ -45,9 +45,9 @@ class InteractiveBaseTransition: UIPercentDrivenInteractiveTransition, UIViewCon
     }
     
     func animateTransition(transitionContext: UIViewControllerContextTransitioning) {
-        var containerView = transitionContext.containerView()
-        var toViewController = transitionContext.viewControllerForKey(UITransitionContextToViewControllerKey)!
-        var fromViewController = transitionContext.viewControllerForKey(UITransitionContextFromViewControllerKey)!
+        let containerView = transitionContext.containerView()
+        let toViewController = transitionContext.viewControllerForKey(UITransitionContextToViewControllerKey)!
+        let fromViewController = transitionContext.viewControllerForKey(UITransitionContextFromViewControllerKey)!
         self.transitionContext = transitionContext
         
         if (isPresenting) {
@@ -102,7 +102,7 @@ class InteractiveBaseTransition: UIPercentDrivenInteractiveTransition, UIViewCon
         }
         
         if isPresenting == false {
-            var fromViewController = transitionContext?.viewControllerForKey(UITransitionContextFromViewControllerKey)!
+            let fromViewController = transitionContext?.viewControllerForKey(UITransitionContextFromViewControllerKey)!
             fromViewController?.view.removeFromSuperview()
         }
         

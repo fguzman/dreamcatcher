@@ -56,7 +56,7 @@ class DreamComposeViewController: UIViewController, UITextViewDelegate{
         composeTextView.delegate = self
         composeTextView.keyboardDismissMode = .OnDrag
         
-        var tmpTextView = paragraphStyle(placeholderText)
+        let tmpTextView = paragraphStyle(placeholderText)
         composeTextView.attributedText = tmpTextView.attributedText
         composeTextView.font = tmpTextView.font
         composeTextView.textColor = lightTextColor
@@ -78,7 +78,7 @@ class DreamComposeViewController: UIViewController, UITextViewDelegate{
     }
     
     func dismissKeyboard() {
-        var translation = panGesture.translationInView(view)
+        let translation = panGesture.translationInView(view)
         
         if (panGesture.state == UIGestureRecognizerState.Ended) {
             if translation.y > 0 {
@@ -89,7 +89,7 @@ class DreamComposeViewController: UIViewController, UITextViewDelegate{
     
     func keyboardWillShowNotification(notification: NSNotification) {
         if composeTextView.isFirstResponder() {
-            var keyboardFrame = (notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.CGRectValue()
+            let keyboardFrame = (notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.CGRectValue()
             let lineHeight = self.composeTextView.font!.lineHeight
             
             if (self.composeTextView.frame.origin.y + lineHeight  > keyboardFrame?.origin.y) {
@@ -212,7 +212,7 @@ class DreamComposeViewController: UIViewController, UITextViewDelegate{
         view.endEditing(true)
         styleScrollView.hidden = true
         if self.parentViewController != nil{ //if embded in AlarmNavController
-            var alarmNavController = self.parentViewController as! AlarmNavController
+            let alarmNavController = self.parentViewController as! AlarmNavController
             alarmNavController.exitButtonName = "close"
             
         }
@@ -224,7 +224,7 @@ class DreamComposeViewController: UIViewController, UITextViewDelegate{
     
     @IBAction func onDone(sender: AnyObject) {
 
-        var journal = PFObject(className: "Journal")
+        let journal = PFObject(className: "Journal")
         
         journal["date"] = dateLabel.text
         journal["title"] = titleLabel.text
@@ -236,7 +236,7 @@ class DreamComposeViewController: UIViewController, UITextViewDelegate{
         }
         
         if self.parentViewController != nil{ //if embded in AlarmNavController
-            var alarmNavController = self.parentViewController as! AlarmNavController
+            let alarmNavController = self.parentViewController as! AlarmNavController
             alarmNavController.exitButtonName = "done"
         }
         

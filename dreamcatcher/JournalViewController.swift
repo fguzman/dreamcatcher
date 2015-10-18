@@ -30,7 +30,7 @@ class JournalViewController: UIViewController, UIScrollViewDelegate{
         
         UIApplication.sharedApplication().setStatusBarHidden(true, withAnimation: UIStatusBarAnimation.None)
         
-        var tmpTextView = paragraphStyle(paragraph)
+        let tmpTextView = paragraphStyle(paragraph)
         textView.attributedText = tmpTextView.attributedText
         textView.font = tmpTextView.font
         
@@ -59,7 +59,7 @@ class JournalViewController: UIViewController, UIScrollViewDelegate{
     }
     
     func scrollViewDidScroll(scrollView: UIScrollView){
-        var backgroundAlpha = progressValue(scrollView.contentOffset.y, refValueMin: 0, refValueMax: -300, convertValueMin: 1, convertValueMax: 0)
+        let backgroundAlpha = progressValue(scrollView.contentOffset.y, refValueMin: 0, refValueMax: -300, convertValueMin: 1, convertValueMax: 0)
        
         backButton.alpha = progressValue(scrollView.contentOffset.y, refValueMin: 0, refValueMax: -150, convertValueMin: 1, convertValueMax: 0)
         scrollView.backgroundColor = UIColor(white:0, alpha: backgroundAlpha)
@@ -90,9 +90,9 @@ class JournalViewController: UIViewController, UIScrollViewDelegate{
         
         
         
-        var ratio = (value - refValueMin)/(refValueMax - refValueMin)
+        let ratio = (value - refValueMin)/(refValueMax - refValueMin)
         
-        var currentValue = (convertValueMax - convertValueMin)*ratio + convertValueMin
+        let currentValue = (convertValueMax - convertValueMin)*ratio + convertValueMin
         
         return currentValue
         

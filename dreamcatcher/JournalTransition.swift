@@ -23,12 +23,12 @@ class JournalTransition: BaseTransition {
         
         containerView.backgroundColor = UIColor(white:0, alpha:0)
         
-        var pageViewController = toViewController as! UIPageViewController
-        var journalViewController = pageViewController.viewControllers?[0] as! JournalViewController
-        var dreamCollectionViewController = fromViewController as! DreamCollectionViewController
-        var selectedCell = dreamCollectionViewController.collectionView.cellForItemAtIndexPath(dreamCollectionViewController.currentRowIndex) as! CardCollectionViewCell
+        let pageViewController = toViewController as! UIPageViewController
+        let journalViewController = pageViewController.viewControllers?[0] as! JournalViewController
+        let dreamCollectionViewController = fromViewController as! DreamCollectionViewController
+        let selectedCell = dreamCollectionViewController.collectionView.cellForItemAtIndexPath(dreamCollectionViewController.currentRowIndex) as! CardCollectionViewCell
         
-        var cellFrame = containerView.convertRect(selectedCell.frame, fromView: selectedCell.superview)
+        _ = containerView.convertRect(selectedCell.frame, fromView: selectedCell.superview)
         
         fullTextView.frame.size = journalViewController.textView.frame.size
         fullTextView.frame.origin = selectedCell.textView.frame.origin
@@ -77,7 +77,7 @@ class JournalTransition: BaseTransition {
         transitionView.addSubview(textView)
         transitionView.addSubview(fullTextView)
         
-        var window = UIApplication.sharedApplication().keyWindow
+        let window = UIApplication.sharedApplication().keyWindow
         window?.addSubview(transitionView)
         
         toViewController.view.alpha = 0
@@ -108,18 +108,16 @@ class JournalTransition: BaseTransition {
         
         let pageViewController = fromViewController as! UIPageViewController
         let journalViewController = pageViewController.viewControllers?[0] as! JournalViewController
-        var dreamCollectionViewController = toViewController as! DreamCollectionViewController
-        
-        var collectionView = dreamCollectionViewController.collectionView
-        
-        var indexPath = NSIndexPath(forRow: journalViewController.index, inSection: 0)
+        let dreamCollectionViewController = toViewController as! DreamCollectionViewController
+                
+        let indexPath = NSIndexPath(forRow: journalViewController.index, inSection: 0)
         
         dreamCollectionViewController.collectionView.scrollToItemAtIndexPath(indexPath, atScrollPosition: UICollectionViewScrollPosition.CenteredHorizontally, animated: true)
         
         var selectedCell: CardCollectionViewCell
         selectedCell = dreamCollectionViewController.collectionView.cellForItemAtIndexPath(dreamCollectionViewController.currentRowIndex) as! CardCollectionViewCell
         
-        var cellFrame = containerView.convertRect(selectedCell.frame, fromView: selectedCell.superview)
+        let cellFrame = containerView.convertRect(selectedCell.frame, fromView: selectedCell.superview)
         
         containerView.backgroundColor = journalViewController.scrollView.backgroundColor
         transitionView.frame.origin.y = journalViewController.scrollView.contentOffset.y * CGFloat(-1)
@@ -137,7 +135,7 @@ class JournalTransition: BaseTransition {
 
         let collectionFlowLayout: UICollectionViewFlowLayout = dreamCollectionViewController.collectionView.collectionViewLayout as! UICollectionViewFlowLayout
         
-        var window = UIApplication.sharedApplication().keyWindow
+        let window = UIApplication.sharedApplication().keyWindow
         window?.addSubview(transitionView)
         
         UIView.animateWithDuration(duration, animations: {

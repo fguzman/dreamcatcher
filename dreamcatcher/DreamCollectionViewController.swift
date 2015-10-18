@@ -94,7 +94,7 @@ class DreamCollectionViewController: UIViewController, UICollectionViewDataSourc
         collectionView.delegate = self
         collectionView.dataSource = self
         
-        var timer = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: "onTimer", userInfo: nil, repeats: true)
+        let timer = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: "onTimer", userInfo: nil, repeats: true)
         
         timer.fire()
         
@@ -115,7 +115,7 @@ class DreamCollectionViewController: UIViewController, UICollectionViewDataSourc
         //pageViewController.view.addSubview(redSquare)
         
         
-        var storyboard = UIStoryboard(name: "Main", bundle:nil)
+        let storyboard = UIStoryboard(name: "Main", bundle:nil)
         statsViewController = storyboard.instantiateViewControllerWithIdentifier("StatsViewController") as! StatsViewController
         
         statsViewController.view.frame = statsView.bounds
@@ -127,7 +127,7 @@ class DreamCollectionViewController: UIViewController, UICollectionViewDataSourc
     }
     
     func onTimer() {
-        var query = PFQuery(className: "Journal")
+        let query = PFQuery(className: "Journal")
         query.whereKey("user", equalTo: PFUser.currentUser()!)
         query.findObjectsInBackgroundWithBlock { (results: [AnyObject]?, error: NSError?) -> Void in
             self.journals = results as! [PFObject]
@@ -137,10 +137,10 @@ class DreamCollectionViewController: UIViewController, UICollectionViewDataSourc
     
     override func viewDidAppear(animated: Bool) {
         if (userDefaults.objectForKey(AlarmViewController.AlarmUserSettings.Date.rawValue) != nil) {
-            var dateFormatter = NSDateFormatter()
+            let dateFormatter = NSDateFormatter()
             dateFormatter.timeStyle = NSDateFormatterStyle.ShortStyle
-            var date = userDefaults.objectForKey(AlarmViewController.AlarmUserSettings.Date.rawValue) as! NSDate
-            var strDate = dateFormatter.stringFromDate(date)
+            let date = userDefaults.objectForKey(AlarmViewController.AlarmUserSettings.Date.rawValue) as! NSDate
+            let strDate = dateFormatter.stringFromDate(date)
             alarmTimeLabel.text = strDate
             alarmTimeLabel.sizeToFit()
             alarmTimeLabel.textAlignment = NSTextAlignment.Center
@@ -173,7 +173,7 @@ class DreamCollectionViewController: UIViewController, UICollectionViewDataSourc
     
     func launchAnimation() {
         collectionView.alpha = 0
-        var initialCollectionCenter = collectionView.center
+        let initialCollectionCenter = collectionView.center
         collectionView.center = CGPointMake(initialCollectionCenter.x, initialCollectionCenter.y + 20)
         collectionView.transform = CGAffineTransformScale(CGAffineTransformIdentity, 1.05, 1.05)
         
@@ -314,16 +314,16 @@ class DreamCollectionViewController: UIViewController, UICollectionViewDataSourc
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell{
         
-        var cell = collectionView.dequeueReusableCellWithReuseIdentifier("cardCollectionViewCell", forIndexPath: indexPath) as! CardCollectionViewCell
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("cardCollectionViewCell", forIndexPath: indexPath) as! CardCollectionViewCell
         
-        var journal = journals[indexPath.row]
+        let journal = journals[indexPath.row]
         
         cell.titleLabel.text = journal["title"] as? String
         cell.dateLabel.text = journal["date"] as? String
         cell.textView.text = journal["body"] as? String
         //cell.backgroundImageView.image = imageArray[indexPath.row]
         
-        var tmpTextView = paragraphStyle(cell.textView.text)
+        let tmpTextView = paragraphStyle(cell.textView.text)
         cell.textView.attributedText = tmpTextView.attributedText
         cell.textView.font = tmpTextView.font
         
@@ -342,10 +342,10 @@ class DreamCollectionViewController: UIViewController, UICollectionViewDataSourc
     }
     
     func pageViewController(pageViewController: UIPageViewController, viewControllerBeforeViewController viewController: UIViewController) -> UIViewController? {
-        var journalViewController = viewController as! JournalViewController
+        let journalViewController = viewController as! JournalViewController
         //        println("Fetching for previous page from page: \(journalViewController.index)")
         if journalViewController.index > 0 {
-            var previousJournal = journalViewControllerAtIndex(journalViewController.index - 1)
+            let previousJournal = journalViewControllerAtIndex(journalViewController.index - 1)
             return previousJournal
         }
         
@@ -353,7 +353,7 @@ class DreamCollectionViewController: UIViewController, UICollectionViewDataSourc
     }
     
     func pageViewController(pageViewController: UIPageViewController, viewControllerAfterViewController viewController: UIViewController) -> UIViewController? {
-        var journalViewController = viewController as! JournalViewController
+        let journalViewController = viewController as! JournalViewController
         if journalViewController.index < journals.count - 1 {
             return journalViewControllerAtIndex(journalViewController.index + 1)
         }
@@ -362,10 +362,10 @@ class DreamCollectionViewController: UIViewController, UICollectionViewDataSourc
     }
     
     func journalViewControllerAtIndex(index: Int) -> JournalViewController {
-        var storyboard = UIStoryboard(name: "Main", bundle: nil)
-        var journalViewController = storyboard.instantiateViewControllerWithIdentifier("JournalViewController") as! JournalViewController
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let journalViewController = storyboard.instantiateViewControllerWithIdentifier("JournalViewController") as! JournalViewController
         
-        var journal = journals[index]
+        let journal = journals[index]
         
         journalViewController.paragraph = journal["body"] as? String
         journalViewController.titleText = journal["title"] as? String
@@ -466,7 +466,7 @@ class DreamCollectionViewController: UIViewController, UICollectionViewDataSourc
         if segue.identifier == "composeSegue"{
             print("compose Segue")
             
-            var destinationVC = segue.destinationViewController as! DreamComposeViewController
+            let destinationVC = segue.destinationViewController as! DreamComposeViewController
             destinationVC.modalPresentationStyle = UIModalPresentationStyle.Custom
             newJournalTransition = NewJournalTransition()
             destinationVC.transitioningDelegate = newJournalTransition
@@ -474,7 +474,7 @@ class DreamCollectionViewController: UIViewController, UICollectionViewDataSourc
         }
         else if segue.identifier == "dreamToAlarmSegue"{
             
-            var destinationVC = segue.destinationViewController as! AlarmNavController
+            let destinationVC = segue.destinationViewController as! AlarmNavController
             destinationVC.modalPresentationStyle = UIModalPresentationStyle.Custom
             newJournalWithAlarmTransition = NewJournalWithAlarmTransition()
             destinationVC.transitioningDelegate = newJournalWithAlarmTransition
