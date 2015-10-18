@@ -31,7 +31,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "230"
             endingLineNumber = "230"
-            landmarkName = "onPlaceButtonPress(_:)"
+            landmarkName = "onThemeButtonPress(_:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

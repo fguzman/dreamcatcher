@@ -77,6 +77,86 @@
             </objects>
             <point key="canvasLocation" x="-2056.875" y="261.97183098591546"/>
         </scene>
+        <!--Walkthrough View Controller-->
+        <scene sceneID="moB-SU-Hnz">
+            <objects>
+                <viewController id="i8A-o1-LVs" customClass="WalkthroughViewController" customModule="dreamcatcher" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="ka4-Jr-Tav"/>
+                        <viewControllerLayoutGuide type="bottom" id="xG5-NR-Uk5"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="nUR-3F-38p">
+                        <rect key="frame" x="0.0" y="0.0" width="1800" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LKO-Bu-SXh">
+                                <rect key="frame" x="0.0" y="0.0" width="1800" height="600"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ghb-zr-s2p" userLabel="Content View">
+                                        <rect key="frame" x="0.0" y="0.0" width="5400" height="600"/>
+                                        <subviews>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Lrl-ek-YGU">
+                                                <rect key="frame" x="0.0" y="0.0" width="1800" height="600"/>
+                                                <animations/>
+                                                <color key="backgroundColor" red="0.61524259934560921" green="0.9870684055456449" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                            </view>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IZh-Tm-jtz">
+                                                <rect key="frame" x="1800" y="0.0" width="1800" height="600"/>
+                                                <animations/>
+                                                <color key="backgroundColor" red="0.94710759856991866" green="0.82557297507171346" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                            </view>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NLD-2C-Fwn">
+                                                <rect key="frame" x="3600" y="0.0" width="1800" height="600"/>
+                                                <animations/>
+                                                <color key="backgroundColor" red="1" green="0.87505619162580317" blue="0.81611969947099505" alpha="1" colorSpace="calibratedRGB"/>
+                                            </view>
+                                        </subviews>
+                                        <animations/>
+                                        <color key="backgroundColor" red="0.90477035984848486" green="0.90477035984848486" blue="0.90477035984848486" alpha="1" colorSpace="calibratedRGB"/>
+                                        <constraints>
+                                            <constraint firstItem="Lrl-ek-YGU" firstAttribute="top" secondItem="ghb-zr-s2p" secondAttribute="top" id="8OZ-vQ-6nU"/>
+                                            <constraint firstItem="NLD-2C-Fwn" firstAttribute="leading" secondItem="IZh-Tm-jtz" secondAttribute="trailing" id="9gI-VY-7Hr"/>
+                                            <constraint firstItem="IZh-Tm-jtz" firstAttribute="width" secondItem="Lrl-ek-YGU" secondAttribute="width" id="IS0-lW-qha"/>
+                                            <constraint firstAttribute="bottom" secondItem="IZh-Tm-jtz" secondAttribute="bottom" id="WZP-xH-yoz"/>
+                                            <constraint firstItem="NLD-2C-Fwn" firstAttribute="top" secondItem="ghb-zr-s2p" secondAttribute="top" id="XqJ-oP-cGp"/>
+                                            <constraint firstItem="Lrl-ek-YGU" firstAttribute="leading" secondItem="ghb-zr-s2p" secondAttribute="leading" id="a0J-bW-LFy"/>
+                                            <constraint firstItem="NLD-2C-Fwn" firstAttribute="width" secondItem="Lrl-ek-YGU" secondAttribute="width" id="bvO-Eb-uNF"/>
+                                            <constraint firstItem="IZh-Tm-jtz" firstAttribute="top" secondItem="ghb-zr-s2p" secondAttribute="top" id="dee-WZ-B5y"/>
+                                            <constraint firstAttribute="bottom" secondItem="Lrl-ek-YGU" secondAttribute="bottom" id="jpr-kj-U3e"/>
+                                            <constraint firstAttribute="trailing" secondItem="NLD-2C-Fwn" secondAttribute="trailing" id="kVy-D8-eoo"/>
+                                            <constraint firstAttribute="bottom" secondItem="NLD-2C-Fwn" secondAttribute="bottom" id="raa-Um-avz"/>
+                                            <constraint firstItem="IZh-Tm-jtz" firstAttribute="leading" secondItem="Lrl-ek-YGU" secondAttribute="trailing" id="sfg-6g-4oG"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                                <animations/>
+                                <constraints>
+                                    <constraint firstItem="Lrl-ek-YGU" firstAttribute="width" secondItem="LKO-Bu-SXh" secondAttribute="width" id="IN7-mK-MLb"/>
+                                    <constraint firstItem="ghb-zr-s2p" firstAttribute="leading" secondItem="LKO-Bu-SXh" secondAttribute="leading" id="KVW-v4-U6y"/>
+                                    <constraint firstAttribute="trailing" secondItem="ghb-zr-s2p" secondAttribute="trailing" id="icC-WB-QJM"/>
+                                    <constraint firstAttribute="bottom" secondItem="ghb-zr-s2p" secondAttribute="bottom" id="jbr-SV-acG"/>
+                                    <constraint firstItem="ghb-zr-s2p" firstAttribute="top" secondItem="LKO-Bu-SXh" secondAttribute="top" id="kwf-aV-jh0"/>
+                                    <constraint firstItem="ghb-zr-s2p" firstAttribute="height" secondItem="LKO-Bu-SXh" secondAttribute="height" id="plT-pr-2UT"/>
+                                    <constraint firstItem="ghb-zr-s2p" firstAttribute="width" secondItem="LKO-Bu-SXh" secondAttribute="width" priority="500" id="wiA-lE-g4Q"/>
+                                </constraints>
+                            </scrollView>
+                        </subviews>
+                        <animations/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="LKO-Bu-SXh" firstAttribute="leading" secondItem="nUR-3F-38p" secondAttribute="leading" id="4ao-Jj-lSx"/>
+                            <constraint firstAttribute="trailing" secondItem="LKO-Bu-SXh" secondAttribute="trailing" id="KlD-1f-Wvi"/>
+                            <constraint firstItem="xG5-NR-Uk5" firstAttribute="top" secondItem="LKO-Bu-SXh" secondAttribute="bottom" id="OgT-kU-5Pm"/>
+                            <constraint firstItem="LKO-Bu-SXh" firstAttribute="top" secondItem="nUR-3F-38p" secondAttribute="top" id="hNS-KL-8YN"/>
+                        </constraints>
+                    </view>
+                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <size key="freeformSize" width="1800" height="600"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="7MO-3Y-cpN" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-971" y="-502"/>
+        </scene>
         <!--Dream Collection View Controller-->
         <scene sceneID="ufC-wZ-h7g">
             <objects>
@@ -95,7 +175,7 @@
                                     <button hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="n16-II-V83">
                                         <rect key="frame" x="133" y="346" width="54" height="49"/>
                                         <animations/>
-                                        <state key="normal" image="F0DF85B7-5CC5-41B8-B34D-85BA62BC719D">
+                                        <state key="normal" image="69842B58-68FE-4828-859B-3B12AD09866C">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
@@ -1131,7 +1211,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="F0DF85B7-5CC5-41B8-B34D-85BA62BC719D" width="18" height="11">
+        <image name="69842B58-68FE-4828-859B-3B12AD09866C" width="18" height="11">
             <mutableData key="keyedArchiveRepresentation">
 YnBsaXN0MDDUAQIDBAUGOjtYJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK0HCBEW
 GxwgISgrLjQ3VSRudWxs1AkKCwwNDg8QViRjbGFzc1xOU0ltYWdlRmxhZ3NWTlNSZXBzV05TQ29sb3KA
