@@ -22,6 +22,7 @@
 		A4E4E3DC1B31200B00E4410B /* FadeTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4E4E3DB1B31200B00E4410B /* FadeTransition.swift */; };
 		A4E4E3DE1B31206600E4410B /* BaseTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4E4E3DD1B31206600E4410B /* BaseTransition.swift */; };
 		A4E4E3E11B3120A600E4410B /* JournalTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4E4E3E01B3120A600E4410B /* JournalTransition.swift */; };
+		A4F8FBDB1BD4405A00942929 /* WalkthroughViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4F8FBDA1BD4405A00942929 /* WalkthroughViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		B51DE73F1B32758200BA7954 /* AlarmTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = B51DE73E1B32758200BA7954 /* AlarmTransition.swift */; };
 		B51DE7411B332F8500BA7954 /* InteractiveBaseTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = B51DE7401B332F8500BA7954 /* InteractiveBaseTransition.swift */; };
 		B551D3B11B36178500E6B555 /* alarm_sound_fadedIn.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B551D3B01B36178500E6B555 /* alarm_sound_fadedIn.mp3 */; };
@@ -66,6 +67,7 @@
 		A4E4E3DB1B31200B00E4410B /* FadeTransition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FadeTransition.swift; sourceTree = "<group>"; };
 		A4E4E3DD1B31206600E4410B /* BaseTransition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseTransition.swift; sourceTree = "<group>"; };
 		A4E4E3E01B3120A600E4410B /* JournalTransition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JournalTransition.swift; sourceTree = "<group>"; };
+		A4F8FBDA1BD4405A00942929 /* WalkthroughViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalkthroughViewController.swift; sourceTree = "<group>"; };
 		A6FDC803859C7965C3ADC62A /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		B51DE73E1B32758200BA7954 /* AlarmTransition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlarmTransition.swift; sourceTree = "<group>"; };
 		B51DE7401B332F8500BA7954 /* InteractiveBaseTransition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InteractiveBaseTransition.swift; sourceTree = "<group>"; };
@@ -137,6 +139,7 @@
 				9455DD7C1B249E300080CE79 /* AppDelegate.swift */,
 				A4E4E3DF1B31207000E4410B /* Transition */,
 				B5F960D61B2D12D000E5AAB3 /* iiFaderForAvAudioPlayer.swift */,
+				A4F8FBDA1BD4405A00942929 /* WalkthroughViewController.swift */,
 				94AF75371B5AFC36000B4216 /* LoginViewController.swift */,
 				B5DC5B8E1B3160C800DD8E6E /* Common.swift */,
 				9455DD801B249E300080CE79 /* Main.storyboard */,
@@ -363,6 +366,7 @@
 				A448A16A1B3A0D7D00FFEB79 /* NewJournalWithAlarmTransition.swift in Sources */,
 				94AF75381B5AFC36000B4216 /* LoginViewController.swift in Sources */,
 				94A48D781B2E5BA400978643 /* DreamComposeViewController.swift in Sources */,
+				A4F8FBDB1BD4405A00942929 /* WalkthroughViewController.swift in Sources */,
 				B51DE73F1B32758200BA7954 /* AlarmTransition.swift in Sources */,
 				A4DECA181B38FD8D00837132 /* NewJournalTransition.swift in Sources */,
 				9455DD7D1B249E300080CE79 /* AppDelegate.swift in Sources */,
