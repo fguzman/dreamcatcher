@@ -32,22 +32,22 @@ class LoginViewController: UIViewController {
         
         user.signUpInBackgroundWithBlock { (success: Bool, error: NSError?) -> Void in
             if success {
-                println("You succeeded!")
+                print("You succeeded!")
                 self.performSegueWithIdentifier("loginSegue", sender: nil)
             } else {
-                println("Error:\(error)")
+                print("Error:\(error)")
             }
         }
     }
     
     @IBAction func didPressSignIn(sender: AnyObject) {
-        PFUser.logInWithUsernameInBackground(usernameField.text, password:passwordField.text) {
+        PFUser.logInWithUsernameInBackground(usernameField.text!, password:passwordField.text!) {
             (user: PFUser?, error: NSError?) -> Void in
             if user != nil {
-                println("You are now logged in")
+                print("You are now logged in")
                 self.performSegueWithIdentifier("loginSegue", sender: nil)
             } else {
-                println("Error:\(error)")
+                print("Error:\(error)")
             }
         }
     }

@@ -90,7 +90,7 @@ class DreamComposeViewController: UIViewController, UITextViewDelegate{
     func keyboardWillShowNotification(notification: NSNotification) {
         if composeTextView.isFirstResponder() {
             var keyboardFrame = (notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.CGRectValue()
-            var lineHeight = self.composeTextView.font.lineHeight
+            let lineHeight = self.composeTextView.font!.lineHeight
             
             if (self.composeTextView.frame.origin.y + lineHeight  > keyboardFrame?.origin.y) {
                 self.pageScroll.contentSize = CGSizeMake(self.pageScroll.contentSize.width, self.pageScroll.contentSize.height - keyboardFrame!.size.height)
@@ -128,7 +128,7 @@ class DreamComposeViewController: UIViewController, UITextViewDelegate{
             
             // If updated text view will be empty, add the placeholder
             // and set the cursor to the beginning of the text view
-            if count(updatedText) == 0 {
+            if updatedText.characters.count == 0 {
                 
                 textView.text = placeholderText
                 textView.textColor = lightTextColor
@@ -144,7 +144,7 @@ class DreamComposeViewController: UIViewController, UITextViewDelegate{
                 // length of the replacement string is greater than 0, clear
                 // the text view and set its color to black to prepare for
                 // the user's entry
-            else if textView.textColor == lightTextColor && count(text) > 0 {
+            else if textView.textColor == lightTextColor && text.characters.count > 0 {
                 textView.text = nil
                 textView.textColor = textColor
                 nextButton.enabled = true
@@ -172,10 +172,10 @@ class DreamComposeViewController: UIViewController, UITextViewDelegate{
     @IBAction func onNext(sender: AnyObject) {
         // Use the first 10 words from the compose field as title
         var words = composeTextView.text.componentsSeparatedByString(" ")
-        println("words: \(words.count)")
-        var index = words.count > titleMaxWords ? titleMaxWords - 1 : words.count - 1
-        var firstWords = Array(words[0...index])
-        titleLabel.text = " ".join(firstWords)
+        print("words: \(words.count)")
+        let index = words.count > titleMaxWords ? titleMaxWords - 1 : words.count - 1
+        let firstWords = Array(words[0...index])
+        titleLabel.text = firstWords.joinWithSeparator(" ")
         
         //println(composeTextView.text)
         styleScrollView.hidden = false
@@ -232,7 +232,7 @@ class DreamComposeViewController: UIViewController, UITextViewDelegate{
         journal["user"] = PFUser.currentUser()
         
         journal.saveInBackgroundWithBlock { (success: Bool, error: NSError?) -> Void in
-            println("Saved the entry!")
+            print("Saved the entry!")
         }
         
         if self.parentViewController != nil{ //if embded in AlarmNavController

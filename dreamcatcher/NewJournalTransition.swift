@@ -117,7 +117,7 @@ class NewJournalTransition: BaseTransition {
         
 
         if dreamComposeViewController.exitButton == dreamComposeViewController.closeButton{
-            println("no entry")
+            print("no entry")
             containerView.backgroundColor = UIColor(white:0, alpha:0)
             fromViewController.view.frame.origin.y = 0
             UIView.animateWithDuration(0.3, animations: { () -> Void in
@@ -130,7 +130,7 @@ class NewJournalTransition: BaseTransition {
         }
             
         else if dreamComposeViewController.exitButton == dreamComposeViewController.doneButton { // if some entry
-            println("some entry")
+            print("some entry")
 
             containerView.backgroundColor = UIColor(white:0, alpha:1)
             fromViewController.view.alpha = 0

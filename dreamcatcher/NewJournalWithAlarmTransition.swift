@@ -41,7 +41,7 @@ class NewJournalWithAlarmTransition: BaseTransition {
         else if alarmNavController.exitButtonName == "done"{
             
             fromViewController.view.alpha = 0
-            (fromViewController as! AlarmNavController).topViewController.view.alpha = 0
+            (fromViewController as! AlarmNavController).topViewController!.view.alpha = 0
             containerView.backgroundColor = UIColor(white:0, alpha:1)
             
             var dreamComposeViewController = alarmNavController.topViewController as! DreamComposeViewController
@@ -77,7 +77,7 @@ class NewJournalWithAlarmTransition: BaseTransition {
             
             transitionView.backgroundColor = UIColor(white:1, alpha:1)
             transitionView.frame = dreamComposeViewController.view.frame
-            println(transitionView.frame)
+            print(transitionView.frame)
             
             backgroundImageView.frame.origin = dreamComposeViewController.styleScrollView.frame.origin
             backgroundImageView.frame.size = CGSize(width: dreamComposeViewController.styleScrollView.frame.size.width+1, height: dreamComposeViewController.styleScrollView.frame.size.height)

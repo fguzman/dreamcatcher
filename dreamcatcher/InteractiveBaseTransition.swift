@@ -8,7 +8,7 @@
 
 import UIKit
 
-class InteractiveBaseTransition: UIPercentDrivenInteractiveTransition, UIViewControllerTransitioningDelegate, UIViewControllerAnimatedTransitioning, UIViewControllerInteractiveTransitioning {
+class InteractiveBaseTransition: UIPercentDrivenInteractiveTransition, UIViewControllerTransitioningDelegate, UIViewControllerAnimatedTransitioning {
     
     var animationDuration: NSTimeInterval = 0.4
     var isPresenting: Bool = true
@@ -30,7 +30,7 @@ class InteractiveBaseTransition: UIPercentDrivenInteractiveTransition, UIViewCon
         return self
     }
     
-    func transitionDuration(transitionContext: UIViewControllerContextTransitioning) -> NSTimeInterval {
+    func transitionDuration(transitionContext: UIViewControllerContextTransitioning?) -> NSTimeInterval {
         return animationDuration
     }
     
@@ -51,9 +51,9 @@ class InteractiveBaseTransition: UIPercentDrivenInteractiveTransition, UIViewCon
         self.transitionContext = transitionContext
         
         if (isPresenting) {
-            containerView.addSubview(toViewController.view)
+            containerView!.addSubview(toViewController.view)
             
-            presentTransition(containerView, fromViewController: fromViewController, toViewController: toViewController, completionCallback: {
+            presentTransition(containerView!, fromViewController: fromViewController, toViewController: toViewController, completionCallback: {
                 if (transitionContext.transitionWasCancelled()) {
                     transitionContext.completeTransition(false)
                 } else {
@@ -62,7 +62,7 @@ class InteractiveBaseTransition: UIPercentDrivenInteractiveTransition, UIViewCon
                 }
             })
         } else {
-            dismissTransition(containerView, fromViewController: fromViewController, toViewController: toViewController, completionCallback: {
+            dismissTransition(containerView!, fromViewController: fromViewController, toViewController: toViewController, completionCallback: {
                 transitionContext.completeTransition(true)
             })
         }

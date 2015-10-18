@@ -12,7 +12,7 @@ import AVFoundation
 let iiFaderForAvAudioPlayer_defaultFadeDurationSeconds = 3.0
 let iiFaderForAvAudioPlayer_defaultVelocity = 2.0
 
-@objc
+
 public class iiFaderForAvAudioPlayer {
   let player: AVAudioPlayer
   private var timer: NSTimer?
@@ -60,7 +60,7 @@ public class iiFaderForAvAudioPlayer {
       duration: duration, velocity: velocity, onFinished: onFinished)
   }
 
-  func fade(#fromVolume: Double, toVolume: Double,
+  func fade(fromVolume fromVolume: Double, toVolume: Double,
     duration: Double = iiFaderForAvAudioPlayer_defaultFadeDurationSeconds,
     velocity: Double = iiFaderForAvAudioPlayer_defaultVelocity, onFinished: ((Bool)->())? = nil) {
 

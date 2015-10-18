@@ -382,8 +382,8 @@ class DreamCollectionViewController: UIViewController, UICollectionViewDataSourc
         //var indexPath = collectionView.indexPathForCell(cell)!
         
         if sender.state == UIGestureRecognizerState.Began{
-            println("pan")
-            println(sender.view)
+            print("pan")
+            print(sender.view)
             
         }
         else if sender.state == UIGestureRecognizerState.Changed{
@@ -464,7 +464,7 @@ class DreamCollectionViewController: UIViewController, UICollectionViewDataSourc
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "composeSegue"{
-            println("compose Segue")
+            print("compose Segue")
             
             var destinationVC = segue.destinationViewController as! DreamComposeViewController
             destinationVC.modalPresentationStyle = UIModalPresentationStyle.Custom

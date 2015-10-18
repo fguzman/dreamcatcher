@@ -66,7 +66,7 @@ class JournalViewController: UIViewController, UIScrollViewDelegate{
     }
     
     func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool){
-        println("end")
+        print("end")
         
         if scrollView.contentOffset.y <= -80{
             self.dismissViewControllerAnimated(true, completion: nil)

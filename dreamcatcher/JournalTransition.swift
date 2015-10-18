@@ -24,7 +24,7 @@ class JournalTransition: BaseTransition {
         containerView.backgroundColor = UIColor(white:0, alpha:0)
         
         var pageViewController = toViewController as! UIPageViewController
-        var journalViewController = pageViewController.viewControllers[0] as! JournalViewController
+        var journalViewController = pageViewController.viewControllers?[0] as! JournalViewController
         var dreamCollectionViewController = fromViewController as! DreamCollectionViewController
         var selectedCell = dreamCollectionViewController.collectionView.cellForItemAtIndexPath(dreamCollectionViewController.currentRowIndex) as! CardCollectionViewCell
         
@@ -32,7 +32,7 @@ class JournalTransition: BaseTransition {
         
         fullTextView.frame.size = journalViewController.textView.frame.size
         fullTextView.frame.origin = selectedCell.textView.frame.origin
-        fullTextView.font = UIFont(name: selectedCell.textView.font.fontName, size: 20)
+        fullTextView.font = UIFont(name: selectedCell.textView.font!.fontName, size: 20)
         fullTextView.attributedText = selectedCell.textView.attributedText
         fullTextView.font = selectedCell.textView.font
         fullTextView.alpha = 0
@@ -106,8 +106,8 @@ class JournalTransition: BaseTransition {
     override func dismissTransition(containerView: UIView, fromViewController: UIViewController, toViewController: UIViewController) {
         fromViewController.view.alpha = 0
         
-        var pageViewController = fromViewController as! UIPageViewController
-        var journalViewController = pageViewController.viewControllers[0] as! JournalViewController
+        let pageViewController = fromViewController as! UIPageViewController
+        let journalViewController = pageViewController.viewControllers?[0] as! JournalViewController
         var dreamCollectionViewController = toViewController as! DreamCollectionViewController
         
         var collectionView = dreamCollectionViewController.collectionView

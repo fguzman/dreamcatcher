@@ -29,7 +29,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Parse.setApplicationId("6lMW6J4FlIcfwtowQuiRFVFSOQbYrjHd53cVAM0l", clientKey: "ENl3CTOUmgRLhJYira0SQYQfMrPc70t0L1WYNi9y")
         
         // Override point for customization after application launch.
-        application.registerUserNotificationSettings(UIUserNotificationSettings(forTypes: .Alert | .Badge | .Sound, categories: nil))
+        let types: UIUserNotificationType = [.Alert, .Badge, .Sound]
+        application.registerUserNotificationSettings(UIUserNotificationSettings(forTypes: types, categories: nil))
         return true
     }
     
@@ -45,7 +46,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             let calendar = NSCalendar.currentCalendar()
 
             var firedate = userDefaults.objectForKey("alarm.date") as! NSDate
-            var nextFiredate = calendar.dateByAddingUnit(.CalendarUnitSecond, value: alarmSoundDuration, toDate: firedate, options: nil)!
+            var nextFiredate = calendar.dateByAddingUnit(.Second, value: alarmSoundDuration, toDate: firedate, options: [])!
             
             if nextFiredate.compare(NSDate()) == .OrderedDescending {
                 fadeInAudio(player)
@@ -62,9 +63,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // Prepare for audio session settings for background audio
     func prepareAudio() {
         var path = NSBundle.mainBundle().pathForResource("alarm_sound_normal", ofType: "mp3")
-        player = AVAudioPlayer(contentsOfURL: NSURL(fileURLWithPath: path!), error: nil)
-        AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback, error: nil)
-        AVAudioSession.sharedInstance().setActive(true, error: nil)
+        
+        do {
+            try player = AVAudioPlayer(contentsOfURL: NSURL(fileURLWithPath: path!), fileTypeHint: nil)
+            try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback)
+            try AVAudioSession.sharedInstance().setActive(true)
+        }
+        catch {
+            print(error)
+        }
+
         UIApplication.sharedApplication().beginReceivingRemoteControlEvents()
         player.prepareToPlay()
         player.numberOfLoops = -1
@@ -77,13 +85,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         player.play()
         player.volume = 0
         fader = iiFaderForAvAudioPlayer(player: player)
-        fader.fadeIn(duration: 22, velocity: 2, onFinished: nil)
+        fader.fadeIn(22, velocity: 2, onFinished: nil)
     }
     
     func stopPlayer() {
         if (isPlayerPrepared) {
             if (fader != nil) {
-                fader.fadeOut(duration: 2, velocity: 2, onFinished: { finished in
+                fader.fadeOut(2, velocity: 2, onFinished: { finished in
                     self.player.stop()
                     self.isPlayerPrepared = false
                     UIApplication.sharedApplication().applicationIconBadgeNumber = 0
