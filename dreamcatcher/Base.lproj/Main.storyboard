@@ -95,7 +95,7 @@
                                     <button hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="n16-II-V83">
                                         <rect key="frame" x="133" y="346" width="54" height="49"/>
                                         <animations/>
-                                        <state key="normal" image="CF513296-470C-41F5-8798-AF6DD640CF89">
+                                        <state key="normal" image="9AA477FB-3F2A-46D6-89A8-176EF4ED7975">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
@@ -587,7 +587,7 @@
                                     <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DxI-Yi-BYG" userLabel="contentView">
                                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                         <subviews>
-                                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" directionalLockEnabled="YES" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yn5-80-zT9" userLabel="imageScroll">
+                                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" directionalLockEnabled="YES" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yn5-80-zT9" userLabel="imageScroll">
                                                 <rect key="frame" x="0.0" y="-319" width="600" height="319"/>
                                                 <subviews>
                                                     <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFill" fixedFrame="YES" image="bg1" translatesAutoresizingMaskIntoConstraints="NO" id="lSH-Oi-OzR">
@@ -744,6 +744,7 @@
                                             <constraint firstAttribute="trailing" secondItem="mAt-jd-RJI" secondAttribute="trailing" constant="25" id="prH-bf-f4v"/>
                                             <constraint firstItem="FPF-D9-67S" firstAttribute="leading" secondItem="DxI-Yi-BYG" secondAttribute="leading" constant="25" id="qMX-0d-tDP"/>
                                             <constraint firstItem="mAt-jd-RJI" firstAttribute="top" secondItem="DxI-Yi-BYG" secondAttribute="top" constant="35" id="uik-1f-leI"/>
+                                            <constraint firstItem="yn5-80-zT9" firstAttribute="top" secondItem="DxI-Yi-BYG" secondAttribute="top" constant="-319" id="v9g-4g-fmH"/>
                                             <constraint firstItem="yn5-80-zT9" firstAttribute="leading" secondItem="DxI-Yi-BYG" secondAttribute="leading" id="vCg-Nl-hhT"/>
                                             <constraint firstAttribute="trailing" secondItem="PW4-9a-ky3" secondAttribute="trailing" constant="25" id="zGq-sd-j7z"/>
                                         </constraints>
@@ -773,12 +774,14 @@
                         <outlet property="backButton" destination="NJs-kM-yaU" id="RuJ-AW-H1a"/>
                         <outlet property="closeButton" destination="dCT-uj-VKF" id="kAJ-le-Wqd"/>
                         <outlet property="composeTextView" destination="FPF-D9-67S" id="kRJ-uw-jO4"/>
+                        <outlet property="composeTextViewVerticalConstraint" destination="Lit-Wm-7Wv" id="8N5-wN-Img"/>
                         <outlet property="dateLabel" destination="qpx-iR-Bzr" id="glW-YQ-JFG"/>
                         <outlet property="doneButton" destination="PW4-9a-ky3" id="fss-D7-r9I"/>
                         <outlet property="navLabel" destination="5Cv-uy-kWF" id="Qdp-zo-GBy"/>
                         <outlet property="nextButton" destination="mAt-jd-RJI" id="ary-FW-oCE"/>
                         <outlet property="pageScroll" destination="Oq8-JL-KCh" id="X5V-Jg-kyG"/>
                         <outlet property="styleScrollView" destination="yn5-80-zT9" id="DQu-qe-vLd"/>
+                        <outlet property="styleScrollViewVerticalConstraint" destination="v9g-4g-fmH" id="6eQ-pj-3ee"/>
                         <outlet property="titleLabel" destination="sk0-1K-Fjp" id="Lpt-g6-sR8"/>
                     </connections>
                 </viewController>
@@ -1124,7 +1127,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="CF513296-470C-41F5-8798-AF6DD640CF89" width="18" height="11">
+        <image name="9AA477FB-3F2A-46D6-89A8-176EF4ED7975" width="18" height="11">
             <mutableData key="keyedArchiveRepresentation">
 YnBsaXN0MDDUAQIDBAUGOjtYJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK0HCBEW
 GxwgISgrLjQ3VSRudWxs1AkKCwwNDg8QViRjbGFzc1xOU0ltYWdlRmxhZ3NWTlNSZXBzV05TQ29sb3KA
@@ -1147,7 +1150,7 @@ AAMAAAABAAsAAAECAAMAAAAEAAADzgEDAAMAAAABAAEAAAEGAAMAAAABAAIAAAERAAQAAAABAAAACAES
 AAMAAAABAAEAAAEVAAMAAAABAAQAAAEWAAMAAAABAAsAAAEXAAQAAAABAAADGAEcAAMAAAABAAEAAAFS
 AAMAAAABAAIAAAFTAAMAAAAEAAAD1odzAAcAAAxIAAAD3gAAAAAACAAIAAgACAABAAEAAQABAAAMSExp
 bm8CEAAAbW50clJHQiBYWVogB84AAgAJAAYAMQAAYWNzcE1TRlQAAAAASUVDIHNSR0IAAAAAAAAAAAAA
-AAEAAPbWAAEAAAAA0y1IUCAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAPbWAAEAAAAA0y1IUCAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
 AAAAAAARY3BydAAAAVAAAAAzZGVzYwAAAYQAAABsd3RwdAAAAfAAAAAUYmtwdAAAAgQAAAAUclhZWgAA
 AhgAAAAUZ1hZWgAAAiwAAAAUYlhZWgAAAkAAAAAUZG1uZAAAAlQAAABwZG1kZAAAAsQAAACIdnVlZAAA
 A0wAAACGdmlldwAAA9QAAAAkbHVtaQAAA/gAAAAUbWVhcwAABAwAAAAkdGVjaAAABDAAAAAMclRSQwAA

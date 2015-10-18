@@ -20,9 +20,12 @@ class DreamComposeViewController: UIViewController, UITextViewDelegate{
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var titleLabel: UILabel!
+    
+    //constraints
+    @IBOutlet weak var composeTextViewVerticalConstraint: NSLayoutConstraint!
+    @IBOutlet weak var styleScrollViewVerticalConstraint: NSLayoutConstraint!
+    
     var exitButton: UIButton!
-    
-    
     var panGesture: UIPanGestureRecognizer!
     
     let placeholderText: String = "Jot down your dream"
@@ -180,9 +183,11 @@ class DreamComposeViewController: UIViewController, UITextViewDelegate{
         //println(composeTextView.text)
         styleScrollView.hidden = false
         view.endEditing(true)
+        
+        self.styleScrollViewVerticalConstraint.constant = 0
+        self.composeTextViewVerticalConstraint.constant = 265
         UIView.animateWithDuration(0.3, animations: { () -> Void in
-            self.styleScrollView.frame.origin.y = 0
-            self.composeTextView.frame.origin.y = 337
+            self.view.layoutIfNeeded()
         })
         navLabel.textColor = UIColor.whiteColor()
         closeButton.hidden = true
@@ -194,9 +199,11 @@ class DreamComposeViewController: UIViewController, UITextViewDelegate{
     }
     
     @IBAction func onBack(sender: AnyObject) {
+        self.styleScrollViewVerticalConstraint.constant = -319
+        self.composeTextViewVerticalConstraint.constant = 10
+        
         UIView.animateWithDuration(0.3, animations: { () -> Void in
-            self.styleScrollView.frame.origin.y = self.styleScrollView.frame.size.height * CGFloat(-1)
-            self.composeTextView.frame.origin.y = 82
+            self.view.layoutIfNeeded()
         })
         navLabel.textColor = UIColor.blackColor()
         closeButton.hidden = false
