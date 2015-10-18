@@ -20,10 +20,16 @@ class DreamComposeViewController: UIViewController, UITextViewDelegate{
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var contentView: UIView!
+    
     
     //constraints
     @IBOutlet weak var composeTextViewVerticalConstraint: NSLayoutConstraint!
     @IBOutlet weak var styleScrollViewVerticalConstraint: NSLayoutConstraint!
+    
+//    @IBOutlet weak var closeButtonVerticalConstraint: NSLayoutConstraint!
+    
+    
     
     var exitButton: UIButton!
     var panGesture: UIPanGestureRecognizer!
@@ -74,6 +80,10 @@ class DreamComposeViewController: UIViewController, UITextViewDelegate{
         view.addGestureRecognizer(panGesture)
         nextButton.enabled = false
         
+        // Set the scroll views frame to current device view
+        let deviceSize = UIScreen.mainScreen().applicationFrame.size
+        contentView.frame = CGRectMake(0, 0, deviceSize.width, deviceSize.height)
+        pageScroll.frame = contentView.frame
     }
     
     func didChangeTabToTabNumber(tabNumber: Int) {
@@ -96,19 +106,22 @@ class DreamComposeViewController: UIViewController, UITextViewDelegate{
             let lineHeight = self.composeTextView.font!.lineHeight
             
             if (self.composeTextView.frame.origin.y + lineHeight  > keyboardFrame?.origin.y) {
-                self.pageScroll.contentSize = CGSizeMake(self.pageScroll.contentSize.width, self.pageScroll.contentSize.height - keyboardFrame!.size.height)
-                self.pageScroll.contentOffset = CGPointMake(0, keyboardFrame!.size.height)
-                
+                var contentInset: UIEdgeInsets = pageScroll.contentInset;
+                contentInset.bottom = keyboardFrame!.size.height;
+                pageScroll.contentInset = contentInset;
             }
         }
     }
     
     func keyboardWillHideNotification(notification: NSNotification) {
         if composeTextView.isFirstResponder() {
-            let screenSize: CGRect = UIScreen.mainScreen().bounds
-            
-            self.pageScroll.contentSize = CGSizeMake(screenSize.width, screenSize.height)
-            self.pageScroll.contentOffset = CGPointMake(0, 0)
+            var contentInset: UIEdgeInsets = pageScroll.contentInset;
+            contentInset.bottom = 0;
+            pageScroll.contentInset = contentInset;
+//            let screenSize: CGRect = UIScreen.mainScreen().bounds
+//            
+//            self.pageScroll.contentSize = CGSizeMake(screenSize.width, screenSize.height)
+//            self.pageScroll.contentOffset = CGPointMake(0, 0)
         }
     }
     
