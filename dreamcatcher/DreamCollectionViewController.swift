@@ -129,6 +129,7 @@ class DreamCollectionViewController: UIViewController, UICollectionViewDataSourc
     func onTimer() {
         let query = PFQuery(className: "Journal")
         query.whereKey("user", equalTo: PFUser.currentUser()!)
+        query.orderByDescending("createdAt")
         query.findObjectsInBackgroundWithBlock { (results: [AnyObject]?, error: NSError?) -> Void in
             self.journals = results as! [PFObject]
             self.collectionView.reloadData()
