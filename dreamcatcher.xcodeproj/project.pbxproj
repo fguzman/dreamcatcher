@@ -22,7 +22,7 @@
 		A4E4E3DC1B31200B00E4410B /* FadeTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4E4E3DB1B31200B00E4410B /* FadeTransition.swift */; };
 		A4E4E3DE1B31206600E4410B /* BaseTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4E4E3DD1B31206600E4410B /* BaseTransition.swift */; };
 		A4E4E3E11B3120A600E4410B /* JournalTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4E4E3E01B3120A600E4410B /* JournalTransition.swift */; };
-		A4F8FBDB1BD4405A00942929 /* WalkthroughViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4F8FBDA1BD4405A00942929 /* WalkthroughViewController.swift */; settings = {ASSET_TAGS = (); }; };
+		A4F8FBDB1BD4405A00942929 /* WalkthroughViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4F8FBDA1BD4405A00942929 /* WalkthroughViewController.swift */; };
 		B51DE73F1B32758200BA7954 /* AlarmTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = B51DE73E1B32758200BA7954 /* AlarmTransition.swift */; };
 		B51DE7411B332F8500BA7954 /* InteractiveBaseTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = B51DE7401B332F8500BA7954 /* InteractiveBaseTransition.swift */; };
 		B551D3B11B36178500E6B555 /* alarm_sound_fadedIn.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B551D3B01B36178500E6B555 /* alarm_sound_fadedIn.mp3 */; };
@@ -266,6 +266,7 @@
 				TargetAttributes = {
 					9455DD761B249E300080CE79 = {
 						CreatedOnToolsVersion = 6.3.2;
+						DevelopmentTeam = T77E52VH8P;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
@@ -507,10 +508,13 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = dreamcatcher/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "co.fguzman.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "dreamcatcher-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -523,10 +527,13 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = dreamcatcher/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "co.fguzman.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "dreamcatcher-Bridging-Header.h";
 			};
 			name = Release;
